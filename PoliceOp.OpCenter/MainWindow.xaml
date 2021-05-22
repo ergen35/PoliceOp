@@ -37,13 +37,17 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="240"/>
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Background="Black">
                             <TextBlock Text="Agent" Foreground="Blue" Style="{StaticResource TextBlockTitle}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
-                        <Grid Grid.Row="1">
+                        <Grid Grid.Row="1" Background="Bisque">
                             <Label Content="Drawer"/>
+                        </Grid>
+                        <Grid Background="Azure" Grid.Row="2">
+                            
                         </Grid>
                         <Button Command="hc:ControlCommands.Close" Grid.Row="0" HorizontalAlignment="Right" Foreground="{DynamicResource LightWarningBrush}" Style="{StaticResource ButtonIcon}" hc:IconElement.Geometry="{StaticResource LeftGeometry}" />
                     </Grid>

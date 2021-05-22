@@ -15,7 +15,6 @@
     <PackageReference Include="MahApps.Metro.IconPacks.BoxIcons" Version="4.6.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.6.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.6.0" />
-    <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.1.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.0" />
