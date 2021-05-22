@@ -1,7 +1,7 @@
 ﻿
 namespace PoliceOp.Models
 {
-    internal class PersonneSpeciale : Personne
+    public class PersonneSpeciale : Personne
     {
         
         

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace PoliceOp.Models
 {
-    internal class Personne
+    public class Personne
     {
         public Guid UID { get; set; }              
         public string NPI { get; set; }

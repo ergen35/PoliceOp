@@ -1,6 +1,6 @@
 ﻿namespace PoliceOp.Models
 {
-    internal enum NiveauDeRecherche
+    public enum NiveauDeRecherche
     {
         
     }

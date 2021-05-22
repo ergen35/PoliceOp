@@ -1,7 +1,7 @@
 ﻿
 namespace PoliceOp.Models
 {
-    internal class Coordonnées
+    public class Coordonnées
     {
         public string Rue { get; set; }
         public string NuméroParcelle { get; set; }

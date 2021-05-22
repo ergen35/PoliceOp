@@ -1,7 +1,7 @@
 ﻿
 namespace PoliceOp.Models
 {
-    internal class NiveauRequete
+    public class NiveauRequete
     {
         
         
