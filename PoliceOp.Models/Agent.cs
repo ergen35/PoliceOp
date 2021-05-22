@@ -1,7 +1,7 @@
 ﻿
 namespace PoliceOp.Models
 {
-    class Agent : Personne
+    public class Agent : Personne
     {
         public string Matricule { get; set; }              
         public string Grade { get; set; }

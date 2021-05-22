@@ -44,7 +44,27 @@
                             <TextBlock Text="Agent" Foreground="Blue" Style="{StaticResource TextBlockTitle}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Row="1" Background="Bisque">
-                            <Label Content="Drawer"/>
+                            <hc:Card MaxWidth="240" BorderThickness="0" Effect="{DynamicResource EffectShadow2}" Margin="8" Footer="{Binding Footer}">
+                                <!--Card Content section template-->
+                                <Border CornerRadius="4,4,0,0" Width="160" Height="160">
+                                    <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Content}"/>
+                                </Border>
+                                <!--Card Footer section template-->
+                                <hc:Card.FooterTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="10" Width="160">
+                                            <!--Card First-level content-->
+                                            <TextBlock TextWrapping="NoWrap"  Style="{DynamicResource TextBlockLargeBold}" TextTrimming="CharacterEllipsis" 
+                                           Text="{Binding DataContext.Header,RelativeSource={RelativeSource AncestorType=hc:Card}}" 
+                                           HorizontalAlignment="Left"/>
+                                            <!--Card Secondary content-->
+                                            <TextBlock TextWrapping="NoWrap" Style="{DynamicResource TextBlockDefault}" TextTrimming="CharacterEllipsis" 
+                                           Text="{Binding}" Margin="0,6,0,0"
+                                           HorizontalAlignment="Left"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </hc:Card.FooterTemplate>
+                            </hc:Card>
                         </Grid>
                         <Grid Background="Azure" Grid.Row="2">
                             
