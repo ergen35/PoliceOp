@@ -1,0 +1,51 @@
+﻿<mah:MetroWindow x:Class="PoliceOp.OpCenter.Authentication"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PoliceOp.OpCenter" xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        mc:Ignorable="d" xmlns:hc="https://handyorg.github.io/handycontrol" 
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" WindowStartupLocation="CenterScreen"
+        xmlns:IconsPack="http://metro.mahapps.com/winfx/xaml/iconpacks" ResizeMode="NoResize"
+        Title="Authentication" Height="450" Width="650">
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button x:Name="ConnectivityBtn" Foreground="Red">
+                <IconsPack:FontAwesome  x:Name="ConnectivityIcon" Kind="WifiSolid" Height="35" Width="25"/>
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.RowSpan="3" Grid.ColumnSpan="3">
+            <Image x:Name="BackGif" />
+        </Grid>
+        
+        <Grid Grid.Row="1" Grid.Column="1" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <hc:TextBox x:Name="LoginTxtb" hc:InfoElement.Placeholder="Login" TextType="Int"
+                        hc:InfoElement.Title="Enter Login"/>
+
+            <hc:PasswordBox x:Name="PwdTxtb" hc:InfoElement.Placeholder="Password"
+                        hc:InfoElement.Title="Enter Password" Grid.Row="1"/>
+
+            <Button x:Name="AuthBtn" Content="Authenticate" Grid.Row="2" Style="{StaticResource ButtonWarning}" Click="AuthBtn_Click"/>
+        </Grid>
+
+        <IconsPack:PackIconFontAwesome Grid.Row="2" Grid.Column="1" x:Name="FingerPrintIcon" Height="50" Width="45" Foreground="White" Kind="FingerprintSolid" HorizontalAlignment="Center" VerticalAlignment="Bottom" BorderBrush="Gray"/>
+    </Grid>
+</mah:MetroWindow>

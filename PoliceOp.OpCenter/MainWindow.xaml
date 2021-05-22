@@ -1,0 +1,97 @@
+﻿<mah:MetroWindow x:Class="PoliceOp.OpCenter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PoliceOp.OpCenter" xmlns:hc="https://handyorg.github.io/handycontrol"
+        mc:Ignorable="d" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="OpCenter" TitleCharacterCasing="Normal" TitleAlignment="Center" Height="450" Width="800" 
+        xmlns:Notif="clr-namespace:Enterwell.Clients.Wpf.Notifications.Controls;assembly=Enterwell.Clients.Wpf.Notifications"
+        xmlns:mde="http://metro.mahapps.com/winfx/xaml/controls" WindowState="Maximized"       
+        >
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button x:Name="EnhancedSecurityMode" ToolTip="Enhanced Security Mode" VerticalAlignment="Center" Height="35" Width="50" Foreground="White" Click="EnhancedSecurityMode_Click">
+                <IconPacks:Material Kind="ShieldOff" Height="20" Width="25"/>
+            </Button>
+            <ToggleButton xmlns:Name="NotifBtn" Height="35" Width="50" Foreground="White" VerticalAlignment="Center" IsChecked="{Binding IsOpen,ElementName=NotifCenter}" Style="{StaticResource MahApps.Styles.Button.Chromeless}">
+                <IconPacks:BoxIcons Kind="RegularNotification" Height="20" Width="25" />
+            </ToggleButton>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands>
+            <ToggleButton x:Name="ThemeBtn" Height="35" Width="25" Style="{StaticResource ToggleButtonSwitch}" ToolTip="Theme Switch" ToggleButton.Checked="ThemeBtn_Checked" ToggleButton.Unchecked="ThemeBtn_Unchecked"/>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
+    <Grid>
+        <hc:SimplePanel>
+            <Grid>
+                <ToggleButton x:Name="ToogleDrawer" Margin="3,0,0,2" HorizontalAlignment="Left" Grid.RowSpan="100" Height="50" Width="40" Opacity="50" VerticalAlignment="Bottom"  IsChecked="{Binding IsOpen,ElementName=DrawerLeft}" Style="{StaticResource MahApps.Styles.Button.Chromeless}" Foreground="Green" Click="ToogleBtn_Click">
+                    <IconPacks:Material Kind="Menu" Height="25" Width="30"/>
+                </ToggleButton>
+            </Grid>
+            <hc:Drawer Name="DrawerLeft" Dock="Left" ShowMode="Push" MaskCanClose="True" Closed="DrawerLeft_Closed" >
+                <Border Background="{DynamicResource RegionBrush}" Width="300" BorderThickness="0,0,0,0" BorderBrush="{DynamicResource BorderBrush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Background="Black">
+                            <TextBlock Text="Agent" Foreground="Blue" Style="{StaticResource TextBlockTitle}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Label Content="Drawer"/>
+                        </Grid>
+                        <Button Command="hc:ControlCommands.Close" Grid.Row="0" HorizontalAlignment="Right" Foreground="{DynamicResource LightWarningBrush}" Style="{StaticResource ButtonIcon}" hc:IconElement.Geometry="{StaticResource LeftGeometry}" />
+                    </Grid>
+                </Border>
+            </hc:Drawer>
+
+            <hc:Drawer Name="NotifCenter" Dock="Right" ShowMode="Push" MaskCanClose="True" >
+                <Border Background="{DynamicResource RegionBrush}" Width="350" BorderThickness="0,1,1,0" BorderBrush="{DynamicResource BorderBrush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="35" />
+                        </Grid.RowDefinitions>
+                        <Grid Background="Black" Margin="1,0,0,0">
+                            <TextBlock Text="Alert Center" Foreground="Blue" Style="{StaticResource TextBlockTitle}" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Black"/>
+                        </Grid>
+                        <Button Command="hc:ControlCommands.Close" Grid.Row="0" HorizontalAlignment="Left" Foreground="{DynamicResource LightWarningBrush}" Style="{StaticResource ButtonIcon}" hc:IconElement.Geometry="{StaticResource RightGeometry}" />
+
+                        <ScrollViewer Grid.Row="1" Width="330"  Margin="0,15,0,0" Style="{StaticResource ListViewScrollViewerStyle}" VerticalScrollBarVisibility="Auto" >
+                            <Notif:NotificationMessageContainer x:Name="AlertCenterMessageContainer" Width="335" />
+                        </ScrollViewer>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="ClearAlertsBtn" ToolTip="Clear All" Grid.Column="0" Click="ClearAlertsBtn_Click" Style="{StaticResource MahApps.Styles.Button.Dialogs}">
+                                <IconPacks:Material Kind="NotificationClearAll" Width="50"/>
+                            </Button>
+
+                            <ComboBox x:Name="AlertsSortingCbbx" Margin="35,0,0,0" ToolTip="Sort" Grid.Column="1" SelectedIndex="2" Style="{StaticResource ComboBoxExtend}" ItemsSource="{DynamicResource CbbxItemsList}" HorizontalContentAlignment="Center" SelectionChanged="AlertsSortingCbbx_SelectionChanged"/>
+
+                            <Grid.Resources>
+                                <x:Array x:Key="CbbxItemsList" Type="sys:String">
+                                    <sys:String>Special Requests</sys:String>
+                                    <sys:String>Wanted Notice</sys:String>
+                                    <sys:String>Show All Requests</sys:String>
+                                </x:Array>
+                            </Grid.Resources>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </hc:Drawer>
+        </hc:SimplePanel>
+
+        <Button x:Name="NotifBtn" Content="Show" Height="50" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Click="NotifBtn_Click"/>
+
+        <Notif:NotificationMessageContainer x:Name="InAppMessageContainer" VerticalAlignment="Top" HorizontalAlignment="Center" Width="800" />
+    </Grid>
+</mah:MetroWindow>
