@@ -8,7 +8,7 @@
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="OpCenter" TitleCharacterCasing="Normal" TitleAlignment="Center" Height="450" Width="800" 
         xmlns:Notif="clr-namespace:Enterwell.Clients.Wpf.Notifications.Controls;assembly=Enterwell.Clients.Wpf.Notifications"
-        xmlns:mde="http://metro.mahapps.com/winfx/xaml/controls" WindowState="Maximized"       
+        xmlns:mde="http://metro.mahapps.com/winfx/xaml/controls" WindowState="Maximized" xmlns:selfModels="clr-namespace:PoliceOp.Models;assembly=PoliceOp.Models" 
         >
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
@@ -39,6 +39,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="240"/>
                             <RowDefinition Height="*" />
+                            <RowDefinition Height="45" />
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Background="Black">
                             <TextBlock Text="Agent" Foreground="Blue" Style="{StaticResource TextBlockTitle}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -47,19 +48,19 @@
                             <hc:Card MaxWidth="240" BorderThickness="0" Effect="{DynamicResource EffectShadow2}" Margin="8" Footer="{Binding Footer}">
                                 <!--Card Content section template-->
                                 <Border CornerRadius="4,4,0,0" Width="160" Height="160">
-                                    <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Content}"/>
+                                    <Image Source="D:\DOCS\images\solar.jpg" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Border>
                                 <!--Card Footer section template-->
                                 <hc:Card.FooterTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate DataType="selfModels:Agent">
                                         <StackPanel Margin="10" Width="160">
                                             <!--Card First-level content-->
                                             <TextBlock TextWrapping="NoWrap"  Style="{DynamicResource TextBlockLargeBold}" TextTrimming="CharacterEllipsis" 
-                                           Text="{Binding DataContext.Header,RelativeSource={RelativeSource AncestorType=hc:Card}}" 
+                                           Text="Matignon" 
                                            HorizontalAlignment="Left"/>
                                             <!--Card Secondary content-->
                                             <TextBlock TextWrapping="NoWrap" Style="{DynamicResource TextBlockDefault}" TextTrimming="CharacterEllipsis" 
-                                           Text="{Binding}" Margin="0,6,0,0"
+                                           Text="Mateo" Margin="0,6,0,0"
                                            HorizontalAlignment="Left"/>
                                         </StackPanel>
                                     </DataTemplate>
@@ -67,7 +68,65 @@
                             </hc:Card>
                         </Grid>
                         <Grid Background="Azure" Grid.Row="2">
+                            <hc:SideMenu BorderThickness="1" Width="300" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <hc:Interaction.Triggers>
+                                    <hc:EventTrigger EventName="SelectionChanged">
+                                        <hc:EventToCommand Command="{Binding SwitchItemCmd}" PassEventArgsToCommand="True" />
+                                    </hc:EventTrigger>
+                                </hc:Interaction.Triggers>
+                                <hc:SideMenuItem Header="Overview"/>
+
+                                <hc:SideMenuItem Header="Boards">
+                                    <hc:SideMenuItem Header="Boards">
+                                        <hc:SideMenuItem.Icon>
+                                            <TextBlock Text="&#xf444;" Style="{StaticResource TextBlockFabricIcons}"/>
+                                        </hc:SideMenuItem.Icon>
+                                    </hc:SideMenuItem>
+                                    <hc:SideMenuItem Header="Backlogs">
+                                        <hc:SideMenuItem.Icon>
+                                            <TextBlock Text="&#xf6bf;" Style="{StaticResource TextBlockFabricIcons}"/>
+                                        </hc:SideMenuItem.Icon>
+                                    </hc:SideMenuItem>
+                                </hc:SideMenuItem>
+                                
+                                <hc:SideMenuItem Header="Repos">
+                                    <hc:SideMenuItem Header="Tags">
+                                        <hc:SideMenuItem.Icon>
+                                            <TextBlock Text="&#xe8ec;" Style="{StaticResource TextBlockFabricIcons}"/>
+                                        </hc:SideMenuItem.Icon>
+                                    </hc:SideMenuItem>
+                                    <hc:SideMenuItem Header="Pull requests">
+                                        <hc:SideMenuItem.Icon>
+                                            <TextBlock Text="&#xf296;" Style="{StaticResource TextBlockFabricIcons}"/>
+                                        </hc:SideMenuItem.Icon>
+                                    </hc:SideMenuItem>
+                                </hc:SideMenuItem>
+                                <hc:SideMenuItem Header="Pipelines">
+                                    <hc:SideMenuItem Header="Releases">
+                                        <hc:SideMenuItem.Icon>
+                                            <TextBlock Text="&#xf3b3;" Style="{StaticResource TextBlockFabricIcons}"/>
+                                        </hc:SideMenuItem.Icon>
+                                    </hc:SideMenuItem>
+                                </hc:SideMenuItem>
+                                <hc:SideMenuItem Header="Test Plans">
+                                    <hc:SideMenuItem Header="Load test">
+                                        <hc:SideMenuItem.Icon>
+                                            <TextBlock Text="&#xe8a9;" Style="{StaticResource TextBlockFabricIcons}"/>
+                                        </hc:SideMenuItem.Icon>
+                                    </hc:SideMenuItem>
+                                </hc:SideMenuItem>
+                            </hc:SideMenu>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
                             
+                            <Button Content="Button" Margin="0,0,1,0"  Style="{StaticResource MahApps.Styles.Button.Dialogs}" />
+                            <Button Content="Button1" Margin="0,0,1,0" Grid.Column="1" Style="{StaticResource MahApps.Styles.Button.Dialogs}"/>
+                            <Button Content="Button2" Margin="0,0,1,0" Grid.Column="2" Style="{StaticResource MahApps.Styles.Button.Dialogs}"/>
                         </Grid>
                         <Button Command="hc:ControlCommands.Close" Grid.Row="0" HorizontalAlignment="Right" Foreground="{DynamicResource LightWarningBrush}" Style="{StaticResource ButtonIcon}" hc:IconElement.Geometry="{StaticResource LeftGeometry}" />
                     </Grid>
