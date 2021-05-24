@@ -25,6 +25,9 @@
             <ToggleButton x:Name="ThemeBtn" Height="35" Width="25" Style="{StaticResource ToggleButtonSwitch}" ToolTip="Theme Switch" ToggleButton.Checked="ThemeBtn_Checked" ToggleButton.Unchecked="ThemeBtn_Unchecked"/>
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
+    <mah:MetroWindow.Resources>
+        
+    </mah:MetroWindow.Resources>
     <Grid>
 
         <Grid.RowDefinitions>
@@ -33,9 +36,7 @@
         </Grid.RowDefinitions>
         <hc:SimplePanel>
             <Grid>
-                <ToggleButton x:Name="ToogleDrawer" Margin="3,0,0,2" HorizontalAlignment="Left" Grid.RowSpan="100" Height="50" Width="40" Opacity="50" VerticalAlignment="Bottom"  IsChecked="{Binding IsOpen,ElementName=DrawerLeft}" Style="{StaticResource MahApps.Styles.Button.Chromeless}" Foreground="Black" Click="ToogleBtn_Click">
-                    <IconPacks:Material Kind="Menu" Height="25" Width="30"/>
-                </ToggleButton>
+
             </Grid>
             <hc:Drawer Name="DrawerLeft" Dock="Left" ShowMode="Push" MaskCanClose="True" Closed="DrawerLeft_Closed" >
                 <Border Background="{DynamicResource RegionBrush}" Width="300" BorderThickness="0,0,0,0" BorderBrush="{DynamicResource BorderBrush}">
@@ -178,10 +179,32 @@
             </hc:Drawer>
         </hc:SimplePanel>
 
-        <Button x:Name="NotifBtn" Content="Show" Height="50" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Click="NotifBtn_Click"/>
+        <Frame NavigationUIVisibility="Hidden" x:Name="ContentFrame"  hc:BorderElement.CornerRadius="0" Navigated="ContentFrame_Navigated"/>
 
+        <Button x:Name="BackNavigation" Visibility="Hidden" Style="{StaticResource MahApps.Styles.Button.Flat}"
+                                    Height="30" Width="45" VerticalAlignment="Top" HorizontalAlignment="Left"
+                                    Click="BackNavigation_Click">
+            <IconPacks:BoxIcons Kind="RegularArrowBack"/>
+        </Button>
+        
+        <ToggleButton x:Name="ToogleDrawer" Margin="3,0,0,20" HorizontalAlignment="Left" Grid.RowSpan="100" Height="50" Width="40"
+                        Opacity="50" VerticalAlignment="Bottom"  IsChecked="{Binding IsOpen,ElementName=DrawerLeft}" 
+                        Style="{StaticResource MahApps.Styles.Button.Chromeless}" Foreground="Black" Click="ToogleBtn_Click">
+            <IconPacks:Material Kind="Menu" Height="25" Width="30"/>
+        </ToggleButton>
+        
+        <ToggleButton x:Name="SettingsBtn" Margin="3,0,0,20" HorizontalAlignment="Right" Grid.RowSpan="100" 
+                      Height="60" Width="50" Opacity="50" VerticalAlignment="Bottom"  
+                      IsChecked="{Binding IsOpen,ElementName=DrawerLeft}" Style="{StaticResource MahApps.Styles.Button.Chromeless}" 
+                      Foreground="Black" Click="ToogleBtn_Click">
+            <IconPacks:Material Kind="CogClockwise" Height="25" Width="30"/>
+        </ToggleButton>
+        
         <StatusBar Grid.Row="1">
-            <TextBlock Text="{Binding SessionID}"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Session ID: "/>
+                <TextBlock Text="{Binding Path=SessionID}"/>
+            </StackPanel>
         </StatusBar>
         <Notif:NotificationMessageContainer x:Name="InAppMessageContainer" VerticalAlignment="Top" HorizontalAlignment="Center" Width="800" />
     </Grid>

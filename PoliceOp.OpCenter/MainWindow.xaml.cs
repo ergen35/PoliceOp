@@ -17,22 +17,26 @@ namespace PoliceOp.OpCenter
     /// </summary>
     public partial class MainWindow : MahApps.Metro.Controls.MetroWindow
     {
-        public string SessionID { get; set; } = "Hello";
+        public string SessionID { get; set; }
+        public IAppCache CachingService { get; set; }
+        public Pages.HomePage Home { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
 
-            IAppCache appCache = new CachingService();
+            this.DataContext = this;
+
+            CachingService= new CachingService();
 
             try
             {
-                SessionID = appCache.Get<string>("SessionID");
+                SessionID = CachingService.Get<string>("SessionID");
                
-                /*if (SessionID == null)
+                if (SessionID == null)
                 {
                     this.Close();
-                }*/
+                }
 
             }
             catch (Exception)
@@ -40,10 +44,15 @@ namespace PoliceOp.OpCenter
                 this.Close();
             }
 
+            this.Home = new Pages.HomePage();
+
+            this.ContentFrame.Navigate(Home, null);
+
             this.AlertCenterMessageContainer.Manager = AppLevel.NotificationManagers.AlertCenterManager;
             this.InAppMessageContainer.Manager = AppLevel.NotificationManagers.InAppNotificationsManager;
 
             this.Closed += MainWindow_Closed;
+
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -148,6 +157,26 @@ namespace PoliceOp.OpCenter
                 {
                     MessageBox.Show(item);
                 }
+            }
+        }
+
+        private void ContentFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            if (this.ContentFrame.CanGoBack)
+            {
+                this.BackNavigation.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.BackNavigation.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void BackNavigation_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.ContentFrame.CanGoBack)
+            {
+                this.ContentFrame.GoBack();
             }
         }
     }

@@ -10,7 +10,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WpfAnimatedGif;
 using Microsoft.Extensions.Configuration;
 using LazyCache;
 using Effortless.Net.Encryption;
