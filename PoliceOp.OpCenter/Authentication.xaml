@@ -18,40 +18,48 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="350" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="100" />
         </Grid.RowDefinitions>
 
         <Grid Grid.RowSpan="3" Grid.ColumnSpan="3">
             <Image x:Name="BackGif" Source="Resources/images/0039.png" Stretch="Fill"  />
         </Grid>
         
-        <Grid Grid.Row="1" Grid.Column="1" Background="White">
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="{StaticResource VioletColor}"/>
+                    <GradientStop Color="Transparent" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70" />
+                <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-            <hc:TextBox x:Name="LoginTxtb" hc:InfoElement.Placeholder="Login" TextType="Int"
-                        hc:InfoElement.Title="Enter Login"/>
+            <hc:TextBox x:Name="LoginTxtb" Foreground="Black" Height="60" hc:BorderElement.CornerRadius="0" hc:InfoElement.Placeholder="Login" TextType="Int" Margin="10,0"
+                        hc:InfoElement.Title="Enter Login" FontWeight="Medium" hc:InfoElement.Necessary="True"/>
 
-            <hc:PasswordBox x:Name="PwdTxtb" hc:InfoElement.Placeholder="Password"
-                        hc:InfoElement.Title="Enter Password" Grid.Row="1"/>
+            <hc:PasswordBox x:Name="PwdTxtb" hc:InfoElement.Placeholder="Password" Height="60" hc:BorderElement.CornerRadius="0" Foreground="Black" FontWeight="Medium" hc:InfoElement.Necessary="True"  Margin="10,0"
+                        hc:InfoElement.Title="Enter Password" Grid.Row="1" />
 
-            <Button x:Name="AuthBtn" Content="Authenticate" Grid.Row="2" Style="{StaticResource ButtonWarning}" Click="AuthBtn_Click"/>
+            <Button x:Name="AuthBtn"  Grid.Row="2"  Height="32" Style="{StaticResource ButtonSuccess}" hc:BorderElement.CornerRadius="0"   VerticalContentAlignment="Center" Width="200" Margin="0,5,0,0" VerticalAlignment="Bottom" Click="AuthBtn_Click">
+                <IconsPack:BoxIcons Kind="RegularCheckShield"/>
+            </Button>
         </Grid>
         
-        <IconsPack:PackIconFontAwesome Grid.Row="2" Grid.Column="1" x:Name="FingerPrintIcon" Height="50" Width="45" Foreground="White" Kind="FingerprintSolid"  HorizontalAlignment="Center" VerticalAlignment="Bottom" BorderBrush="Gray" MouseEnter="FingerPrintIcon_MouseEnter" MouseLeave="FingerPrintIcon_MouseLeave">
+        <IconsPack:PackIconFontAwesome Grid.Row="2" Grid.Column="1" x:Name="FingerPrintIcon" ToolTip="Finger Print Authentication" Height="50" Width="45" Foreground="White" Kind="FingerprintSolid"  HorizontalAlignment="Center" VerticalAlignment="Bottom" BorderBrush="Gray" MouseEnter="FingerPrintIcon_MouseEnter" MouseLeave="FingerPrintIcon_MouseLeave">
             <IconsPack:PackIconFontAwesome.Effect>
                 <BlurEffect/>
             </IconsPack:PackIconFontAwesome.Effect>
         </IconsPack:PackIconFontAwesome>
 
-        <Notif:NotificationMessageContainer x:Name="AuthMessages" VerticalAlignment="Top" Width="150" Height="100"/>
+        <Notif:NotificationMessageContainer  Grid.ColumnSpan="5" x:Name="AuthMessages" VerticalAlignment="Top" HorizontalAlignment="Center" Width="600"/>
     </Grid>
 </mah:MetroWindow>

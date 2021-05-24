@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using LazyCache;
 using Effortless.Net.Encryption;
 using System.Windows.Threading;
+using Enterwell.Clients.Wpf.Notifications;
 
 
 
@@ -37,6 +38,8 @@ namespace PoliceOp.OpCenter
             //image.UriSource = new Uri("/Resources/BadgeAnimation.gif");
             //image.EndInit();
             //ImageBehavior.SetAnimatedSource(this.BackGif, image);
+
+            this.AuthMessages.Manager = AppLevel.NotificationManagers.AuthNotificationsManager;
 
             this.KeyDown += Authentication_KeyDown;
         }
@@ -67,13 +70,15 @@ namespace PoliceOp.OpCenter
 
                     //Caching
                     IAppCache appCache = new CachingService();
-                    appCache.Add<string>("SessionID",  SessionID , new TimeSpan(0,3,0));
+                    appCache.Add<string>("SessionID", SessionID, new TimeSpan(0, 3, 0));
 
 
                     //MessageBox.Show(appCache.Get<string>("SessionID"));
 
                     //Close this window and try to call The OpCenter
                     this.Visibility = Visibility.Collapsed;
+                    //Clear Password
+                    this.PwdTxtb.Clear();
 
                     // When OpCenter Opens, check Hash in the cache
                     MainWindow MW = new MainWindow();
@@ -83,8 +88,10 @@ namespace PoliceOp.OpCenter
                 }
                 else
                     MessageBox.Show("Not Okay");
+
             }
 
+            ShowNotification("Connection Lost.");
 
         }
 
@@ -97,6 +104,22 @@ namespace PoliceOp.OpCenter
         private void FingerPrintIcon_MouseLeave(object sender, MouseEventArgs e)
         {
             this.FingerPrintIcon.Effect = new System.Windows.Media.Effects.BlurEffect();
+        }
+
+        private void ShowNotification(string Message)
+        {
+            AppLevel.NotificationManagers.AuthNotificationsManager.CreateMessage()
+                                        .Accent("#1751C3")
+                                        .Animates(true)
+                                        .AnimationInDuration(0.75)
+                                        .AnimationOutDuration(2)
+                                        .Background("#333")
+                                        .HasBadge("Info")
+                                        .HasMessage("Update will be installed on next application restart. This message will be dismissed after 5 seconds.")
+                                        .Dismiss().WithButton("Update now", button => { })
+                                        .Dismiss().WithButton("Release notes", button => { })
+                                        .Dismiss().WithDelay(TimeSpan.FromSeconds(5))
+                                        .Queue();
         }
     }
 }

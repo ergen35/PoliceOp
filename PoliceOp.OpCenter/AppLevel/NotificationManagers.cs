@@ -11,5 +11,6 @@ namespace PoliceOp.OpCenter.AppLevel
     {
         public static NotificationMessageManager AlertCenterManager = new NotificationMessageManager();   
         public static NotificationMessageManager InAppNotificationsManager = new NotificationMessageManager();   
+        public static NotificationMessageManager AuthNotificationsManager = new NotificationMessageManager();   
     }
 }
