@@ -5,11 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Linq.Expressions;
 using LazyCache;
 using ControlzEx.Theming;
-using PoliceOp.OpCenter;
 using Enterwell.Clients.Wpf.Notifications;
 
 namespace PoliceOp.OpCenter
@@ -19,6 +17,8 @@ namespace PoliceOp.OpCenter
     /// </summary>
     public partial class MainWindow : MahApps.Metro.Controls.MetroWindow
     {
+        public string SessionID { get; set; } = "Hello";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -27,7 +27,7 @@ namespace PoliceOp.OpCenter
 
             try
             {
-                string SessionID = appCache.Get<string>("SessionID");
+                SessionID = appCache.Get<string>("SessionID");
                
                 /*if (SessionID == null)
                 {
@@ -116,14 +116,14 @@ namespace PoliceOp.OpCenter
                                                            .Queue();
 
             AppLevel.NotificationManagers.AlertCenterManager.CreateMessage()
-                                        .Accent("#F15B19")
-                                        .Background("#F15B19")
-                                        .HasHeader("Lost connection to server")
-                                        .HasMessage("Reconnecting...")
-                                        .Dismiss().WithButton("Update now", button => { })
-                                        .Dismiss().WithButton("Release notes", button => { })
-                                        .Dismiss().WithButton("Later", button => { })
-                                        .Queue();
+                                                            .Accent("#1751C3")
+                                                            .Background("#333")
+                                                            .HasBadge("Info")
+                                                            .HasMessage("Update will be installed on next application restart.")
+                                                            .Dismiss().WithButton("Update now", button => { })
+                                                            .Dismiss().WithButton("Release notes", button => { })
+                                                            .Dismiss().WithButton("Later", button => { })
+                                                            .Queue();
         }
 
         private void ClearAlertsBtn_Click(object sender, RoutedEventArgs e)

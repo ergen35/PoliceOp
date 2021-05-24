@@ -26,9 +26,14 @@
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
     <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
         <hc:SimplePanel>
             <Grid>
-                <ToggleButton x:Name="ToogleDrawer" Margin="3,0,0,2" HorizontalAlignment="Left" Grid.RowSpan="100" Height="50" Width="40" Opacity="50" VerticalAlignment="Bottom"  IsChecked="{Binding IsOpen,ElementName=DrawerLeft}" Style="{StaticResource MahApps.Styles.Button.Chromeless}" Foreground="Green" Click="ToogleBtn_Click">
+                <ToggleButton x:Name="ToogleDrawer" Margin="3,0,0,2" HorizontalAlignment="Left" Grid.RowSpan="100" Height="50" Width="40" Opacity="50" VerticalAlignment="Bottom"  IsChecked="{Binding IsOpen,ElementName=DrawerLeft}" Style="{StaticResource MahApps.Styles.Button.Chromeless}" Foreground="Black" Click="ToogleBtn_Click">
                     <IconPacks:Material Kind="Menu" Height="25" Width="30"/>
                 </ToggleButton>
             </Grid>
@@ -79,12 +84,12 @@
                                 <hc:SideMenuItem Header="Boards">
                                     <hc:SideMenuItem Header="Boards">
                                         <hc:SideMenuItem.Icon>
-                                            <TextBlock Text="&#xf444;" Style="{StaticResource TextBlockFabricIcons}"/>
+                                            <TextBlock Text="&#xf444;" Style="{StaticResource TextBlockBaseStyle}"/>
                                         </hc:SideMenuItem.Icon>
                                     </hc:SideMenuItem>
                                     <hc:SideMenuItem Header="Backlogs">
                                         <hc:SideMenuItem.Icon>
-                                            <TextBlock Text="&#xf6bf;" Style="{StaticResource TextBlockFabricIcons}"/>
+                                            <TextBlock Text="&#xf6bf;" Style="{StaticResource TextBlockBaseStyle}"/>
                                         </hc:SideMenuItem.Icon>
                                     </hc:SideMenuItem>
                                 </hc:SideMenuItem>
@@ -92,26 +97,26 @@
                                 <hc:SideMenuItem Header="Repos">
                                     <hc:SideMenuItem Header="Tags">
                                         <hc:SideMenuItem.Icon>
-                                            <TextBlock Text="&#xe8ec;" Style="{StaticResource TextBlockFabricIcons}"/>
+                                            <TextBlock Text="&#xe8ec;" Style="{StaticResource TextBlockBaseStyle}"/>
                                         </hc:SideMenuItem.Icon>
                                     </hc:SideMenuItem>
                                     <hc:SideMenuItem Header="Pull requests">
                                         <hc:SideMenuItem.Icon>
-                                            <TextBlock Text="&#xf296;" Style="{StaticResource TextBlockFabricIcons}"/>
+                                            <TextBlock Text="&#xf296;" Style="{StaticResource TextBlockBaseStyle}"/>
                                         </hc:SideMenuItem.Icon>
                                     </hc:SideMenuItem>
                                 </hc:SideMenuItem>
                                 <hc:SideMenuItem Header="Pipelines">
                                     <hc:SideMenuItem Header="Releases">
                                         <hc:SideMenuItem.Icon>
-                                            <TextBlock Text="&#xf3b3;" Style="{StaticResource TextBlockFabricIcons}"/>
+                                            <TextBlock Text="&#xf3b3;" Style="{StaticResource TextBlockBaseStyle}"/>
                                         </hc:SideMenuItem.Icon>
                                     </hc:SideMenuItem>
                                 </hc:SideMenuItem>
                                 <hc:SideMenuItem Header="Test Plans">
                                     <hc:SideMenuItem Header="Load test">
                                         <hc:SideMenuItem.Icon>
-                                            <TextBlock Text="&#xe8a9;" Style="{StaticResource TextBlockFabricIcons}"/>
+                                            <TextBlock Text="&#xe8a9;" Style="{StaticResource TextBlockBaseStyle}"/>
                                         </hc:SideMenuItem.Icon>
                                     </hc:SideMenuItem>
                                 </hc:SideMenuItem>
@@ -142,12 +147,12 @@
                             <RowDefinition Height="35" />
                         </Grid.RowDefinitions>
                         <Grid Background="Black" Margin="1,0,0,0">
-                            <TextBlock Text="Alert Center" Foreground="Blue" Style="{StaticResource TextBlockTitle}" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Black"/>
+                                <TextBlock Text="Alert Center" Foreground="Blue" Style="{StaticResource TextBlockTitle}" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Black"/>
                         </Grid>
                         <Button Command="hc:ControlCommands.Close" Grid.Row="0" HorizontalAlignment="Left" Foreground="{DynamicResource LightWarningBrush}" Style="{StaticResource ButtonIcon}" hc:IconElement.Geometry="{StaticResource RightGeometry}" />
 
                         <ScrollViewer Grid.Row="1" Width="330"  Margin="0,15,0,0" Style="{StaticResource ListViewScrollViewerStyle}" VerticalScrollBarVisibility="Auto" >
-                            <Notif:NotificationMessageContainer x:Name="AlertCenterMessageContainer" Width="335" />
+                        <Notif:NotificationMessageContainer Grid.Row="1" x:Name="AlertCenterMessageContainer" Width="335" />
                         </ScrollViewer>
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
@@ -175,6 +180,9 @@
 
         <Button x:Name="NotifBtn" Content="Show" Height="50" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Click="NotifBtn_Click"/>
 
+        <StatusBar Grid.Row="1">
+            <TextBlock Text="{Binding SessionID}"/>
+        </StatusBar>
         <Notif:NotificationMessageContainer x:Name="InAppMessageContainer" VerticalAlignment="Top" HorizontalAlignment="Center" Width="800" />
     </Grid>
 </mah:MetroWindow>
