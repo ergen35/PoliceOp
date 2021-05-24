@@ -46,7 +46,7 @@
             <hc:TextBox x:Name="LoginTxtb" Foreground="Black" Height="60" hc:BorderElement.CornerRadius="0" hc:InfoElement.Placeholder="Login" TextType="Int" Margin="10,0"
                         hc:InfoElement.Title="Enter Login" FontWeight="Medium" hc:InfoElement.Necessary="True"/>
 
-            <hc:PasswordBox x:Name="PwdTxtb" hc:InfoElement.Placeholder="Password" Height="60" hc:BorderElement.CornerRadius="0" Foreground="Black" FontWeight="Medium" hc:InfoElement.Necessary="True"  Margin="10,0"
+            <hc:PasswordBox x:Name="PwdTxtb" Foreground="Black" hc:InfoElement.Placeholder="Password" Height="60" hc:BorderElement.CornerRadius="0"  FontWeight="Medium" hc:InfoElement.Necessary="True"  Margin="10,0"
                         hc:InfoElement.Title="Enter Password" Grid.Row="1" />
 
             <Button x:Name="AuthBtn"  Grid.Row="2"  Height="32" Style="{StaticResource ButtonSuccess}" hc:BorderElement.CornerRadius="0"   VerticalContentAlignment="Center" Width="200" Margin="0,5,0,0" VerticalAlignment="Bottom" Click="AuthBtn_Click">
