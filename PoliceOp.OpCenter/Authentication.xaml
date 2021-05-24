@@ -7,7 +7,8 @@
         mc:Ignorable="d" xmlns:hc="https://handyorg.github.io/handycontrol" 
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" WindowStartupLocation="CenterScreen"
         xmlns:IconsPack="http://metro.mahapps.com/winfx/xaml/iconpacks" ResizeMode="NoResize"
-        Title="Authentication" Height="450" Width="650" xmlns:Notif="clr-namespace:Enterwell.Clients.Wpf.Notifications.Controls;assembly=Enterwell.Clients.Wpf.Notifications">
+        Title="Authentication" Height="450" Width="650" 
+        xmlns:Notif="clr-namespace:Enterwell.Clients.Wpf.Notifications.Controls;assembly=Enterwell.Clients.Wpf.Notifications">
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
             <Button x:Name="ConnectivityBtn" Foreground="Red">
@@ -43,23 +44,30 @@
                 <RowDefinition Height="70" />
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-            <hc:TextBox x:Name="LoginTxtb" Foreground="Black" Height="60" hc:BorderElement.CornerRadius="0" hc:InfoElement.Placeholder="Login" TextType="Int" Margin="10,0"
-                        hc:InfoElement.Title="Enter Login" FontWeight="Medium" hc:InfoElement.Necessary="True"/>
+            <hc:TextBox x:Name="LoginTxtb"  Height="60" hc:BorderElement.CornerRadius="0" hc:InfoElement.Placeholder="Login" 
+                                                        TextType="Int" Margin="10,0"
+                                                        hc:InfoElement.Title="Enter Login" 
+                                                        FontWeight="Medium" hc:InfoElement.Necessary="True"/>
 
-            <hc:PasswordBox x:Name="PwdTxtb" Foreground="Black" hc:InfoElement.Placeholder="Password" Height="60" hc:BorderElement.CornerRadius="0"  FontWeight="Medium" hc:InfoElement.Necessary="True"  Margin="10,0"
-                        hc:InfoElement.Title="Enter Password" Grid.Row="1" />
+            <hc:PasswordBox x:Name="PwdTxtb" Height="60" hc:InfoElement.Placeholder="Password" hc:BorderElement.CornerRadius="0"  
+                                             FontWeight="Medium" hc:InfoElement.Necessary="True"  Margin="10,0"
+                                             hc:InfoElement.Title="Enter Password" Grid.Row="1" />
 
-            <Button x:Name="AuthBtn"  Grid.Row="2"  Height="32" Style="{StaticResource ButtonSuccess}" hc:BorderElement.CornerRadius="0"   VerticalContentAlignment="Center" Width="200" Margin="0,5,0,0" VerticalAlignment="Bottom" Click="AuthBtn_Click">
+            <Button x:Name="AuthBtn" Grid.Row="2"  Height="32" Style="{StaticResource ButtonSuccess}" hc:BorderElement.CornerRadius="0" 
+                                      VerticalContentAlignment="Center" Width="200" Margin="0,5,0,0" VerticalAlignment="Bottom" Click="AuthBtn_Click">
                 <IconsPack:BoxIcons Kind="RegularCheckShield"/>
             </Button>
         </Grid>
         
-        <IconsPack:PackIconFontAwesome Grid.Row="2" Grid.Column="1" x:Name="FingerPrintIcon" ToolTip="Finger Print Authentication" Height="50" Width="45" Foreground="White" Kind="FingerprintSolid"  HorizontalAlignment="Center" VerticalAlignment="Bottom" BorderBrush="Gray" MouseEnter="FingerPrintIcon_MouseEnter" MouseLeave="FingerPrintIcon_MouseLeave">
+        <IconsPack:PackIconFontAwesome Grid.Row="2" Grid.Column="1" x:Name="FingerPrintIcon" ToolTip="Finger Print Authentication" 
+                                       Height="50" Width="45" Foreground="White" Kind="FingerprintSolid"  HorizontalAlignment="Center" 
+                                       VerticalAlignment="Bottom" BorderBrush="Gray" MouseEnter="FingerPrintIcon_MouseEnter" MouseLeave="FingerPrintIcon_MouseLeave">
             <IconsPack:PackIconFontAwesome.Effect>
                 <BlurEffect/>
             </IconsPack:PackIconFontAwesome.Effect>
         </IconsPack:PackIconFontAwesome>
 
-        <Notif:NotificationMessageContainer  Grid.ColumnSpan="5" x:Name="AuthMessages" VerticalAlignment="Top" HorizontalAlignment="Center" Width="600"/>
+        <Notif:NotificationMessageContainer  Grid.ColumnSpan="5" x:Name="AuthMessages" VerticalAlignment="Top" 
+                                             HorizontalAlignment="Center" Width="600"/>
     </Grid>
 </mah:MetroWindow>

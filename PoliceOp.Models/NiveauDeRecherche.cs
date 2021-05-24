@@ -2,6 +2,8 @@
 {
     public enum NiveauDeRecherche
     {
-        
+        GTA,
+        PDA,
+        DOOM
     }
 }

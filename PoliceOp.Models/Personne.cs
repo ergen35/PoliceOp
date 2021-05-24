@@ -6,6 +6,7 @@ namespace PoliceOp.Models
 {
     public class Personne
     {
+        public int ID { get; set; }
         public Guid UID { get; set; }              
         public string NPI { get; set; }
         public string IFU { get; set; }

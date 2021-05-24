@@ -4,6 +4,7 @@ namespace PoliceOp.Models
 {
     public class Requete
     {
+        public int ID { get; set; }
         public Guid UID { get; set; }
         public string TermeRequete { get; set; }
         public DateTime DateRequete { get; set; }

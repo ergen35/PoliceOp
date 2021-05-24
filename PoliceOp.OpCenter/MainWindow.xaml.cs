@@ -137,7 +137,7 @@ namespace PoliceOp.OpCenter
             if (this.AlertsSortingCbbx.SelectedIndex == 0)
             {
 
-                ICollection<string> Xo = new List<string>();
+                var Xo = new List<string>();
                 Xo.Add("Hello56");
                 Xo.Add("Hello1");
                 Xo.Add("Hel");

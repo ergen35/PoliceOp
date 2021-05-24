@@ -2,6 +2,8 @@
 {
     public enum Rang
     {
-        
+        Special,
+        National,
+        Authorite
     }
 }

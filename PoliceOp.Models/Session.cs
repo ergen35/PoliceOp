@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PoliceOp.Models
 {
-    class Session
+    public class Session
     {
         public int ID { get; set; }
         public Guid SessionID { get; set; }
