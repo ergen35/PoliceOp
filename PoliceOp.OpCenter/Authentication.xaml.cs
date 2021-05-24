@@ -88,5 +88,15 @@ namespace PoliceOp.OpCenter
 
         }
 
+        private void FingerPrintIcon_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.FingerPrintIcon.Effect = new HandyControl.Media.Effects.BrightnessEffect();
+            
+        }
+
+        private void FingerPrintIcon_MouseLeave(object sender, MouseEventArgs e)
+        {
+            this.FingerPrintIcon.Effect = new System.Windows.Media.Effects.BlurEffect();
+        }
     }
 }

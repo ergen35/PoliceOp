@@ -7,7 +7,7 @@
         mc:Ignorable="d" xmlns:hc="https://handyorg.github.io/handycontrol" 
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" WindowStartupLocation="CenterScreen"
         xmlns:IconsPack="http://metro.mahapps.com/winfx/xaml/iconpacks" ResizeMode="NoResize"
-        Title="Authentication" Height="450" Width="650">
+        Title="Authentication" Height="450" Width="650" xmlns:Notif="clr-namespace:Enterwell.Clients.Wpf.Notifications.Controls;assembly=Enterwell.Clients.Wpf.Notifications">
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
             <Button x:Name="ConnectivityBtn" Foreground="Red">
@@ -45,11 +45,13 @@
 
             <Button x:Name="AuthBtn" Content="Authenticate" Grid.Row="2" Style="{StaticResource ButtonWarning}" Click="AuthBtn_Click"/>
         </Grid>
-
-        <IconsPack:PackIconFontAwesome Grid.Row="2" Grid.Column="1" x:Name="FingerPrintIcon" Height="50" Width="45" Foreground="White" Kind="FingerprintSolid" HorizontalAlignment="Center" VerticalAlignment="Bottom" BorderBrush="Gray">
+        
+        <IconsPack:PackIconFontAwesome Grid.Row="2" Grid.Column="1" x:Name="FingerPrintIcon" Height="50" Width="45" Foreground="White" Kind="FingerprintSolid"  HorizontalAlignment="Center" VerticalAlignment="Bottom" BorderBrush="Gray" MouseEnter="FingerPrintIcon_MouseEnter" MouseLeave="FingerPrintIcon_MouseLeave">
             <IconsPack:PackIconFontAwesome.Effect>
-                <hc:BrightnessEffect/>
+                <BlurEffect/>
             </IconsPack:PackIconFontAwesome.Effect>
         </IconsPack:PackIconFontAwesome>
+
+        <Notif:NotificationMessageContainer x:Name="AuthMessages" VerticalAlignment="Top" Width="150" Height="100"/>
     </Grid>
 </mah:MetroWindow>
