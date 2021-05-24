@@ -32,11 +32,11 @@ namespace PoliceOp.OpCenter
 
 
             //Initialize Image
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = new Uri(@"D:\DOCS\UX\Loadings\loadi.gif");
-            image.EndInit();
-            ImageBehavior.SetAnimatedSource(this.BackGif, image);
+            //BitmapImage image = new BitmapImage();
+            //image.BeginInit();
+            //image.UriSource = new Uri("/Resources/BadgeAnimation.gif");
+            //image.EndInit();
+            //ImageBehavior.SetAnimatedSource(this.BackGif, image);
 
             this.FingerPrintIcon.Effect = new System.Windows.Media.Effects.BlurEffect();
 

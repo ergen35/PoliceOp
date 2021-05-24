@@ -28,7 +28,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.RowSpan="3" Grid.ColumnSpan="3">
-            <Image x:Name="BackGif" />
+            <Image x:Name="BackGif" gif:ImageBehavior.AnimatedSource="/Resources/BadgeAnimation.gif" />
         </Grid>
         
         <Grid Grid.Row="1" Grid.Column="1" Background="White">
