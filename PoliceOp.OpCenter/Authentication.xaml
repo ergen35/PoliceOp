@@ -28,7 +28,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.RowSpan="3" Grid.ColumnSpan="3">
-            <Image x:Name="BackGif" gif:ImageBehavior.AnimatedSource="/Resources/BadgeAnimation.gif" />
+            <Image x:Name="BackGif" Source="Resources/images/0039.png" Stretch="Fill"  />
         </Grid>
         
         <Grid Grid.Row="1" Grid.Column="1" Background="White">
@@ -46,6 +46,10 @@
             <Button x:Name="AuthBtn" Content="Authenticate" Grid.Row="2" Style="{StaticResource ButtonWarning}" Click="AuthBtn_Click"/>
         </Grid>
 
-        <IconsPack:PackIconFontAwesome Grid.Row="2" Grid.Column="1" x:Name="FingerPrintIcon" Height="50" Width="45" Foreground="White" Kind="FingerprintSolid" HorizontalAlignment="Center" VerticalAlignment="Bottom" BorderBrush="Gray"/>
+        <IconsPack:PackIconFontAwesome Grid.Row="2" Grid.Column="1" x:Name="FingerPrintIcon" Height="50" Width="45" Foreground="White" Kind="FingerprintSolid" HorizontalAlignment="Center" VerticalAlignment="Bottom" BorderBrush="Gray">
+            <IconsPack:PackIconFontAwesome.Effect>
+                <hc:BrightnessEffect/>
+            </IconsPack:PackIconFontAwesome.Effect>
+        </IconsPack:PackIconFontAwesome>
     </Grid>
 </mah:MetroWindow>

@@ -38,8 +38,6 @@ namespace PoliceOp.OpCenter
             //image.EndInit();
             //ImageBehavior.SetAnimatedSource(this.BackGif, image);
 
-            this.FingerPrintIcon.Effect = new System.Windows.Media.Effects.BlurEffect();
-
             this.KeyDown += Authentication_KeyDown;
         }
 
