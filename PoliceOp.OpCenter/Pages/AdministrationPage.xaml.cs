@@ -14,13 +14,12 @@ using System.Windows.Shapes;
 namespace PoliceOp.OpCenter.Pages
 {
     /// <summary>
-    /// Interaction logic for BioPage.xaml
+    /// Interaction logic for AdministrationPage.xaml
     /// </summary>
-    public partial class BioPage : Page
+    public partial class AdministrationPage : Page
     {
-        public BioPage()
+        public AdministrationPage()
         {
-
             InitializeComponent();
         }
     }

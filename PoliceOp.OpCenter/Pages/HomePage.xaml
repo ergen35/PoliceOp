@@ -6,50 +6,98 @@
       xmlns:local="clr-namespace:PoliceOp.OpCenter.Pages"
       mc:Ignorable="d" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
       d:DesignHeight="450" d:DesignWidth="800" xmlns:hc="https://handyorg.github.io/handycontrol"
+      xmlns:IconsPack="http://metro.mahapps.com/winfx/xaml/iconpacks"
       Background="Transparent" Title="HomePage">
 
     <Grid>
-        <Grid Margin="50,50,50,50">
+        <Grid Margin="50,20,50,50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
+                <RowDefinition Height="100" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
 
-            <mah:Tile x:Name="TileNews" Grid.Row="1" Grid.Column="0" Title="Wanted Notices" Width="auto" Height="215" Margin="5,0,3,3" Click="TileNews_Click">
+            <hc:Badge Status="Processing" Grid.ColumnSpan="5"  Style="{DynamicResource BadgeDanger}">
+                <TextBlock Text="Operations Center" Style="{StaticResource TextBlockLarge}" FontSize="35" Margin="0,0,0,30" 
+                           FontFamily="Consolas" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </hc:Badge>
+
+            <mah:Tile x:Name="TileNews" Grid.Row="1"  Grid.Column="0" Title="Wanted Notices" Width="auto" 
+                      Height="215" Margin="5,0,3,3" Click="TileNews_Click">
                 <mah:Tile.Background>
-                    <ImageBrush ImageSource="C:\Users\HOTEGNI\source\repos\GeneApp\GeneApp\Resources\bg1.jpg"/>
+                    <ImageBrush ImageSource="D:\DOCS\UX\BackGrounds\Background.jpg"/>
                 </mah:Tile.Background>
+                <mah:Tile.Effect>
+                    <DropShadowEffect/>
+                </mah:Tile.Effect>
+                <Label Foreground="Gray">
+                    <IconsPack:Material Kind="PoliceBadge" Height="150" Width="150"/>
+                </Label>
             </mah:Tile>
-            <mah:Tile Grid.Row="1" Grid.Column="1" Title="Search or Identify" Width="auto" Height="215" Margin="5,0,3,3">
+            <mah:Tile x:Name="TileSearch" Grid.Row="1" Grid.Column="1" Title="Search or Identify" Width="auto" 
+                      Height="215" Margin="5,0,3,3" Click="TileSearch_Click">
                 <mah:Tile.Background>
-                    <ImageBrush ImageSource="C:\Users\HOTEGNI\source\repos\GeneApp\GeneApp\Resources\bg2.jpg"/>
+                    <ImageBrush ImageSource="D:\DOCS\UX\BackGrounds\Background.jpg"/>
                 </mah:Tile.Background>
+                <mah:Tile.Effect>
+                    <DropShadowEffect/>
+                </mah:Tile.Effect>
+                <Label Foreground="Gray">
+                    <IconsPack:Material Kind="AccountSearch" Height="150" Width="150"/>
+                </Label>
             </mah:Tile>
-            <mah:Tile Grid.Row="1" Grid.Column="2" Title="Workspace" Width="auto" Height="215" Margin="5,0,3,3">
+            <mah:Tile x:Name="TileWorkspace" Grid.Row="1" Grid.Column="2" Title="Workspace" Width="auto" 
+                      Height="215" Margin="5,0,3,3" Click="TileWorkspace_Click">
                 <mah:Tile.Background>
-                    <ImageBrush ImageSource="C:\Users\HOTEGNI\source\repos\GeneApp\GeneApp\Resources\bg3.jpg"/>
+                    <ImageBrush ImageSource="D:\DOCS\UX\BackGrounds\Background.jpg"/>
                 </mah:Tile.Background>
+                <mah:Tile.Effect>
+                    <DropShadowEffect/>
+                </mah:Tile.Effect>
+                <Label Foreground="Gray">
+                    <IconsPack:Material Kind="ViewDashboardVariant" Height="150" Width="150"/>
+                </Label>
             </mah:Tile>
-            <mah:Tile Grid.Row="2" Grid.Column="0" Title="Agents Management" Width="auto" Height="215" Margin="5,0,3,0">
+            <mah:Tile x:Name="TileAgentsMgmt" Grid.Row="2" Grid.Column="0" Title="Agents Management" Width="auto"
+                      Height="215" Margin="5,0,3,0" Click="TileAgentsMgmt_Click">
                 <mah:Tile.Background>
-                    <ImageBrush ImageSource="C:\Users\HOTEGNI\source\repos\GeneApp\GeneApp\Resources\bg2.jpg"/>
+                    <ImageBrush ImageSource="D:\DOCS\UX\BackGrounds\Background.jpg"/>
                 </mah:Tile.Background>
+                <mah:Tile.Effect>
+                    <DropShadowEffect/>
+                </mah:Tile.Effect>
+                <Label Foreground="Gray">
+                    <IconsPack:Material Kind="AccountGroup" Height="150" Width="150"/>
+                </Label>
             </mah:Tile>
-            <mah:Tile Grid.Row="2" Grid.Column="1" Title="Diffusions" Width="auto" Height="215" Margin="5,0,3,0">
+            <mah:Tile x:Name="TileDiffusion" Grid.Row="2" Grid.Column="1" Title="Diffusions" Width="auto" 
+                      Height="215" Margin="5,0,3,0" Click="TileDiffusion_Click">
                 <mah:Tile.Background>
-                    <ImageBrush ImageSource="C:\Users\HOTEGNI\source\repos\GeneApp\GeneApp\Resources\bg1.jpg"/>
+                    <ImageBrush ImageSource="D:\DOCS\UX\BackGrounds\Background.jpg"/>
                 </mah:Tile.Background>
+                <mah:Tile.Effect>
+                    <DropShadowEffect/>
+                </mah:Tile.Effect>
+                <Label Foreground="Gray">
+                    <IconsPack:Material Kind="SurroundSound" Height="150" Width="150"/>
+                </Label>
             </mah:Tile>
-            <mah:Tile Grid.Row="2" Grid.Column="2" Title="Administration" Width="auto" Height="215" Margin="5,0,3,0">
+            <mah:Tile x:Name="TileAdministration" Grid.Row="2" Grid.Column="2" Title="Administration" Width="auto" 
+                      Height="215" Margin="5,0,3,0" Click="TileAdministration_Click">
                 <mah:Tile.Background>
-                    <ImageBrush ImageSource="C:\Users\HOTEGNI\source\repos\GeneApp\GeneApp\Resources\bg4.jpg"/>
+                    <ImageBrush ImageSource="D:\DOCS\UX\BackGrounds\Background.jpg"/>
                 </mah:Tile.Background>
+                <mah:Tile.Effect>
+                    <DropShadowEffect/>
+                </mah:Tile.Effect>
+                <Label Foreground="Gray">
+                    <IconsPack:Material Kind="ServerNetwork" Height="150" Width="150"/>
+                </Label>
             </mah:Tile>
         </Grid>
     </Grid>

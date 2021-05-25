@@ -39,87 +39,95 @@
 
             </Grid>
             <hc:Drawer Name="DrawerLeft" Dock="Left" ShowMode="Push" MaskCanClose="True" Closed="DrawerLeft_Closed" >
-                <Border Background="{DynamicResource RegionBrush}" Width="300" BorderThickness="0,0,0,0" BorderBrush="{DynamicResource BorderBrush}">
+                <Border Background="White" Width="245" BorderThickness="0" BorderBrush="{DynamicResource BorderBrush}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="240"/>
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="45" />
+                            <RowDefinition Height="35" />
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Background="Black">
                             <TextBlock Text="Agent" Foreground="Blue" Style="{StaticResource TextBlockTitle}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
-                        <Grid Grid.Row="1" Background="Bisque">
-                            <hc:Card MaxWidth="240" BorderThickness="0" Effect="{DynamicResource EffectShadow2}" Margin="8" Footer="{Binding Footer}">
-                                <!--Card Content section template-->
-                                <Border CornerRadius="4,4,0,0" Width="160" Height="160">
-                                    <Image Source="D:\DOCS\images\solar.jpg" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Grid Grid.Row="1" Background="White">
+                            <hc:Card MaxWidth="240" BorderThickness="0" Background="LightBlue" Effect="{DynamicResource EffectShadow2}" Margin="0,8,0,8">
+                                <!--Card Content section-->
+                                <Border CornerRadius="4,4,0,0" Width="240" Height="240">
+                                    <Image Source="D:\DOCS\blender files divers\renders\MechWarior 6.png" VerticalAlignment="Center" 
+                                                                HorizontalAlignment="Center" Stretch="Fill"
+                                                                Height="240" Width="240"/>
                                 </Border>
-                                <!--Card Footer section template-->
-                                <hc:Card.FooterTemplate>
-                                    <DataTemplate DataType="selfModels:Agent">
-                                        <StackPanel Margin="10" Width="160">
+                                <!--Card Footer part-->
+                                <hc:Card.Footer>
+                                    <hc:Badge Status="Processing" Margin="5,10,10,10" Width="200" Style="{DynamicResource BadgeSuccess}">
+                                        <Grid >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="1*" />
+                                                <RowDefinition Height="3*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
                                             <!--Card First-level content-->
-                                            <TextBlock TextWrapping="NoWrap"  Style="{DynamicResource TextBlockLargeBold}" TextTrimming="CharacterEllipsis" 
-                                           Text="Matignon" 
-                                           HorizontalAlignment="Left"/>
+                                            <TextBlock TextWrapping="NoWrap"  Style="{DynamicResource TextBlockLargeBold}" 
+                                                TextTrimming="CharacterEllipsis" Text="{Binding Agent.Nom}" HorizontalAlignment="Left"/>
                                             <!--Card Secondary content-->
-                                            <TextBlock TextWrapping="NoWrap" Style="{DynamicResource TextBlockDefault}" TextTrimming="CharacterEllipsis" 
-                                           Text="Mateo" Margin="0,6,0,0"
-                                           HorizontalAlignment="Left"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </hc:Card.FooterTemplate>
+                                            <TextBlock TextWrapping="NoWrap" Grid.Row="1" Style="{DynamicResource TextBlockDefault}" 
+                                                   FontSize="14"
+                                                TextTrimming="CharacterEllipsis" Text="{Binding Agent.Prenom}" Margin="0,6,0,0"
+                                                HorizontalAlignment="Left"/>
+                                            <TextBlock Text="{Binding Agent.Matricule}" Grid.Row="1" Grid.Column="1" 
+                                                   HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                                   FontSize="16" FontFamily="Cambria" Foreground="Black"/>
+                                        </Grid>
+                                    </hc:Badge>
+                                </hc:Card.Footer>
                             </hc:Card>
                         </Grid>
                         <Grid Background="Azure" Grid.Row="2">
-                            <hc:SideMenu BorderThickness="1" Width="300" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                            <hc:SideMenu BorderThickness="1" Width="300" SideBrush="LightBlue" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                                 <hc:Interaction.Triggers>
                                     <hc:EventTrigger EventName="SelectionChanged">
                                         <hc:EventToCommand Command="{Binding SwitchItemCmd}" PassEventArgsToCommand="True" />
                                     </hc:EventTrigger>
                                 </hc:Interaction.Triggers>
-                                <hc:SideMenuItem Header="Overview"/>
-
-                                <hc:SideMenuItem Header="Boards">
-                                    <hc:SideMenuItem Header="Boards">
-                                        <hc:SideMenuItem.Icon>
-                                            <TextBlock Text="&#xf444;" Style="{StaticResource TextBlockBaseStyle}"/>
-                                        </hc:SideMenuItem.Icon>
-                                    </hc:SideMenuItem>
-                                    <hc:SideMenuItem Header="Backlogs">
-                                        <hc:SideMenuItem.Icon>
-                                            <TextBlock Text="&#xf6bf;" Style="{StaticResource TextBlockBaseStyle}"/>
-                                        </hc:SideMenuItem.Icon>
-                                    </hc:SideMenuItem>
+                                <hc:SideMenuItem Header="Wanted Notices">
+                                    <hc:SideMenuItem.Icon>
+                                        <IconPacks:Material Kind="PoliceBadge"/>
+                                    </hc:SideMenuItem.Icon>
+                                </hc:SideMenuItem>
+                                <hc:SideMenuItem Header="Search or Identify">
+                                    <hc:SideMenuItem.Icon>
+                                        <IconPacks:Material Kind="AccountSearch"/>
+                                    </hc:SideMenuItem.Icon>
+                                </hc:SideMenuItem>
+                                <hc:SideMenuItem Header="WorkSpace">
+                                    <hc:SideMenuItem.Icon>
+                                        <IconPacks:Material Kind="ViewDashboardVariant"/>
+                                    </hc:SideMenuItem.Icon>
+                                </hc:SideMenuItem>
+                                <hc:SideMenuItem Header="Agents Management">
+                                    <hc:SideMenuItem.Icon>
+                                        <IconPacks:Material Kind="AccountGroup"/>
+                                    </hc:SideMenuItem.Icon>
+                                </hc:SideMenuItem>
+                                <hc:SideMenuItem Header="Diffusions">
+                                    <hc:SideMenuItem.Icon>
+                                        <IconPacks:Material Kind="SurroundSound"/>
+                                    </hc:SideMenuItem.Icon>
+                                </hc:SideMenuItem>
+                                <hc:SideMenuItem Header="Administration">
+                                    <hc:SideMenuItem.Icon>
+                                        <IconPacks:Material Kind="ServerNetwork"/>
+                                    </hc:SideMenuItem.Icon>
                                 </hc:SideMenuItem>
                                 
-                                <hc:SideMenuItem Header="Repos">
-                                    <hc:SideMenuItem Header="Tags">
-                                        <hc:SideMenuItem.Icon>
-                                            <TextBlock Text="&#xe8ec;" Style="{StaticResource TextBlockBaseStyle}"/>
-                                        </hc:SideMenuItem.Icon>
-                                    </hc:SideMenuItem>
-                                    <hc:SideMenuItem Header="Pull requests">
-                                        <hc:SideMenuItem.Icon>
-                                            <TextBlock Text="&#xf296;" Style="{StaticResource TextBlockBaseStyle}"/>
-                                        </hc:SideMenuItem.Icon>
-                                    </hc:SideMenuItem>
-                                </hc:SideMenuItem>
-                                <hc:SideMenuItem Header="Pipelines">
-                                    <hc:SideMenuItem Header="Releases">
-                                        <hc:SideMenuItem.Icon>
-                                            <TextBlock Text="&#xf3b3;" Style="{StaticResource TextBlockBaseStyle}"/>
-                                        </hc:SideMenuItem.Icon>
-                                    </hc:SideMenuItem>
-                                </hc:SideMenuItem>
-                                <hc:SideMenuItem Header="Test Plans">
-                                    <hc:SideMenuItem Header="Load test">
-                                        <hc:SideMenuItem.Icon>
-                                            <TextBlock Text="&#xe8a9;" Style="{StaticResource TextBlockBaseStyle}"/>
-                                        </hc:SideMenuItem.Icon>
-                                    </hc:SideMenuItem>
+                                <hc:SideMenuItem Header="Notifications Center">
+                                    <hc:SideMenuItem.Icon>
+                                        <IconPacks:BoxIcons Kind="RegularNotification"/>
+                                    </hc:SideMenuItem.Icon>
                                 </hc:SideMenuItem>
                             </hc:SideMenu>
                         </Grid>
@@ -129,12 +137,16 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            
-                            <Button Content="Button" Margin="0,0,1,0"  Style="{StaticResource MahApps.Styles.Button.Dialogs}" />
-                            <Button Content="Button1" Margin="0,0,1,0" Grid.Column="1" Style="{StaticResource MahApps.Styles.Button.Dialogs}"/>
-                            <Button Content="Button2" Margin="0,0,1,0" Grid.Column="2" Style="{StaticResource MahApps.Styles.Button.Dialogs}"/>
+
+                            <Button x:Name="LogOutBtn" Margin="0,0,1,0" Foreground="Red" ToolTip="Log out" Style="{StaticResource MahApps.Styles.Button.Flat}" Click="LogOutBtn_Click">
+                                <IconPacks:FontAwesome Kind="PowerOffSolid"/>
+                            </Button>
+                            <Button x:Name="HomeBtn"  Margin="0,0,1,0" Foreground="DarkBlue" ToolTip="Home" Grid.Column="2" Style="{StaticResource MahApps.Styles.Button.Flat}" Click="HomeBtn_Click">
+                                <IconPacks:FontAwesome Kind="HomeSolid"/>
+                            </Button>
                         </Grid>
-                        <Button Command="hc:ControlCommands.Close" Grid.Row="0" HorizontalAlignment="Right" Foreground="{DynamicResource LightWarningBrush}" Style="{StaticResource ButtonIcon}" hc:IconElement.Geometry="{StaticResource LeftGeometry}" />
+                        <Button Command="hc:ControlCommands.Close" Grid.Row="0" HorizontalAlignment="Right" Foreground="{DynamicResource LightWarningBrush}" 
+                                Style="{StaticResource ButtonIcon}" hc:IconElement.Geometry="{StaticResource LeftGeometry}" />
                     </Grid>
                 </Border>
             </hc:Drawer>
@@ -179,7 +191,19 @@
             </hc:Drawer>
         </hc:SimplePanel>
 
-        <Frame NavigationUIVisibility="Hidden" x:Name="ContentFrame"  hc:BorderElement.CornerRadius="0" Navigated="ContentFrame_Navigated"/>
+        <Frame NavigationUIVisibility="Hidden" x:Name="ContentFrame"  
+               hc:BorderElement.CornerRadius="0" Navigated="ContentFrame_Navigated"
+               >
+            <Frame.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#63F6DBDB" Offset="0.391"/>
+                    <GradientStop Color="#2FEAA3A3" Offset="1"/>
+                    <GradientStop Color="Transparent" Offset="0"/>
+                    <GradientStop Color="#632E822D" Offset="0.5"/>
+                    <GradientStop Color="#2E3341CB" Offset="0.183"/>
+                </LinearGradientBrush>
+            </Frame.Background>
+        </Frame>
 
         <Button x:Name="BackNavigation" Visibility="Hidden" Style="{StaticResource MahApps.Styles.Button.Flat}"
                                     Height="30" Width="45" VerticalAlignment="Top" HorizontalAlignment="Left"
@@ -190,6 +214,9 @@
         <ToggleButton x:Name="ToogleDrawer" Margin="3,0,0,20" HorizontalAlignment="Left" Grid.RowSpan="100" Height="50" Width="40"
                         Opacity="50" VerticalAlignment="Bottom"  IsChecked="{Binding IsOpen,ElementName=DrawerLeft}" 
                         Style="{StaticResource MahApps.Styles.Button.Chromeless}" Foreground="Black" Click="ToogleBtn_Click">
+            <!--<ToggleButton.Effect>
+                <DropShadowEffect ShadowDepth="0"/>
+            </ToggleButton.Effect>-->
             <IconPacks:Material Kind="Menu" Height="25" Width="30"/>
         </ToggleButton>
         
@@ -197,15 +224,33 @@
                       Height="60" Width="50" Opacity="50" VerticalAlignment="Bottom"  
                       IsChecked="{Binding IsOpen,ElementName=DrawerLeft}" Style="{StaticResource MahApps.Styles.Button.Chromeless}" 
                       Foreground="Black" Click="ToogleBtn_Click">
-            <IconPacks:Material Kind="CogClockwise" Height="25" Width="30"/>
+            <IconPacks:Material Kind="Cogs" Height="25" Width="30"/>
         </ToggleButton>
-        
+
+        <Border x:Name="LoadingIndicator" Visibility="Collapsed" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="45" Width="150" 
+                                           Background="#FFE2D2D2" Margin="0,0,5,5" CornerRadius="15,0,0,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <IconPacks:PackIconFontAwesome x:Name="LoadingAnimatedIcon" Foreground="BlueViolet" Kind="CircleNotchSolid" Height="35" Width="30" 
+                                               VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                               Spin="True" />
+                <TextBlock Text="Loading ... " Grid.Column="1" Foreground="BlueViolet" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+            <Border.Effect>
+                <DropShadowEffect/>
+            </Border.Effect>
+        </Border>
+
         <StatusBar Grid.Row="1">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Session ID: "/>
                 <TextBlock Text="{Binding Path=SessionID}"/>
             </StackPanel>
         </StatusBar>
+        
         <Notif:NotificationMessageContainer x:Name="InAppMessageContainer" VerticalAlignment="Top" HorizontalAlignment="Center" Width="800" />
     </Grid>
 </mah:MetroWindow>

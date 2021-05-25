@@ -20,6 +20,7 @@ namespace PoliceOp.OpCenter
         public string SessionID { get; set; }
         public IAppCache CachingService { get; set; }
         public Pages.HomePage Home { get; set; }
+        public Models.Agent Agent { get; set; }
 
         public MainWindow()
         {
@@ -43,6 +44,8 @@ namespace PoliceOp.OpCenter
             {
                 this.Close();
             }
+
+            Agent = new Models.Agent() { Matricule = "4555555881", Nom = "Mad", Prenom = "Crocodile" };
 
             this.Home = new Pages.HomePage();
 
@@ -162,6 +165,8 @@ namespace PoliceOp.OpCenter
 
         private void ContentFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
+            this.LoadingIndicator.Visibility = Visibility.Collapsed;
+
             if (this.ContentFrame.CanGoBack)
             {
                 this.BackNavigation.Visibility = Visibility.Visible;
@@ -178,6 +183,23 @@ namespace PoliceOp.OpCenter
             {
                 this.ContentFrame.GoBack();
             }
+        }
+
+        private void LogOutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //Delete sessionID from cache
+
+            CachingService.Add<string>("SessionID", string.Empty);
+            MessageBox.Show(CachingService.Get<string>("SessionID"));
+            //Call Api logout
+
+            //Close window
+            this.Close();
+        }
+
+        private void HomeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.ContentFrame.Navigate(Home);
         }
     }
 }
