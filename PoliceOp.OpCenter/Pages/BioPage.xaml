@@ -4,11 +4,129 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PoliceOp.OpCenter.Pages"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"  xmlns:hc="https://handyorg.github.io/handycontrol"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BioPage">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Details on a Person" Style="{StaticResource TextBlockLarge}" FontSize="30" Margin="50,30,0,0" 
+                           FontFamily="Consolas" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+        <Grid Grid.Row="1" Margin="50,10,5,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" Margin="0,0,5,0">
+
+                <hc:Card BorderThickness="0" Effect="{DynamicResource EffectShadow2}">
+                    <!--Card Content section-->
+                    <Border CornerRadius="4,4,0,0" Width="160" Height="160">
+                        <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Text="test"/>
+                    </Border>
+                    <!--Card Footer part-->
+                    <hc:Card.Footer>
+                        <StackPanel Margin="10" Width="160">
+                            <!--Card First-level content-->
+                            <TextBlock TextWrapping="NoWrap"  Style="{DynamicResource TextBlockLargeBold}" TextTrimming="CharacterEllipsis" 
+                                       Text="Headline" 
+                                       HorizontalAlignment="Left"/>
+                            <!--Card Secondary content-->
+                            <TextBlock TextWrapping="NoWrap" Style="{DynamicResource TextBlockDefault}" TextTrimming="CharacterEllipsis" 
+                                       Text="Description" Margin="0,6,0,0"
+                                       HorizontalAlignment="Left"/>
+                        </StackPanel>
+                    </hc:Card.Footer>
+                </hc:Card>
+
+                <hc:Card Grid.Row="1" BorderThickness="0" Effect="{DynamicResource EffectShadow2}" Margin="0,10,0,0">
+                    <!--Card Content section-->
+                    <Border CornerRadius="4,4,0,0" Width="160" Height="160">
+                        <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Text="test"/>
+                    </Border>
+                    <!--Card Footer part-->
+                    <hc:Card.Footer>
+                        <StackPanel Margin="10" Width="160">
+                            <!--Card First-level content-->
+                            <TextBlock TextWrapping="NoWrap"  Style="{DynamicResource TextBlockLargeBold}" TextTrimming="CharacterEllipsis" 
+                                       Text="Headline" 
+                                       HorizontalAlignment="Left"/>
+                            <!--Card Secondary content-->
+                            <TextBlock TextWrapping="NoWrap" Style="{DynamicResource TextBlockDefault}" TextTrimming="CharacterEllipsis" 
+                                       Text="Description" Margin="0,6,0,0"
+                                       HorizontalAlignment="Left"/>
+                        </StackPanel>
+                    </hc:Card.Footer>
+                </hc:Card>
+            </StackPanel>
+
+            <hc:ScrollViewer x:Name="BioScrollViewer" IsInertiaEnabled="True" ScrollViewer.CanContentScroll="True" Grid.Column="1" Margin="5,0,0,0">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="250" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+
+
+                    <Border Background="Wheat" CornerRadius="8" Grid.Row="0" Margin="0,0,0,15" BorderThickness="1" Effect="{StaticResource EffectShadow2}">
+
+                    </Border>
+
+                    <StackPanel Orientation="Vertical" Grid.Row="1" Background="White">
+
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <hc:Divider Content="Ning"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                        <Button Content="Hello"/>
+                    </StackPanel>
+
+                </Grid>
+
+            </hc:ScrollViewer>
+
+            <hc:GotoTop Grid.Column="1" Animated="True" AutoHiding="True" 
+                        AnimationTime="500" Target="{Binding ElementName=BioScrollViewer}" 
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,20"/>
+        </Grid>
         
     </Grid>
 </Page>

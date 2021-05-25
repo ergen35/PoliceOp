@@ -8,7 +8,7 @@
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="OpCenter" TitleCharacterCasing="Normal" TitleAlignment="Center" Height="450" Width="800" 
         xmlns:Notif="clr-namespace:Enterwell.Clients.Wpf.Notifications.Controls;assembly=Enterwell.Clients.Wpf.Notifications"
-        xmlns:mde="http://metro.mahapps.com/winfx/xaml/controls" WindowState="Maximized" xmlns:selfModels="clr-namespace:PoliceOp.Models;assembly=PoliceOp.Models" 
+        xmlns:mde="http://metro.mahapps.com/winfx/xaml/controls" WindowState="Maximized"
         >
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
@@ -34,10 +34,9 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
+        
         <hc:SimplePanel>
-            <Grid>
-
-            </Grid>
+            
             <hc:Drawer Name="DrawerLeft" Dock="Left" ShowMode="Push" MaskCanClose="True" Closed="DrawerLeft_Closed" >
                 <Border Background="White" Width="245" BorderThickness="0" BorderBrush="{DynamicResource BorderBrush}">
                     <Grid>
@@ -87,12 +86,10 @@
                             </hc:Card>
                         </Grid>
                         <Grid Background="Azure" Grid.Row="2">
-                            <hc:SideMenu BorderThickness="1" Width="300" SideBrush="LightBlue" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                                <hc:Interaction.Triggers>
-                                    <hc:EventTrigger EventName="SelectionChanged">
-                                        <hc:EventToCommand Command="{Binding SwitchItemCmd}" PassEventArgsToCommand="True" />
-                                    </hc:EventTrigger>
-                                </hc:Interaction.Triggers>
+                            <hc:SideMenu BorderThickness="1" Width="300" SideBrush="LightBlue" 
+                                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                         ExpandMode="ShowAll"
+                                         >
                                 <hc:SideMenuItem Header="Wanted Notices">
                                     <hc:SideMenuItem.Icon>
                                         <IconPacks:Material Kind="PoliceBadge"/>
@@ -189,6 +186,7 @@
                     </Grid>
                 </Border>
             </hc:Drawer>
+            
         </hc:SimplePanel>
 
         <Frame NavigationUIVisibility="Hidden" x:Name="ContentFrame"  
@@ -220,13 +218,6 @@
             <IconPacks:Material Kind="Menu" Height="25" Width="30"/>
         </ToggleButton>
         
-        <ToggleButton x:Name="SettingsBtn" Margin="3,0,0,20" HorizontalAlignment="Right" Grid.RowSpan="100" 
-                      Height="60" Width="50" Opacity="50" VerticalAlignment="Bottom"  
-                      IsChecked="{Binding IsOpen,ElementName=DrawerLeft}" Style="{StaticResource MahApps.Styles.Button.Chromeless}" 
-                      Foreground="Black" Click="ToogleBtn_Click">
-            <IconPacks:Material Kind="Cogs" Height="25" Width="30"/>
-        </ToggleButton>
-
         <Border x:Name="LoadingIndicator" Visibility="Collapsed" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="45" Width="150" 
                                            Background="#FFE2D2D2" Margin="0,0,5,5" CornerRadius="15,0,0,15">
             <Grid>
