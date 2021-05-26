@@ -4,8 +4,4 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Device.Location.Portable" Version="1.0.0" />
-  </ItemGroup>
-
 </Project>
