@@ -10,8 +10,8 @@ using PoliceOp.API.Data;
 namespace PoliceOp.API.Migrations
 {
     [DbContext(typeof(PoliceOpAPIContext))]
-    [Migration("20210526010642_Add Password To Agent")]
-    partial class AddPasswordToAgent
+    [Migration("20210526190248_Classes Redone")]
+    partial class ClassesRedone
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,77 +23,34 @@ namespace PoliceOp.API.Migrations
 
             modelBuilder.Entity("PoliceOp.Models.AvisRecherche", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("UID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateEmission")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("StatutRecherche")
+                    b.Property<string>("Informations")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("StatutRecherche")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("UID");
 
                     b.ToTable("AvisRecherches");
                 });
 
-            modelBuilder.Entity("PoliceOp.Models.Biometrie", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DonneesDigitales")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DonneesFaciales")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("BioData");
-                });
-
-            modelBuilder.Entity("PoliceOp.Models.Coordonnees", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CoordonneesGeo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NumeroChambre")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NumeroParcelle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Rue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Coordonnees");
-                });
-
             modelBuilder.Entity("PoliceOp.Models.Personne", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("PersonneId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BiometrieID")
+                        .HasColumnType("int");
 
                     b.Property<string>("CouleurCheveux")
                         .IsRequired()
@@ -122,13 +79,19 @@ namespace PoliceOp.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nationalité")
+                    b.Property<string>("Nationalite")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Personne_mere")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Personne_pere")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("Photographie")
                         .IsRequired()
@@ -141,6 +104,9 @@ namespace PoliceOp.API.Migrations
                     b.Property<string>("Profession")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ResidenceId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Sexe")
                         .HasColumnType("int");
@@ -165,20 +131,13 @@ namespace PoliceOp.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("fk_mere")
-                        .HasColumnType("int");
+                    b.HasKey("PersonneId");
 
-                    b.Property<int?>("fk_pere")
-                        .HasColumnType("int");
+                    b.HasIndex("Personne_mere");
 
-                    b.HasKey("ID");
-
-                    b.HasIndex("fk_mere");
-
-                    b.HasIndex("fk_pere");
+                    b.HasIndex("Personne_pere");
 
                     b.ToTable("Personnes");
 
@@ -187,10 +146,9 @@ namespace PoliceOp.API.Migrations
 
             modelBuilder.Entity("PoliceOp.Models.Requete", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("UID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateRequete")
                         .HasColumnType("datetime2");
@@ -199,42 +157,18 @@ namespace PoliceOp.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ID");
+                    b.HasKey("UID");
 
                     b.ToTable("Requetes");
                 });
 
-            modelBuilder.Entity("PoliceOp.Models.Residence", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Residences");
-                });
-
             modelBuilder.Entity("PoliceOp.Models.Session", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<Guid>("SessionID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("ID");
+                    b.HasKey("SessionID");
 
                     b.ToTable("Sessions");
                 });
@@ -257,7 +191,6 @@ namespace PoliceOp.API.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Agent");
@@ -292,11 +225,11 @@ namespace PoliceOp.API.Migrations
                 {
                     b.HasOne("PoliceOp.Models.Personne", "Mere")
                         .WithMany()
-                        .HasForeignKey("fk_mere");
+                        .HasForeignKey("Personne_mere");
 
                     b.HasOne("PoliceOp.Models.Personne", "Pere")
                         .WithMany()
-                        .HasForeignKey("fk_pere");
+                        .HasForeignKey("Personne_pere");
                 });
 #pragma warning restore 612, 618
         }

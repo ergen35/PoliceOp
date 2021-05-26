@@ -9,10 +9,10 @@ namespace PoliceOp.Models
     public class Personne
     {
 
-        [InverseProperty("Pere, Mere")]
-        public int ID { get; set; }
+        [Key]
+        public int PersonneId { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
         public Guid UID { get; set; } 
         
         [Required]
@@ -33,12 +33,6 @@ namespace PoliceOp.Models
 
         [Required]
         public string Telephone { get; set; }
-        
-        [ForeignKey("fk_pere")]
-        public Personne Pere { get; set; }
-
-        [ForeignKey("fk_mere")]
-        public Personne Mere { get; set; }
 
         [Required]
         [EnumDataType(typeof(Sexe))]
@@ -48,7 +42,7 @@ namespace PoliceOp.Models
         public string LieuNaissance { get; set; }
 
         [Required]
-        public string Nationalité { get; set; }
+        public string Nationalite { get; set; }
 
         [Required]
         public string Profession { get; set; }
@@ -70,9 +64,25 @@ namespace PoliceOp.Models
 
         [Required]
         public double Taille { get; set; }
-
         [Required]
         public Byte[] Photographie { get; set; }
+
+
+
+        [ForeignKey("Biometrie")]
+        [Column(Order = 1)]
+        public int BiometrieID { get; set; }
+
+        [ForeignKey("Residence")]
+        [Column(Order = 2)]
+        public int ResidenceId { get; set; }
+        [ForeignKey("Personne_pere")]
+        [Column(Order = 3)]
+        public Personne Pere { get; set; }
+
+        [ForeignKey("Personne_mere")]
+        [Column(Order = 4)]
+        public Personne Mere { get; set; }
 
     }
 }

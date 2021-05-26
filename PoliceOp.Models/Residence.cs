@@ -4,12 +4,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PoliceOp.Models
 {
+    [ComplexType]
     public class Residence
-    {
-        public int ID { get; set; }   
-        
+    {        
         [Required]
         public string Type { get; set; }
+        public string Description { get; set; }
+        public string Rue { get; set; }
+        public string NumeroParcelle { get; set; }
+        public string NumeroChambre { get; set; }
+        public GeoCoordinate CoordonneesGeo { get; set; }
 
     }
 }

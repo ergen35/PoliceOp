@@ -6,15 +6,12 @@ namespace PoliceOp.Models
 {
     public class Requete
     {
-        public int ID { get; set; }
-
+        [Key]
         public Guid UID { get; set; }
 
         [Required]
-        [DataType(DataType.Text)]
         public string TermeRequete { get; set; }
 
-        [DataType(DataType.DateTime)]
         public DateTime DateRequete { get; set; } = DateTime.Now;
 
     }

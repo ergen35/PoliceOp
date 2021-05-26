@@ -21,7 +21,7 @@ namespace PoliceOp.API.Controllers
         [HttpGet]
         public string GetToken()
         {
-            return new Services.JWTServices(this._configuration).GenerateTokenFromObject(new Guid().ToString());
+            return new Services.JWTServices(this._configuration).GenerateTokenFromObject(new { a = 5, h = "54ze" });
         }
 
         [HttpPost]

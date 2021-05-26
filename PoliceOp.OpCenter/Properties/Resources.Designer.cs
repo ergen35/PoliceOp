@@ -69,15 +69,5 @@ namespace PoliceOp.OpCenter.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap BadgeAnimation {
-            get {
-                object obj = ResourceManager.GetObject("BadgeAnimation", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }

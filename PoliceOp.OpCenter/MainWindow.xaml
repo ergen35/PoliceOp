@@ -8,26 +8,21 @@
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="OpCenter" TitleCharacterCasing="Normal" TitleAlignment="Center" Height="450" Width="800" 
         xmlns:Notif="clr-namespace:Enterwell.Clients.Wpf.Notifications.Controls;assembly=Enterwell.Clients.Wpf.Notifications"
-        xmlns:mde="http://metro.mahapps.com/winfx/xaml/controls" WindowState="Maximized"
+        xmlns:mde="http://metro.mahapps.com/winfx/xaml/controls" WindowState="Maximized" Icon="/Resources/images/PoliceOp.ico"
         >
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
+            <ToggleButton x:Name="ThemeBtn" Height="35" Width="25" Style="{StaticResource ToggleButtonSwitch}" ToolTip="Theme Switch" ToggleButton.Checked="ThemeBtn_Checked" ToggleButton.Unchecked="ThemeBtn_Unchecked"/>
+
             <Button x:Name="EnhancedSecurityMode" ToolTip="Enhanced Security Mode" VerticalAlignment="Center" Height="35" Width="50" Foreground="White" Click="EnhancedSecurityMode_Click">
                 <IconPacks:Material Kind="ShieldOff" Height="20" Width="25"/>
             </Button>
+            
             <ToggleButton xmlns:Name="NotifBtn" Height="35" Width="50" Foreground="White" VerticalAlignment="Center" IsChecked="{Binding IsOpen,ElementName=NotifCenter}" Style="{StaticResource MahApps.Styles.Button.Chromeless}">
                 <IconPacks:BoxIcons Kind="RegularNotification" Height="20" Width="25" />
             </ToggleButton>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
-    <mah:MetroWindow.LeftWindowCommands>
-        <mah:WindowCommands>
-            <ToggleButton x:Name="ThemeBtn" Height="35" Width="25" Style="{StaticResource ToggleButtonSwitch}" ToolTip="Theme Switch" ToggleButton.Checked="ThemeBtn_Checked" ToggleButton.Unchecked="ThemeBtn_Unchecked"/>
-        </mah:WindowCommands>
-    </mah:MetroWindow.LeftWindowCommands>
-    <mah:MetroWindow.Resources>
-        
-    </mah:MetroWindow.Resources>
     <Grid>
 
         <Grid.RowDefinitions>

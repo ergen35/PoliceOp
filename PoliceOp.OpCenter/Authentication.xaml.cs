@@ -12,10 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Extensions.Configuration;
 using LazyCache;
-using Effortless.Net.Encryption;
 using System.Windows.Threading;
 using Enterwell.Clients.Wpf.Notifications;
-
 
 
 

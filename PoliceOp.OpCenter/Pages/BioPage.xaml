@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PoliceOp.OpCenter.Pages"
       mc:Ignorable="d"  xmlns:hc="https://handyorg.github.io/handycontrol"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="800" xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
       Title="BioPage">
 
     <Grid>
@@ -13,7 +13,7 @@
             <RowDefinition Height="70" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Details on a Person" Style="{StaticResource TextBlockLarge}" FontSize="30" Margin="50,30,0,0" 
+        <TextBlock Text="Person Details" Style="{StaticResource TextBlockLarge}" FontSize="30" Margin="50,30,0,0" 
                            FontFamily="Consolas" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <Grid Grid.Row="1" Margin="50,10,5,5">
@@ -22,49 +22,91 @@
                 <ColumnDefinition Width="5*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Vertical" Margin="0,0,5,0">
+            <hc:ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical" Margin="0,0,5,0">
 
-                <hc:Card BorderThickness="0" Effect="{DynamicResource EffectShadow2}">
-                    <!--Card Content section-->
-                    <Border CornerRadius="4,4,0,0" Width="160" Height="160">
-                        <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Text="test"/>
-                    </Border>
-                    <!--Card Footer part-->
-                    <hc:Card.Footer>
-                        <StackPanel Margin="10" Width="160">
-                            <!--Card First-level content-->
-                            <TextBlock TextWrapping="NoWrap"  Style="{DynamicResource TextBlockLargeBold}" TextTrimming="CharacterEllipsis" 
+                    <hc:Card BorderThickness="0" Effect="{DynamicResource EffectShadow2}">
+                        <!--Card Content section-->
+                        <Border CornerRadius="4,4,0,0" Width="160" Height="160">
+                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Text="test"/>
+                        </Border>
+                        <!--Card Footer part-->
+                        <hc:Card.Footer>
+                            <StackPanel Margin="10" Width="160">
+                                <!--Card First-level content-->
+                                <TextBlock TextWrapping="NoWrap"  Style="{DynamicResource TextBlockLargeBold}" TextTrimming="CharacterEllipsis" 
                                        Text="Headline" 
                                        HorizontalAlignment="Left"/>
-                            <!--Card Secondary content-->
-                            <TextBlock TextWrapping="NoWrap" Style="{DynamicResource TextBlockDefault}" TextTrimming="CharacterEllipsis" 
+                                <!--Card Secondary content-->
+                                <TextBlock TextWrapping="NoWrap" Style="{DynamicResource TextBlockDefault}" TextTrimming="CharacterEllipsis" 
                                        Text="Description" Margin="0,6,0,0"
                                        HorizontalAlignment="Left"/>
-                        </StackPanel>
-                    </hc:Card.Footer>
-                </hc:Card>
+                            </StackPanel>
+                        </hc:Card.Footer>
+                    </hc:Card>
 
-                <hc:Card Grid.Row="1" BorderThickness="0" Effect="{DynamicResource EffectShadow2}" Margin="0,10,0,0">
-                    <!--Card Content section-->
-                    <Border CornerRadius="4,4,0,0" Width="160" Height="160">
-                        <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Text="test"/>
+                    <Border Grid.Row="1" CornerRadius="0,10,0,10" Background="White" BorderThickness="0" Height="150" Effect="{DynamicResource EffectShadow2}" Margin="0,10,0,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Biométrie" Grid.ColumnSpan="3" VerticalAlignment="Center"
+                                       Style="{StaticResource TextBlockLargeBold}"/>
+                            <hc:Divider Grid.Row="1" Grid.ColumnSpan="3"/>
+
+                            <Button x:Name="FaceDataBtn" Grid.Row="2" Grid.Column="0"
+                                    Click="FaceDataBtn_Click"
+                                    Style="{StaticResource MahApps.Styles.Button.Flat}">
+                                <Icons:Material Kind="FaceRecognition" Height="50" Width="50"/>
+                            </Button>
+                            <Button x:Name="FingerPrintBtn" Grid.Row="2" Grid.Column="1"
+                                    Click="FingerPrintBtn_Click"
+                                    Style="{StaticResource MahApps.Styles.Button.Flat}">
+                                <Icons:Material Kind="Fingerprint" Height="50" Width="50"/>
+                            </Button>
+                        </Grid>
                     </Border>
-                    <!--Card Footer part-->
-                    <hc:Card.Footer>
-                        <StackPanel Margin="10" Width="160">
-                            <!--Card First-level content-->
-                            <TextBlock TextWrapping="NoWrap"  Style="{DynamicResource TextBlockLargeBold}" TextTrimming="CharacterEllipsis" 
-                                       Text="Headline" 
-                                       HorizontalAlignment="Left"/>
-                            <!--Card Secondary content-->
-                            <TextBlock TextWrapping="NoWrap" Style="{DynamicResource TextBlockDefault}" TextTrimming="CharacterEllipsis" 
-                                       Text="Description" Margin="0,6,0,0"
-                                       HorizontalAlignment="Left"/>
+                    <Expander x:Name="FingerDataExp" Header="Finger Prints" Margin="0,2,0,0">
+                        <StackPanel>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
                         </StackPanel>
-                    </hc:Card.Footer>
-                </hc:Card>
-            </StackPanel>
+                    </Expander>
+                    <Expander x:Name="FaceDataExp" Header="Face Data">
+                        <StackPanel>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                            <Button Content="Hello"/>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
 
+            </hc:ScrollViewer>
+            
             <hc:ScrollViewer x:Name="BioScrollViewer" IsInertiaEnabled="True" ScrollViewer.CanContentScroll="True" Grid.Column="1" Margin="5,0,0,0">
 
                 <Grid>
@@ -74,50 +116,308 @@
                     </Grid.RowDefinitions>
 
 
-                    <Border Background="Wheat" CornerRadius="8" Grid.Row="0" Margin="0,0,0,15" BorderThickness="1" Effect="{StaticResource EffectShadow2}">
+                    <Border Background="WhiteSmoke" CornerRadius="8" Grid.Row="0" Margin="0,0,0,15" BorderThickness="1" Effect="{StaticResource EffectShadow2}">
+                        <Grid Margin="10,10,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
+                            <TextBlock Text="Nom Complet: " Margin="5,0,0,0" FontSize="22"/>
+
+                            <StackPanel Grid.ColumnSpan="3" HorizontalAlignment="Center" Orientation="Horizontal">
+                                <TextBlock  Text="{Binding Personne.Nom}" FontSize="22"/>
+                                <TextBlock  Text="{Binding Personne.Prenom}" FontSize="22" Margin="5,0,0,0"/>
+                            </StackPanel>
+
+                            <hc:Divider Grid.ColumnSpan="3" Background="BlueViolet"/>
+
+                            <TextBlock Text="Nom" Grid.Row="1"/>
+                            <TextBlock Text="{Binding Personne.Prenom}" Grid.Row="1" Grid.Column="1" Margin="5,0,0,0"/>
+
+                            <TextBlock Text="Prénom" Grid.Row="2"/>
+                            <TextBlock Text="{Binding Personne.Prenom}" Grid.Row="2" Grid.Column="1" Margin="5,0,0,0"/>
+
+
+                            <TextBlock Text="Sexe" Grid.Row="3"/>
+                            <TextBlock Text="{Binding Personne.Sexe}" Grid.Row="3" Grid.Column="1" Margin="5,0,0,0"/>
+
+                            
+                            <TextBlock Text="Nationalité" Grid.Row="4"/>
+                            <TextBlock Text="{Binding Personne.Nationalité}" Grid.Row="4" Grid.Column="1" Margin="5,0,0,0"/>
+
+                            <TextBlock Text="Taille" Grid.Row="5"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" Margin="5,0,0,0">
+                                <TextBlock Text="{Binding Personne.Taille}"/>
+                                <TextBlock Text=" m"/>
+                            </StackPanel>
+
+                            <TextBlock Text="Date de Naissance" Grid.Row="6"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" Margin="5,0,0,0">
+                                <TextBlock Text="{Binding Personne.DateNaissance.Day}" />
+                                <TextBlock Text="/"/>
+                                <TextBlock Text="{Binding Personne.DateNaissance.Month}" />
+                                <TextBlock Text="/"/>
+                                <TextBlock Text="{Binding Personne.DateNaissance.Year}" />
+                            </StackPanel>
+
+                            <TextBlock Text="Sexe" Grid.Row="7"/>
+                            <TextBlock Text="{Binding Personne.Sexe}" Grid.Row="7" Grid.Column="1" Margin="5,0,0,0"/>
+
+                        </Grid>
                     </Border>
 
                     <StackPanel Orientation="Vertical" Grid.Row="1" Background="White">
 
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <hc:Divider Content="Ning"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
-                        <Button Content="Hello"/>
+                        <hc:Divider Content="Indentification"/>
+
+                        <Grid Margin="2,0,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="UID"/>
+                            <TextBlock Text="{Binding Personne.UID}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        </Grid>
+
+                        <Grid Margin="2,0,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="NPI (Numéro Personnel d'Identification)"/>
+                            <TextBlock Text="{Binding Personne.NPI}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        </Grid>
+                        <Grid Margin="2,0,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="IFU (Identifiant Fiscal Unique)"/>
+                            <TextBlock Text="{Binding Personne.IFU}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        </Grid>
+
+
+                        <hc:Divider Content="Bio"/>
+                        <Grid Margin="2,0,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Nom"/>
+                            <TextBlock Text="{Binding Personne.Nom}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        </Grid>
+                        
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Prénom"/>
+                            <TextBlock Text="{Binding Personne.Prenom}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        </Grid>
+                        
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Taille"/>
+                            <TextBlock Text="{Binding Personne.Taille}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        </Grid>
+
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Sexe"/>
+                            <TextBlock Text="{Binding Personne.Sexe}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        </Grid>
+
+                        <hc:Divider Content="Naissance"/>
+
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Date Naissance"/>
+                            <TextBlock Text="{Binding Personne.DateNaissance}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        </Grid>
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Lieu Naissance"/>
+                            <TextBlock Text="{Binding Personne.LieuNaissance}" Grid.Column="1" HorizontalAlignment="Right"/>
+                        </Grid>
+
+                        <hc:Divider Content="Caractéristiques"/>
+
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Teint"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                                <TextBlock 
+                                    Text="{Binding Personne.Teint}" VerticalAlignment="Center"/>
+                                <Border Background="{Binding Personne.Teint}" 
+                                        VerticalAlignment="Center" 
+                                        Margin="5,0,8,0" Height="25" Width="75"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Couleur des yeux"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                                <TextBlock 
+                                    Text="{Binding Personne.CouleurYeux}" VerticalAlignment="Center"/>
+                                <Border Background="{Binding Personne.CouleurYeux}" 
+                                        VerticalAlignment="Center" 
+                                        Margin="5,0,8,0" Height="25" Width="75"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Couleur des Cheveux"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                                <TextBlock 
+                                    Text="{Binding Personne.CouleurCheveux}" VerticalAlignment="Center"/>
+                                <Border Background="{Binding Personne.CouleurCheveux}" 
+                                        VerticalAlignment="Center" 
+                                        Margin="5,0,8,0" Height="25" Width="75"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Signes Particuliers"/>
+                                <TextBlock Grid.Column="1" HorizontalAlignment="Right"
+                                    Text="{Binding Personne.SignesParticuliers}" VerticalAlignment="Center"
+                                    TextWrapping="Wrap"
+                                />
+   
+                        </Grid>
+
+                        <hc:Divider Content="Relatifs"/>
+
+                        <Grid Margin="2,0,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Père"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding Personne.Pere.Nom}" VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Personne.Pere.Prenom}" Margin="5,0,8,0" VerticalAlignment="Center"/>
+                                <Button x:Name="BtnPere" Click="BtnPere_Click"  VerticalAlignment="Center">
+                                    <Icons:PackIconFontAwesome Kind="ExternalLinkAltSolid" />
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="2,10,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Mère"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding Personne.Mere.Nom}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Personne.Mere.Prenom}" Margin="5,0,8,0" VerticalAlignment="Center"/>
+                                <Button x:Name="BtnMere" Click="BtnMere_Click"  VerticalAlignment="Center">
+                                    <Icons:PackIconFontAwesome Kind="ExternalLinkAltSolid" />
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+
+                        <hc:Divider Content="Etat"/>
+
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Nationalité"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right"
+                                    Text="{Binding Personne.Nationalité}" VerticalAlignment="Center"
+                                    TextWrapping="Wrap"/>
+
+                        </Grid>
+                        
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Profession"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right"
+                                    Text="{Binding Personne.Profession}" VerticalAlignment="Center"
+                                    TextWrapping="Wrap"/>
+
+                        </Grid>
+
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Situation Matrimoniale"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right"
+                                    Text="{Binding Personne.SituationMatrimoniale}" VerticalAlignment="Center"
+                                    TextWrapping="Wrap"/>
+
+                        </Grid>
+
+                        <hc:Divider Content="Contacts"/>
+
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Telephone"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right"
+                                    Text="{Binding Personne.Telephone}" VerticalAlignment="Center"
+                                    TextWrapping="Wrap"/>
+
+                        </Grid>
+
+                        <hc:Divider Content="Résidence"/>
+
+                        <Grid Margin="0">
+                            <Button Grid.Column="1" Grid.ColumnSpan="3" Height="30" Style="{StaticResource MahApps.Styles.Button.Flat}"/>
+                        </Grid>
+
                     </StackPanel>
+                    
+                    
 
                 </Grid>
 
@@ -125,7 +425,7 @@
 
             <hc:GotoTop Grid.Column="1" Animated="True" AutoHiding="True" 
                         AnimationTime="500" Target="{Binding ElementName=BioScrollViewer}" 
-                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,20"/>
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10"/>
         </Grid>
         
     </Grid>

@@ -6,9 +6,7 @@ namespace PoliceOp.Models
 {
     public class Session
     {
-        public int ID { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid SessionID { get; set; } = new Guid();
 
         public override string ToString()
