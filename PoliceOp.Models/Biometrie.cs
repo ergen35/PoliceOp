@@ -14,8 +14,8 @@ namespace PoliceOp.Models
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid UID { get; set; }
-        public object DonneesFaciales { get; set; }
-        public Dictionary<string, object> DonneesDigitales { get; set; }
+        public string DonneesFaciales { get; set; }
+        public string DonneesDigitales { get; set; }
 
         public void Comparer ()
         {

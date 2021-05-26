@@ -8,6 +8,8 @@ namespace PoliceOp.Models
 {
     public class Personne
     {
+
+        [InverseProperty("Pere, Mere")]
         public int ID { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -29,10 +31,13 @@ namespace PoliceOp.Models
         [DataType(DataType.Date)]
         public DateTime DateNaissance { get; set; }
 
-        public ICollection<string> Telephone { get; set; }
+        [Required]
+        public string Telephone { get; set; }
         
+        [ForeignKey("fk_pere")]
         public Personne Pere { get; set; }
 
+        [ForeignKey("fk_mere")]
         public Personne Mere { get; set; }
 
         [Required]

@@ -13,5 +13,10 @@ namespace PoliceOp.Models
 
         [Required]
         public string Corps { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public string PasswordHash { get; set; }
     }
 }
