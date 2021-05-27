@@ -10,50 +10,50 @@ using PoliceOp.Models;
 
 namespace PoliceOp.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
-    public class SessionsController : ControllerBase
+    public class IdentificationController : ControllerBase
     {
         private readonly PoliceOpAPIContext _context;
 
-        public SessionsController(PoliceOpAPIContext context)
+        public IdentificationController(PoliceOpAPIContext context)
         {
             _context = context;
         }
 
-        // GET: api/Sessions
+        // GET: api/Identification
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Session>>> GetSessions()
+        public async Task<ActionResult<IEnumerable<Personne>>> GetPersonnes()
         {
-            return await _context.Sessions.ToListAsync();
+            return await _context.Personnes.ToListAsync();
         }
 
-        // GET: api/Sessions/5
+        // GET: api/Identification/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Session>> GetSession(Guid id)
+        public async Task<ActionResult<Personne>> GetPersonne(int id)
         {
-            var session = await _context.Sessions.FindAsync(id);
+            var personne = await _context.Personnes.FindAsync(id);
 
-            if (session == null)
+            if (personne == null)
             {
                 return NotFound();
             }
 
-            return session;
+            return personne;
         }
 
-        // PUT: api/Sessions/5
+        // PUT: api/Identification/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSession(Guid id, Session session)
+        public async Task<IActionResult> PutPersonne(int id, Personne personne)
         {
-            if (id != session.SessionID)
+            if (id != personne.PersonneId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(session).State = EntityState.Modified;
+            _context.Entry(personne).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace PoliceOp.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SessionExists(id))
+                if (!PersonneExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +74,37 @@ namespace PoliceOp.API.Controllers
             return NoContent();
         }
 
-        // POST: api/Sessions
+        // POST: api/Identification
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Session>> PostSession(Session session)
+        public async Task<ActionResult<Personne>> PostPersonne(Personne personne)
         {
-            _context.Sessions.Add(session);
+            _context.Personnes.Add(personne);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSession", new { id = session.SessionID }, session);
+            return CreatedAtAction("GetPersonne", new { id = personne.PersonneId }, personne);
         }
 
-        // DELETE: api/Sessions/5
+        // DELETE: api/Identification/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Session>> DeleteSession(Guid id)
+        public async Task<ActionResult<Personne>> DeletePersonne(int id)
         {
-            var session = await _context.Sessions.FindAsync(id);
-            if (session == null)
+            var personne = await _context.Personnes.FindAsync(id);
+            if (personne == null)
             {
                 return NotFound();
             }
 
-            _context.Sessions.Remove(session);
+            _context.Personnes.Remove(personne);
             await _context.SaveChangesAsync();
 
-            return session;
+            return personne;
         }
 
-        private bool SessionExists(Guid id)
+        private bool PersonneExists(int id)
         {
-            return _context.Sessions.Any(e => e.SessionID == id);
+            return _context.Personnes.Any(e => e.PersonneId == id);
         }
     }
 }
