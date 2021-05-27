@@ -28,7 +28,7 @@ namespace PoliceOp.API.Services
             return token;  //Token can be null, so it's to check if null
         }
 
-        public string GenerateTokenFromObject(object DataObject)
+        public string GenerateTokenFromObject<T>(T DataObject)
         {
             var token = JwtBuilder.Create()
               .WithAlgorithm(new HMACSHA256Algorithm()) // symmetric
@@ -36,7 +36,7 @@ namespace PoliceOp.API.Services
               .AddClaim(ClaimName.Issuer, "PoliceOP.API")
               .AddClaim(ClaimName.Subject, "SessionID")
               .AddClaim(ClaimName.Audience, "PoliceOp.Terminal")
-              .AddClaim("exp", DateTimeOffset.UtcNow.AddMinutes(this._SessionSendexpTime).ToUnixTimeSeconds())
+              .AddClaim("exp", DateTimeOffset.UtcNow.AddMinutes(240).ToUnixTimeSeconds())
               .AddClaim("DataObject", DataObject)  //Store a whole object 
               .Encode();
             
@@ -44,7 +44,7 @@ namespace PoliceOp.API.Services
             return token;
         }
 
-        public object DecodeObjectFromToken(string token)
+        public T DecodeObjectFromToken<T>(string token) where T: class
         {
             try
             {
@@ -52,7 +52,7 @@ namespace PoliceOp.API.Services
                 .WithAlgorithm(new HMACSHA256Algorithm()) // symmetric
                 .WithSecret(_secret)
                 .MustVerifySignature()
-                .Decode<object>(token);
+                .Decode<T>(token);
 
                  return payload;
             }

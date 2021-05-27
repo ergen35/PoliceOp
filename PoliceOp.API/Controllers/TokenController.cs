@@ -4,31 +4,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Authorization;
+
 namespace PoliceOp.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize]
     public class TokenController : Controller
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration configuration;
+        public Services.JWTServices JWTServices { get; set; }
+
+        public List<string> LisT { get; set; }
+
         public TokenController(IConfiguration configuration)
         {
-            this._configuration = configuration;
+            this.configuration = configuration;
+            this.JWTServices = new Services.JWTServices(this.configuration);
+            this.LisT = new List<string>();
         }
 
         [HttpGet]
-        public string GetToken()
+        public ActionResult Index()
         {
-            return new Services.JWTServices(this._configuration).GenerateTokenFromObject(new { a = 5, h = "54ze" });
+            string a = JWTServices.GenerateTokenFromObject<string>("Hello");
+
+            return Json(new {token = a, data = JWTServices.DecodeObjectFromToken<string>(a) });
         }
 
         [HttpPost]
-        public JsonResult GetEncodedObject(string token)
+        public ActionResult<string> PostToken(string jeton)
         {
-            return Json(new Services.JWTServices(this._configuration).DecodeObjectFromToken(token));
-        }
+            if (jeton == null)
+            {
+                return "Pas marché";
+            }
 
+
+            return jeton + " Marché";
+        }
     }
 }
