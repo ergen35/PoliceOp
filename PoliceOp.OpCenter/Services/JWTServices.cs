@@ -2,45 +2,23 @@
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Http;
 using JWT.Algorithms;
 using JWT.Builder;
+using Newtonsoft.Json;
+using JWT;
+using JWT.Serializers;
 
-namespace PoliceOp.API.Services
+namespace PoliceOp.OpCenter.Services
 {
     public class JWTServices
     {
-        private readonly string _secret; 
+        private readonly string _secret;
 
         public JWTServices(IConfiguration configuration)
         {
             this._secret = configuration.GetSection("JwtConfig").GetSection("secret").Value;
         }
 
-        //Using JWT.NET Package
-        public string GetTokenFromRequest(HttpContext context)
-        {
-            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-
-            return token;  //Token can be null, so it's to check if null
-        }
-
-        public string GenerateTokenFromObject<T>(T DataObject)
-        {
-            var token = JwtBuilder.Create()
-                                  .WithAlgorithm(new HMACSHA256Algorithm()) // symmetric
-                                  .WithSecret(_secret)
-                                  .AddClaim(ClaimName.ExpirationTime, DateTimeOffset.UtcNow.AddMinutes(240).ToUnixTimeSeconds())
-                                  //.AddClaim(ClaimName.Issuer, "API")
-                                  //.AddClaim(ClaimName.Subject, "SessionID")
-                                  //.AddClaim(ClaimName.Audience, "http://localhost")
-
-                                  .AddClaim("DataObject", DataObject)  //Store a whole object 
-                                  .Encode();
-            
-
-            return token;
-        }
 
         //Terminal -> API - TokenizeID with reason
         public string TokenizeID(string Matricule, string Password, string Reason, double expIMinutes = 5)
@@ -106,6 +84,7 @@ namespace PoliceOp.API.Services
 
             return token;
         }
+
 
         public IDictionary<string, string> DecodeObjectFromToken(string token)
         {

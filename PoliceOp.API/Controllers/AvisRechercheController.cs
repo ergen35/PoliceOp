@@ -150,7 +150,7 @@ namespace PoliceOp.API.Controllers
 
             if (AccessToken != null)
             {
-                var sessionID = jWTService.DecodeObjectFromToken(AccessToken)["SessionID"];
+                var sessionID = jWTService.DecodeObjectFromToken(AccessToken)["sid"];
 
                 if ((await _context.Sessions.AnyAsync(s => s.SessionID.ToString() == sessionID)))
                 {
