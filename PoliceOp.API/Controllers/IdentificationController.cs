@@ -7,11 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PoliceOp.API.Data;
 using PoliceOp.Models;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace PoliceOp.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
     public class IdentificationController : ControllerBase
     {
         private readonly PoliceOpAPIContext _context;

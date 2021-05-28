@@ -5,27 +5,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace PoliceOp.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class TerminalController : Controller
+    [Authorize]
+    public class TerminalController : ControllerBase
     {
         [HttpGet]
         [Route("mobile")]
-        public ActionResult GetTerminalMobile()
+        public string GetTerminalMobile()
         {
 
-            return Json(new { x = "This is the Mobile terminal" }) ;
+            return "This is the Mobile terminal";
         }
 
         [HttpGet]
         [Route("desktop")]
-        public ActionResult GetTerminalDesktop()
+        public string GetTerminalDesktop()
         {
 
-            return Json(new { x = "This is the Desktop terminal" });
+            return "This is the Desktop terminal";
         }
 
 

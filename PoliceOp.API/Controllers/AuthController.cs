@@ -7,90 +7,85 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PoliceOp.API.Data;
 using PoliceOp.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PoliceOp.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthController : ControllerBase
     {
         private readonly PoliceOpAPIContext _context;
+        private readonly Services.JWTServices jWTService;
+        private readonly IConfiguration configuration;
 
-        public AuthController(PoliceOpAPIContext context)
+
+        public AuthController(PoliceOpAPIContext context, IConfiguration configuration)
         {
+            this.configuration = configuration;
+            this.jWTService = new Services.JWTServices(this.configuration);
             _context = context;
+
         }
 
-        // GET: api/Auth
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Session>>> GetSessions()
+
+        // POST: api/Auth
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult<Models.Session>> InitiateSession([FromHeader] string Authorization)
         {
-            return await _context.Sessions.ToListAsync();
-        }
 
-        // GET: api/Auth/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Session>> GetSession(Guid id)
-        {
-            var session = await _context.Sessions.FindAsync(id);
+            var token = string.Empty;
 
-            if (session == null)
+            if (Authorization != null || Authorization == string.Empty)
             {
-                return NotFound();
-            }
+                token = Authorization.Split(" ").LastOrDefault();
+                //Decode
 
-            return session;
-        }
+                var mat = jWTService.DecodeObjectFromToken(token)["mat"];
+                var pwd = jWTService.DecodeObjectFromToken(token)["pwd"];
 
-        // PUT: api/Auth/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutSession(Guid id, Session session)
-        {
-            if (id != session.SessionID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(session).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SessionExists(id))
+                if ((await _context.Agents.AnyAsync(a => a.Matricule == mat)))
                 {
-                    return NotFound();
+                    var query = from Agent in _context.Agents
+                                where Agent.Matricule == mat
+                                where Agent.PasswordHash == pwd
+                                select Agent;
+
+                    if ((await query.FirstOrDefaultAsync()) != null)
+                    {
+                        Session newSession = new Session();
+                        await _context.Sessions.AddAsync(newSession);
+                        await _context.SaveChangesAsync();
+                        
+                        return newSession;
+                    }
+                    else
+                    {
+                        return NotFound("Bad Math");
+                    }
                 }
                 else
                 {
-                    throw;
+                    return NotFound("No Such Data");
                 }
             }
+            else
+            {
+                return BadRequest("Authorization token Not Found");
+            }
 
-            return NoContent();
-        }
-
-        // POST: api/Auth
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<Session>> PostSession(Session session)
-        {
-            _context.Sessions.Add(session);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetSession", new { id = session.SessionID }, session);
         }
 
         // DELETE: api/Auth/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Session>> DeleteSession(Guid id)
+        [HttpDelete("{uid}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<Session>> DestroySession(Guid uid)
         {
-            var session = await _context.Sessions.FindAsync(id);
+            var session = await _context.Sessions.FindAsync(uid);
             if (session == null)
             {
                 return NotFound();
@@ -100,11 +95,6 @@ namespace PoliceOp.API.Controllers
             await _context.SaveChangesAsync();
 
             return session;
-        }
-
-        private bool SessionExists(Guid id)
-        {
-            return _context.Sessions.Any(e => e.SessionID == id);
         }
     }
 }

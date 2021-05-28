@@ -7,17 +7,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PoliceOp.API.Data;
 using PoliceOp.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 
 namespace PoliceOp.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
     public class AvisRechercheController : ControllerBase
     {
         private readonly PoliceOpAPIContext _context;
+        private readonly IConfiguration configuration;
+        private readonly Services.JWTServices jWTService;
 
-        public AvisRechercheController(PoliceOpAPIContext context)
+        public AvisRechercheController(PoliceOpAPIContext context, IConfiguration configuration)
         {
+            this.configuration = configuration;
+            this.jWTService = new Services.JWTServices(this.configuration);
             _context = context;
         }
 
@@ -105,6 +112,24 @@ namespace PoliceOp.API.Controllers
         private bool AvisRechercheExists(Guid id)
         {
             return _context.AvisRecherches.Any(e => e.UID == id);
+        }
+
+        private Guid GetSessionIDFromRequest(HttpContext httpContext)
+        {
+            Guid SessionID = new Guid();
+
+            var AccessToken = httpContext.Request.Headers["SessionID"].ToString();
+
+            if (AccessToken != string.Empty || AccessToken != null )
+            {
+                if (Guid.TryParse(jWTService.DecodeObjectFromToken(AccessToken)["SessionID"], out SessionID))
+                {
+                    return SessionID;
+                }
+            }
+             
+            return SessionID;
+            
         }
     }
 }

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PoliceOp.API.Data;
+using PoliceOp.API.Middleware;
 
 namespace PoliceOp.API
 {
@@ -32,6 +33,8 @@ namespace PoliceOp.API
             services.AddDbContext<PoliceOpAPIContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("PoliceOpAPIContext")));
 
+            services.AddJwtTokenAuthentication(this.Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +48,8 @@ namespace PoliceOp.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
