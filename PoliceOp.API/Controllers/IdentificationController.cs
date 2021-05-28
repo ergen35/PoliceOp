@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using PoliceOp.API.Data;
 using PoliceOp.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 
 
 namespace PoliceOp.API.Controllers
@@ -18,31 +19,47 @@ namespace PoliceOp.API.Controllers
     public class IdentificationController : ControllerBase
     {
         private readonly PoliceOpAPIContext _context;
+        private readonly IConfiguration configuration;
+        private readonly Services.JWTServices jWTService;
 
-        public IdentificationController(PoliceOpAPIContext context)
+        public IdentificationController(PoliceOpAPIContext context, IConfiguration configuration)
         {
             _context = context;
+            this.configuration = configuration;
+            this.jWTService = new Services.JWTServices(this.configuration);
         }
 
         // GET: api/Identification
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Personne>>> GetPersonnes()
         {
-            return await _context.Personnes.ToListAsync();
+            if (await SessionExists(HttpContext))
+            {
+                return await _context.Personnes.ToListAsync();
+            }
+
+            return Unauthorized("Session ID is Required");
+
         }
 
         // GET: api/Identification/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Personne>> GetPersonne(int id)
         {
-            var personne = await _context.Personnes.FindAsync(id);
-
-            if (personne == null)
+            if (await SessionExists(HttpContext))
             {
-                return NotFound();
+                var personne = await _context.Personnes.FindAsync(id);
+
+                if (personne == null)
+                {
+                    return NotFound();
+                }
+
+                return personne;
             }
 
-            return personne;
+            return Unauthorized("Session ID is Required");
+
         }
 
         // PUT: api/Identification/5
@@ -51,30 +68,36 @@ namespace PoliceOp.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPersonne(int id, Personne personne)
         {
-            if (id != personne.PersonneId)
-            {
-                return BadRequest();
-            }
 
-            _context.Entry(personne).State = EntityState.Modified;
-
-            try
+            if (await SessionExists(HttpContext))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PersonneExists(id))
+                if (id != personne.PersonneId)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
+
+                _context.Entry(personne).State = EntityState.Modified;
+
+                try
                 {
-                    throw;
+                    await _context.SaveChangesAsync();
                 }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PersonneExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return NoContent();
             }
 
-            return NoContent();
+            return Unauthorized("Session ID is Required");
         }
 
         // POST: api/Identification
@@ -83,31 +106,60 @@ namespace PoliceOp.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Personne>> PostPersonne(Personne personne)
         {
-            _context.Personnes.Add(personne);
-            await _context.SaveChangesAsync();
+            if (await SessionExists(HttpContext))
+            {
+                _context.Personnes.Add(personne);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPersonne", new { id = personne.PersonneId }, personne);
+                return CreatedAtAction("GetPersonne", new { id = personne.PersonneId }, personne);
+            }
+
+            return Unauthorized("Session ID is Required");
         }
 
         // DELETE: api/Identification/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Personne>> DeletePersonne(int id)
         {
-            var personne = await _context.Personnes.FindAsync(id);
-            if (personne == null)
+            if (await SessionExists(HttpContext))
             {
-                return NotFound();
+                var personne = await _context.Personnes.FindAsync(id);
+                if (personne == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Personnes.Remove(personne);
+                await _context.SaveChangesAsync();
+
+                return personne;
             }
 
-            _context.Personnes.Remove(personne);
-            await _context.SaveChangesAsync();
+            return Unauthorized("Session ID is Required");
 
-            return personne;
         }
 
         private bool PersonneExists(int id)
         {
             return _context.Personnes.Any(e => e.PersonneId == id);
+        }
+
+        private async Task<bool> SessionExists(HttpContext httpContext)
+        {
+
+            var AccessToken = jWTService.GetTokenFromRequest(httpContext);
+
+            if (AccessToken != null)
+            {
+                var sessionID = jWTService.DecodeObjectFromToken(AccessToken)["SessionID"];
+
+                if ((await _context.Sessions.AnyAsync(s => s.SessionID.ToString() == sessionID)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

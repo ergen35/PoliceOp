@@ -32,21 +32,32 @@ namespace PoliceOp.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AvisRecherche>>> GetAvisRecherches()
         {
-            return await _context.AvisRecherches.ToListAsync();
+            if (await SessionExists(HttpContext))
+            {
+                return await _context.AvisRecherches.ToListAsync();
+            }
+
+            return Unauthorized("Session ID is Required");
         }
 
         // GET: api/AvisRecherche/5
         [HttpGet("{id}")]
         public async Task<ActionResult<AvisRecherche>> GetAvisRecherche(Guid id)
         {
-            var avisRecherche = await _context.AvisRecherches.FindAsync(id);
-
-            if (avisRecherche == null)
+            if (await SessionExists(HttpContext))
             {
-                return NotFound();
+                var avisRecherche = await _context.AvisRecherches.FindAsync(id);
+
+                if (avisRecherche == null)
+                {
+                    return NotFound();
+                }
+
+                return avisRecherche;
+
             }
 
-            return avisRecherche;
+            return Unauthorized("Session ID is Required");
         }
 
         // PUT: api/AvisRecherche/5
@@ -55,30 +66,37 @@ namespace PoliceOp.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAvisRecherche(Guid id, AvisRecherche avisRecherche)
         {
-            if (id != avisRecherche.UID)
-            {
-                return BadRequest();
-            }
 
-            _context.Entry(avisRecherche).State = EntityState.Modified;
-
-            try
+            if (await SessionExists(HttpContext))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AvisRechercheExists(id))
+                if (id != avisRecherche.UID)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
+
+                _context.Entry(avisRecherche).State = EntityState.Modified;
+
+                try
                 {
-                    throw;
+                    await _context.SaveChangesAsync();
                 }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AvisRechercheExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return NoContent();
+
             }
 
-            return NoContent();
+            return Unauthorized("Session ID is Required");
         }
 
         // POST: api/AvisRecherche
@@ -87,26 +105,37 @@ namespace PoliceOp.API.Controllers
         [HttpPost]
         public async Task<ActionResult<AvisRecherche>> PostAvisRecherche(AvisRecherche avisRecherche)
         {
-            _context.AvisRecherches.Add(avisRecherche);
-            await _context.SaveChangesAsync();
+            if (await SessionExists(HttpContext))
+            {
+                _context.AvisRecherches.Add(avisRecherche);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAvisRecherche", new { id = avisRecherche.UID }, avisRecherche);
+                return CreatedAtAction("GetAvisRecherche", new { id = avisRecherche.UID }, avisRecherche);
+            }
+
+            return Unauthorized("Session ID is Required");
         }
 
         // DELETE: api/AvisRecherche/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<AvisRecherche>> DeleteAvisRecherche(Guid id)
         {
-            var avisRecherche = await _context.AvisRecherches.FindAsync(id);
-            if (avisRecherche == null)
+
+            if (await SessionExists(HttpContext))
             {
-                return NotFound();
+                var avisRecherche = await _context.AvisRecherches.FindAsync(id);
+                if (avisRecherche == null)
+                {
+                    return NotFound();
+                }
+
+                _context.AvisRecherches.Remove(avisRecherche);
+                await _context.SaveChangesAsync();
+
+                return avisRecherche;
             }
 
-            _context.AvisRecherches.Remove(avisRecherche);
-            await _context.SaveChangesAsync();
-
-            return avisRecherche;
+            return Unauthorized("Session ID is Required");
         }
 
         private bool AvisRechercheExists(Guid id)
@@ -114,22 +143,22 @@ namespace PoliceOp.API.Controllers
             return _context.AvisRecherches.Any(e => e.UID == id);
         }
 
-        private Guid GetSessionIDFromRequest(HttpContext httpContext)
+        private async Task<bool> SessionExists(HttpContext httpContext)
         {
-            Guid SessionID = new Guid();
 
-            var AccessToken = httpContext.Request.Headers["SessionID"].ToString();
+            var AccessToken = jWTService.GetTokenFromRequest(httpContext);
 
-            if (AccessToken != string.Empty || AccessToken != null )
+            if (AccessToken != null)
             {
-                if (Guid.TryParse(jWTService.DecodeObjectFromToken(AccessToken)["SessionID"], out SessionID))
+                var sessionID = jWTService.DecodeObjectFromToken(AccessToken)["SessionID"];
+
+                if ((await _context.Sessions.AnyAsync(s => s.SessionID.ToString() == sessionID)))
                 {
-                    return SessionID;
+                    return true;
                 }
             }
-             
-            return SessionID;
-            
+
+            return false;
         }
     }
 }
