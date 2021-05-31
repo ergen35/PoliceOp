@@ -21,6 +21,8 @@ namespace PoliceOp.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    
                 });
+
     }
 }

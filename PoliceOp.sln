@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoliceOp.Models", "PoliceOp.Models\PoliceOp.Models.csproj", "{C8E29C58-D77C-4502-A99E-EFD02778C0AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoliceOp.Models", "PoliceOp.Models\PoliceOp.Models.csproj", "{C8E29C58-D77C-4502-A99E-EFD02778C0AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoliceOp.API", "PoliceOp.API\PoliceOp.API.csproj", "{80DAA327-8DF1-43A4-AD4E-6EE8402BB7DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoliceOp.API", "PoliceOp.API\PoliceOp.API.csproj", "{80DAA327-8DF1-43A4-AD4E-6EE8402BB7DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoliceOp.OpCenter", "PoliceOp.OpCenter\PoliceOp.OpCenter.csproj", "{55616FA4-E3D3-4ABA-9204-31AF3284B77C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoliceOp.OpCenter", "PoliceOp.OpCenter\PoliceOp.OpCenter.csproj", "{55616FA4-E3D3-4ABA-9204-31AF3284B77C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
