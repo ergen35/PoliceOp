@@ -5,10 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FileRoot\CaptImg.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PoliceOp.Models\PoliceOp.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Faker.Net" Version="1.5.138" />
     <PackageReference Include="JWT" Version="8.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.15" />
@@ -23,6 +28,16 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils" Version="3.1.5" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="FileRoot\CaptImg.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\images\EliteCap.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 

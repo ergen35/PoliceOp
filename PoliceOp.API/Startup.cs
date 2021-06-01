@@ -47,8 +47,9 @@ namespace PoliceOp.API
 
             //app.UseHttpsRedirection();
 
-
             app.UseRouting();
+
+            app.UseStaticFiles();
 
             app.UseAuthentication();
 
