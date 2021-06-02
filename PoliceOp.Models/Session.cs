@@ -7,7 +7,7 @@ namespace PoliceOp.Models
     public class Session
     {
         [Key]
-        public Guid SessionID { get; set; } = new Guid();
+        public Guid SessionID { get; set; }
 
         public override string ToString()
         {

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Configuration;
 using Enterwell.Clients.Wpf.Notifications.Controls;
 using Enterwell.Clients.Wpf;
 using Enterwell.Clients.Wpf.Notifications;
+using Tiny.RestClient;
 
 namespace PoliceOp.OpCenter.AppLevel
 {

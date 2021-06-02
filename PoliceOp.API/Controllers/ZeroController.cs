@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,12 +34,18 @@ namespace PoliceOp.API.Controllers
         {
             var token = jWTService.TokenizeID("89898598", "77a8zeea87", "Session",Models.Issuers.PoliceOpAPI, Models.Audiences.TerminalDesktop);
 
-            //await GenerateData();
-            
-            int totalA = ctx.Agents.Count();
-            int totalP = ctx.Personnes.Count();
+            //await GenerateData(500, 100);
 
-            return Json(new {token = token, totalAgents = totalA, totalPersonnes = totalP});
+            //EraseData();
+
+            //int totalA = ctx.Agents.Count();
+            //int totalP = ctx.Personnes.Count();
+
+            List<Models.Agent> LA = ctx.Agents.Take(2).AsEnumerable().ToList();
+
+            //return Json(new {token = token, totalAgents = totalA, totalPersonnes = totalP});
+
+            return Json(LA);
         }
 
 
@@ -59,41 +66,26 @@ namespace PoliceOp.API.Controllers
 
             return jWTService.DecodeObjectFromToken(token)["pwd"];
 
-
-            // return EmbbededData;
-
-            //return Newtonsoft.Json.JsonConvert.SerializeObject(P);
-
-
-            //return jWTService.DecodeObjectFromToken(token)["iss"].ToString();
-
         }
 
-        public async Task GenerateData()
+        public async Task GenerateData(long totalPersonnes, long totalAgents)
         {
-            //ctx.Personnes.RemoveRange(ctx.Personnes.AsEnumerable());
-            //ctx.Agents.RemoveRange(ctx.Agents.AsEnumerable());
-
-            //ctx.SaveChanges();
-
-            Console.WriteLine("Removed All");
-
             DataGenerator generator = new DataGenerator();
 
             Console.Write("[");
 
-            for (int i = 0; i < 1000; i++)
+            for (long i = 0; i < totalPersonnes; i++)
             {
-                await ctx.AddAsync(await generator.GeneratePersonne());
+                await ctx.Personnes.AddAsync(await generator.GeneratePersonne());
                 Console.Write("|");
             }
 
             Console.WriteLine("Fin Personnes\n");
 
             Console.Write("[");
-            for (int i = 0; i < 200; i++)
+            for (long i = 0; i < totalPersonnes; i++)
             {
-                await ctx.AddAsync(await generator.GenerateAgent());
+                await ctx.Agents.AddAsync(await generator.GenerateAgent());
 
                 Console.Write("|");
             }
@@ -101,8 +93,18 @@ namespace PoliceOp.API.Controllers
             Console.WriteLine("Fin Agents");
 
 
-            await ctx.SaveChangesAsync();
+            ctx.SaveChanges();
 
+        }
+
+        public void EraseData()
+        {
+            ctx.Personnes.RemoveRange(ctx.Personnes.AsEnumerable());
+            ctx.Agents.RemoveRange(ctx.Agents.AsEnumerable());
+
+            ctx.SaveChanges();
+
+            Console.WriteLine("Removed All");
         }
 
     }

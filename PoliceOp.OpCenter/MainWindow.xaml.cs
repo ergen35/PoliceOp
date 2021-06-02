@@ -18,7 +18,6 @@ namespace PoliceOp.OpCenter
     public partial class MainWindow : MahApps.Metro.Controls.MetroWindow
     {
         public string SessionID { get; set; }
-        public IAppCache CachingService { get; set; }
         public Pages.HomePage Home { get; set; }
         public Models.Agent Agent { get; set; }
 
@@ -28,11 +27,10 @@ namespace PoliceOp.OpCenter
 
             this.DataContext = this;
 
-            CachingService= new CachingService();
 
             try
             {
-                SessionID = CachingService.Get<string>("SessionID");
+                SessionID = AppLevel.CachingService.appCache.Get<string>("SessionID");
                
                 if (SessionID == null)
                 {
@@ -45,6 +43,7 @@ namespace PoliceOp.OpCenter
                 this.Close();
             }
 
+
             Agent = new Models.Agent() { Matricule = "4555555881", Nom = "Mad", Prenom = "Crocodile" };
 
             this.Home = new Pages.HomePage();
@@ -56,6 +55,14 @@ namespace PoliceOp.OpCenter
 
             this.Closed += MainWindow_Closed;
 
+            //Load Agent Info once window is loaded
+            this.Loaded += MainWindow_Loaded;
+
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -189,8 +196,8 @@ namespace PoliceOp.OpCenter
         {
             //Delete sessionID from cache
 
-            CachingService.Add<string>("SessionID", string.Empty);
-            MessageBox.Show(CachingService.Get<string>("SessionID"));
+            AppLevel.CachingService.appCache.Add<string>("SessionID", string.Empty);
+            MessageBox.Show(AppLevel.CachingService.appCache.Get<string>("SessionID"));
             //Call Api logout
 
             //Close window

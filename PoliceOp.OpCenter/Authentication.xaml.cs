@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Microsoft.Extensions.Configuration;
 using LazyCache;
 using System.Windows.Threading;
 using Enterwell.Clients.Wpf.Notifications;
-
+using PoliceOp.OpCenter.Services;
+using Tiny.RestClient;
 
 
 namespace PoliceOp.OpCenter
@@ -24,71 +18,107 @@ namespace PoliceOp.OpCenter
     /// </summary>
     public partial class Authentication : MahApps.Metro.Controls.MetroWindow
     {
+        public JWTServices jWTServices { get; set; }
         public Authentication()
         {
             InitializeComponent();
 
-
-            //Initialize Image
-            //BitmapImage image = new BitmapImage();
-            //image.BeginInit();
-            //image.UriSource = new Uri("/Resources/BadgeAnimation.gif");
-            //image.EndInit();
-            //ImageBehavior.SetAnimatedSource(this.BackGif, image);
-
             this.AuthMessages.Manager = AppLevel.NotificationManagers.AuthNotificationsManager;
 
-            this.KeyDown += Authentication_KeyDown;
+            jWTServices = new JWTServices();
+
+            //this.KeyDown += Authentication_KeyDown;
         }
 
-        private void Authentication_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape || e.Key == Key.Enter || e.Key == Key.Space)
-            {
-                MessageBox.Show("KeyEvent fired");
-            }
-        }
+        //private void Authentication_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Escape || e.Key == Key.Enter || e.Key == Key.Space)
+        //    {
+        //        MessageBox.Show("KeyEvent fired");
+        //    }
+        //}
 
         private async void AuthBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (this.LoginTxtb.Text != "" && this.PwdTxtb.Password != "")
+            Models.Session session = new Models.Session();
+
+            string login = this.LoginTxtb.Text;
+            string pwd = this.PwdTxtb.Password;
+
+            if ( login != "" &&  pwd != "")
             {
                 if (this.LoginTxtb.VerifyData())
                 {
                     //Send Request to API
 
-                    //Return Result
 
-                    // Get Key from AppConfig
-                    string key = System.Configuration.ConfigurationManager.AppSettings.Get("HashKey");
-                    //Generate Hash
+                    this.AuthBtn.Content = new MahApps.Metro.IconPacks.PackIconFontAwesome() { 
+                        Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.CircleNotchSolid,
+                        Spin = true
+                    };
 
-                    string SessionID = await Task.Run<string>(() => { return Guid.NewGuid().ToString(); });
+                        
+                    try
+                    {
+                        session = await AppLevel.APIClients.v1Client
+                                        .PostRequest(route: "Auth")
+                                        .WithOAuthBearer(jWTServices.TokenizeID(login, pwd, "Auth", Models.Issuers.OpCenterApp, Models.Audiences.PoliceOpAPI))
+                                        .ExecuteAsync<Models.Session>();
+                    }
+                    catch (HttpException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound || ex.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    {
+                        ShowNotification("L'authentification a échoué", "#F15B19", "#F15B19", "Echec");
+                    }
+                    catch (HttpException ex) when (ex.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                    {
+                        ShowNotification("Le Serveur est Hors Service", "#F15B19", "#F15B19", "Echec");
+                    }
+                    catch(Exception)
+                    {
+                        ShowNotification("Impossible d'atteindre le serveur\nUne Erreur s'est Produite", "#F15B19", "#F15B19", "Echec");
+                    }
 
-                    //Caching
-                    IAppCache appCache = new CachingService();
-                    appCache.Add<string>("SessionID", SessionID, new TimeSpan(0, 3, 0));
+                    await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 5));
+
+                    this.AuthBtn.Content = new MahApps.Metro.IconPacks.PackIconBoxIcons()
+                    {
+                        Kind = MahApps.Metro.IconPacks.PackIconBoxIconsKind.RegularCheckShield,
+                        Spin = false
+                    };
 
 
-                    //MessageBox.Show(appCache.Get<string>("SessionID"));
+                    if (session.SessionID == (new Models.Session()).SessionID)
+                    {
+                        return;
+                    }
+                    
+                    else
+                    {
+                        // Get Key from AppConfig
+                        string key = System.Configuration.ConfigurationManager.AppSettings.Get("HashKey");
+                        
+                        //Generate Hash
 
-                    //Close this window and try to call The OpCenter
-                    this.Visibility = Visibility.Collapsed;
-                    //Clear Password
-                    this.PwdTxtb.Clear();
+                        //Caching
 
-                    // When OpCenter Opens, check Hash in the cache
-                    MainWindow MW = new MainWindow();
-                    MW.Show();
+                        AppLevel.CachingService.appCache.Add<string>("SessionID", session.SessionID.ToString(), new TimeSpan(23, 30, 0));
 
-                    // When OpCenter Closes, Delete hash from cache
+                        //Close this window and try to call The OpCenter
+                        this.Visibility = Visibility.Collapsed;
+                        //Clear Password
+                        this.PwdTxtb.Clear();
+
+                        // When OpCenter Opens, check Hash in the cache
+                        MainWindow MW = new MainWindow();
+                        MW.Show();
+
+                        // When OpCenter Closes, Delete hash from cache
+                    }
+
                 }
                 else
-                    MessageBox.Show("Not Okay");
-
+                    MessageBox.Show("La Vérification des données entrées a échoué\nVeuillez réésayer", "Avertissement", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
             }
-
-            ShowNotification("Connection Lost.");
 
         }
 
@@ -103,19 +133,35 @@ namespace PoliceOp.OpCenter
             this.FingerPrintIcon.Effect = new System.Windows.Media.Effects.BlurEffect();
         }
 
-        private void ShowNotification(string Message)
+        private void ShowNotification(string Message, Brush BgBrush, Brush AccentBrush, string BadgeInfo)
         {
             AppLevel.NotificationManagers.AuthNotificationsManager.CreateMessage()
-                                        .Accent("#1751C3")
+                                        .Accent(AccentBrush)
                                         .Animates(true)
                                         .AnimationInDuration(0.75)
                                         .AnimationOutDuration(2)
-                                        .Background("#333")
-                                        .HasBadge("Info")
-                                        .HasMessage("Update will be installed on next application restart. This message will be dismissed after 5 seconds.")
-                                        .Dismiss().WithButton("Update now", button => { })
-                                        .Dismiss().WithButton("Release notes", button => { })
-                                        .Dismiss().WithDelay(TimeSpan.FromSeconds(5))
+                                        .Background(BgBrush)
+                                        .HasBadge(BadgeInfo)
+                                        .HasMessage(Message)
+                                        .Dismiss().WithButton("Ok", button => { })
+                                        .Dismiss().WithButton("Réesayer", button => { AuthBtn_Click(this, null); })
+                                        .Dismiss().WithDelay(TimeSpan.FromSeconds(6))
+                                        .Queue();
+        }
+
+        private void ShowNotification(string Message, String BgBrush, String AccentBrush, string BadgeInfo)
+        {
+            AppLevel.NotificationManagers.AuthNotificationsManager.CreateMessage()
+                                        .Accent(AccentBrush)
+                                        .Animates(true)
+                                        .AnimationInDuration(0.75)
+                                        .AnimationOutDuration(2)
+                                        .Background(BgBrush)
+                                        .HasBadge(BadgeInfo)
+                                        .HasMessage(Message)
+                                        .Dismiss().WithButton("Ok", button => { })
+                                        .Dismiss().WithButton("Réesayer", button => { AuthBtn_Click(this, null); })
+                                        .Dismiss().WithDelay(TimeSpan.FromSeconds(6))
                                         .Queue();
         }
     }

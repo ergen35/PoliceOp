@@ -63,7 +63,7 @@ namespace PoliceOp.API.Controllers
                     }
                     else
                     {
-                        return NotFound("Bad Math");
+                        return NotFound("Bad Match");
                     }
                 }
                 else

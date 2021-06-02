@@ -12,11 +12,11 @@ namespace PoliceOp.OpCenter.Services
 {
     public class JWTServices
     {
-        private readonly string _secret;
-
-        public JWTServices(IConfiguration configuration)
+        public string _secret { get; set; }
+        
+        public JWTServices()
         {
-            this._secret = configuration.GetSection("JwtConfig").GetSection("secret").Value;
+            this._secret = System.Configuration.ConfigurationManager.AppSettings["secret"].ToString();
         }
 
 
