@@ -7,10 +7,15 @@ namespace PoliceOp.Models
     {
         [Key]
         public Guid UID { get; set; }
+
         [Required]
         public DateTime DateEmission { get; set; }
+
         [Required]
         public string StatutRecherche { get; set; }
+
         public string Informations { get; set; }
+
+        public virtual Personne PersonneRecherchee { get; set; }
     }
 }

@@ -9,11 +9,18 @@ namespace PoliceOp.Models
     {        
         [Required]
         public string Type { get; set; }
-        public string Description { get; set; }
+
         public string Rue { get; set; }
+
         public string NumeroParcelle { get; set; }
+
         public string NumeroChambre { get; set; }
-        public GeoCoordinate CoordonneesGeo { get; set; }
+
+        public virtual GeoCoordinate CoordonneesGeo { get; set; }
+
+        public string Description { get; set; }
+
+        public virtual Personne Proprietaire { get; set; }
 
     }
 }

@@ -10,8 +10,10 @@ namespace PoliceOp.Models
     {
         [Key]
         public Guid UID { get; set; }
-        public byte[] DonneesFaciales { get; set; }
-        public byte[] DonneesDigitales { get; set; }
+
+        public virtual byte[] DonneesFaciales { get; set; }
+
+        public virtual byte[] DonneesDigitales { get; set; }
 
         public bool Comparer()
         {

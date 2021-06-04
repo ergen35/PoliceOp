@@ -65,23 +65,16 @@ namespace PoliceOp.Models
         public double Taille { get; set; }
 
         [Required]
-        public string Photographie { get; set; }
+        public byte[] Photographie { get; set; }
 
-        [ForeignKey("Biometrie")]
-        [Column(Order = 1)]
-        public int BiometrieID { get; set; }
+        public virtual Biometrie Biometrie { get; set; }
 
-        [ForeignKey("Residence")]
-        [Column(Order = 2)]
-        public int ResidenceId { get; set; }
+        [Required]
+        public virtual Residence Residence { get; set; }
 
-        [ForeignKey("PersonneId")]
-        [Column(Order = 3)]
-        public int PereId { get; set; }
+        public virtual Personne Pere { get; set; }
 
-        [ForeignKey("PersonneId")]
-        [Column(Order = 4)]
-        public int MereId { get; set; }
+        public virtual Personne Mere { get; set; }
 
     }
 }

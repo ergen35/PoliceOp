@@ -24,7 +24,6 @@ namespace PoliceOp.API
             Personne P = new Personne()
             {
                 UID = Guid.NewGuid().ToString(),
-                BiometrieID = Faker.RandomNumber.Next(0, 500000000),
                 CouleurCheveux = Faker.Enum.Random<Couleur>().ToString(),
                 CouleurYeux = Faker.Enum.Random<Couleur>().ToString(),
                 DateNaissance = Faker.Identification.DateOfBirth(),
@@ -41,7 +40,7 @@ namespace PoliceOp.API
                 Taille = Convert.ToDouble(Faker.RandomNumber.Next(45, 300)),
                 Teint = Faker.Enum.Random<Couleur>().ToString(),
                 Telephone = Phone.Number(),
-                Photographie =  "alze9ve2avez"//await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png")
+                Photographie =  Convert.FromBase64String("alze9ve2avez")//await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png")
             };
 
             return P;
@@ -56,7 +55,6 @@ namespace PoliceOp.API
                 Matricule = Faker.Identification.UkNhsNumber(),
                 PasswordHash = pwd.Next(),
                 Corps = string.Concat(Lorem.Words(3)),
-                BiometrieID = Faker.RandomNumber.Next(0, 500000000),
                 CouleurCheveux = Faker.Enum.Random<Couleur>().ToString(),
                 CouleurYeux = Faker.Enum.Random<Couleur>().ToString(),
                 DateNaissance = Faker.Identification.DateOfBirth(),
@@ -73,7 +71,7 @@ namespace PoliceOp.API
                 Teint = Faker.Enum.Random<Couleur>().ToString(),
                 Telephone = Phone.Number(),
                 Profession = string.Concat(Faker.Lorem.Words(3)),
-                Photographie = "alze9ve2avez" //Convert.ToBase64String(await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png"))
+                Photographie = Convert.FromBase64String("alze9ve2avez") //Convert.ToBase64String(await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png"))
             };
 
             return A;
