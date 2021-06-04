@@ -75,6 +75,9 @@ namespace PoliceOp.OpCenter.Services
 
                                   .WithSecret(_secret)
 
+                                  .AddClaim(ClaimName.Issuer, Models.Issuers.OpCenterApp.ToString())
+                                  .AddClaim(ClaimName.Audience, Models.Audiences.PoliceOpAPI.ToString())
+
                                   .AddClaim(ClaimName.ExpirationTime, DateTimeOffset.UtcNow.AddMinutes(expIMinutes).ToUnixTimeSeconds())
                                   .AddClaim("sid", SessionID)
                                   .AddClaim("bks", Reason)

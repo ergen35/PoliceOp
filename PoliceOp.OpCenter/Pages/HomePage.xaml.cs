@@ -81,7 +81,7 @@ namespace PoliceOp.OpCenter.Pages
 
                     await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 12));
 
-                    (item as MainWindow).ContentFrame.Navigate(new Pages.NoticeDetailsPage());
+                    (item as MainWindow).ContentFrame.Navigate(new Pages.AgentsManagementPage());
                     break;
                 }
             }

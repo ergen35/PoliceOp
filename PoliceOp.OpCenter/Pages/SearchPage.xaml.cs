@@ -21,6 +21,18 @@ namespace PoliceOp.OpCenter.Pages
         public SearchPage()
         {
             InitializeComponent();
+
+            List<Models.Personne> PList = new List<Models.Personne>()
+            {
+                new Models.Personne(){Nom = "Hello", Prenom = "Hello", NPI = "656248489", UID = Guid.NewGuid().ToString() },
+                new Models.Personne(){Nom = "Halo", Prenom = "Malo", NPI = "656248489", UID = Guid.NewGuid().ToString() },
+                new Models.Personne(){Nom = "Hilo", Prenom = "Milo", NPI = "656248489", UID = Guid.NewGuid().ToString() },
+                new Models.Personne(){Nom = "Hulo", Prenom = "Mulo", NPI = "656248489", UID = Guid.NewGuid().ToString() },
+                new Models.Personne(){Nom = "Hylo", Prenom = "Mylo", NPI = "656248489", UID = Guid.NewGuid().ToString() },
+                new Models.Personne(){Nom = "Mulo", Prenom = "Poulos", NPI = "656248489", UID = Guid.NewGuid().ToString() },
+            };
+
+            this.PersonnesListView.ItemsSource = PList;
         }
     }
 }

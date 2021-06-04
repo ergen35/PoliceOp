@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PoliceOp.API.Controllers
 {
@@ -38,14 +37,12 @@ namespace PoliceOp.API.Controllers
 
             //EraseData();
 
-            //int totalA = ctx.Agents.Count();
-            //int totalP = ctx.Personnes.Count();
+            int totalA = ctx.Agents.Count();
+            int totalP = ctx.Personnes.Count();
 
             List<Models.Agent> LA = ctx.Agents.Take(2).AsEnumerable().ToList();
 
-            //return Json(new {token = token, totalAgents = totalA, totalPersonnes = totalP});
-
-            return Json(LA);
+            return Json(new { token = token, totalAgents = totalA, totalPersonnes = totalP, Agebtx2 = LA });
         }
 
 
@@ -59,7 +56,7 @@ namespace PoliceOp.API.Controllers
                 Prenom = "Hotegni",
                 IFU = "888888",
                 CouleurCheveux = "Red",
-                Sexe = Models.Sexe.M
+                Sexe = Models.Sexe.M.ToString()
             };
 
             string token = jWTService.TokenizeID("6556265", "899d8er6zfxer", "");

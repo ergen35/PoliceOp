@@ -16,7 +16,7 @@ namespace PoliceOp.API.Controllers
     [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize]
-    public class AgentsController : ControllerBase
+    public class AgentsController : Controller
     {
         private readonly PoliceOpAPIContext _context;
         private readonly IConfiguration configuration;
@@ -44,27 +44,25 @@ namespace PoliceOp.API.Controllers
 
         // GET: api/Agents/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Agent>> GetAgent(int id)
+        [AllowAnonymous]
+        public async Task<ActionResult<Models.Agent>> GetAgent(int id)
         {
-
             if (await SessionExists(HttpContext))
             {
-                var agent = await _context.Agents.FindAsync(id);
+                var agent = _context.Agents.Where(a => a.PersonneId == id).FirstOrDefault();
 
                 if (agent == null)
                 {
                     return NotFound();
                 }
 
-                return agent;
+                return Json(agent);
             }
 
             return Unauthorized("Session ID is Required");
         }
 
         // PUT: api/Agents/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAgent(int id, Agent agent)
         {

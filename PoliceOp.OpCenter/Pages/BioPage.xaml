@@ -5,7 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PoliceOp.OpCenter.Pages"
       mc:Ignorable="d"  xmlns:hc="https://handyorg.github.io/handycontrol"
-      d:DesignHeight="450" d:DesignWidth="800" xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
       Title="BioPage">
 
     <Grid>
@@ -23,6 +24,7 @@
             </Grid.ColumnDefinitions>
 
             <hc:ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+                
                 <StackPanel Orientation="Vertical" Margin="0,0,5,0">
 
                     <hc:Card BorderThickness="0" Effect="{DynamicResource EffectShadow2}">
@@ -73,20 +75,34 @@
                             </Button>
                         </Grid>
                     </Border>
-                    <Expander x:Name="FingerDataExp" Header="Finger Prints" Margin="0,2,0,0">
-                        <StackPanel>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                        </StackPanel>
+                    <Expander x:Name="FingerDataExp" Header="Finger Prints" Background="White" Margin="0,2,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+
+                            <Image Source="/Resources/images/d1.png" Grid.Row="0" Grid.Column="0"/>
+                            <Image Source="/Resources/images/d2.png" Grid.Row="0" Grid.Column="1"/>
+                            <Image Source="/Resources/images/d3.png" Grid.Row="0" Grid.Column="2"/>
+                            <Image Source="/Resources/images/d4.png" Grid.Row="0" Grid.Column="3"/>
+                            <Image Source="/Resources/images/d5.png" Grid.Row="0" Grid.Column="4"/>
+                            
+
+                            <Image Source="/Resources/images/d6.png" Grid.Row="1" Grid.Column="0"/>
+                            <Image Source="/Resources/images/d7.png" Grid.Row="1" Grid.Column="1"/>
+                            <Image Source="/Resources/images/d8.png" Grid.Row="1" Grid.Column="2"/>
+                            <Image Source="/Resources/images/d9.png" Grid.Row="1" Grid.Column="3"/>
+                            <Image Source="/Resources/images/d10.png" Grid.Row="1" Grid.Column="4"/>
+
+                        </Grid>
                     </Expander>
                     <Expander x:Name="FaceDataExp" Header="Face Data">
                         <StackPanel>
@@ -130,50 +146,50 @@
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="408" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="Nom Complet: " Margin="5,0,0,0" FontSize="22"/>
+                            <TextBlock Text="Nom Complet: " Margin="0,0,0,0" FontSize="22"/>
 
                             <StackPanel Grid.ColumnSpan="3" HorizontalAlignment="Center" Orientation="Horizontal">
                                 <TextBlock  Text="{Binding Personne.Nom}" FontSize="22"/>
                                 <TextBlock  Text="{Binding Personne.Prenom}" FontSize="22" Margin="5,0,0,0"/>
                             </StackPanel>
 
-                            <hc:Divider Grid.ColumnSpan="3" Background="BlueViolet"/>
+                            <hc:Divider Grid.ColumnSpan="3" Grid.Row="1" Background="BlueViolet" Margin="0,0,0,0"/>
 
-                            <TextBlock Text="Nom" Grid.Row="1"/>
-                            <TextBlock Text="{Binding Personne.Prenom}" Grid.Row="1" Grid.Column="1" Margin="5,0,0,0"/>
+                            <TextBlock Text="Nom" Grid.Row="1" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding Personne.Nom}" Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
 
-                            <TextBlock Text="Prénom" Grid.Row="2"/>
-                            <TextBlock Text="{Binding Personne.Prenom}" Grid.Row="2" Grid.Column="1" Margin="5,0,0,0"/>
+                            <TextBlock Text="Prénom" Grid.Row="2" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding Personne.Prenom}" Grid.Row="2" Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
 
 
-                            <TextBlock Text="Sexe" Grid.Row="3"/>
-                            <TextBlock Text="{Binding Personne.Sexe}" Grid.Row="3" Grid.Column="1" Margin="5,0,0,0"/>
+                            <TextBlock Text="Sexe" Grid.Row="3" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding Personne.Sexe}" Grid.Row="3" Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
 
-                            
-                            <TextBlock Text="Nationalité" Grid.Row="4"/>
-                            <TextBlock Text="{Binding Personne.Nationalité}" Grid.Row="4" Grid.Column="1" Margin="5,0,0,0"/>
 
-                            <TextBlock Text="Taille" Grid.Row="5"/>
+                            <TextBlock Text="Nationalité" Grid.Row="4" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding Personne.Nationalite}" Grid.Row="4" Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+
+                            <TextBlock Text="Taille" Grid.Row="5" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left" />
                             <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" Margin="5,0,0,0">
-                                <TextBlock Text="{Binding Personne.Taille}"/>
-                                <TextBlock Text=" m"/>
+                                <TextBlock Text="{Binding Personne.Taille}" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                                <TextBlock Text=" m" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
                             </StackPanel>
 
-                            <TextBlock Text="Date de Naissance" Grid.Row="6"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" Margin="5,0,0,0">
-                                <TextBlock Text="{Binding Personne.DateNaissance.Day}" />
-                                <TextBlock Text="/"/>
-                                <TextBlock Text="{Binding Personne.DateNaissance.Month}" />
-                                <TextBlock Text="/"/>
-                                <TextBlock Text="{Binding Personne.DateNaissance.Year}" />
+                            <TextBlock Text="Date de Naissance" Grid.Row="6" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" Margin="5,0,0,0" >
+                                <TextBlock Text="{Binding Personne.DateNaissance.Day}" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                                <TextBlock Text="/" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                                <TextBlock Text="{Binding Personne.DateNaissance.Month}" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                                <TextBlock Text="/" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                                <TextBlock Text="{Binding Personne.DateNaissance.Year}" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
                             </StackPanel>
 
-                            <TextBlock Text="Sexe" Grid.Row="7"/>
-                            <TextBlock Text="{Binding Personne.Sexe}" Grid.Row="7" Grid.Column="1" Margin="5,0,0,0"/>
+                            <TextBlock Text="Sexe" Grid.Row="7" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding Personne.Sexe}" Grid.Row="7" Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
 
                         </Grid>
                     </Border>

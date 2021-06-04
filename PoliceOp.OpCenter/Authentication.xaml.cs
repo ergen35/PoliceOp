@@ -30,17 +30,9 @@ namespace PoliceOp.OpCenter
             //this.KeyDown += Authentication_KeyDown;
         }
 
-        //private void Authentication_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Escape || e.Key == Key.Enter || e.Key == Key.Space)
-        //    {
-        //        MessageBox.Show("KeyEvent fired");
-        //    }
-        //}
-
         private async void AuthBtn_Click(object sender, RoutedEventArgs e)
         {
-            Models.Session session = new Models.Session();
+            Models.SessionVM sessionVM = new Models.SessionVM();
 
             string login = this.LoginTxtb.Text;
             string pwd = this.PwdTxtb.Password;
@@ -60,10 +52,10 @@ namespace PoliceOp.OpCenter
                         
                     try
                     {
-                        session = await AppLevel.APIClients.v1Client
+                        sessionVM = await AppLevel.APIClients.v1Client
                                         .PostRequest(route: "Auth")
                                         .WithOAuthBearer(jWTServices.TokenizeID(login, pwd, "Auth", Models.Issuers.OpCenterApp, Models.Audiences.PoliceOpAPI))
-                                        .ExecuteAsync<Models.Session>();
+                                        .ExecuteAsync<Models.SessionVM>();
                     }
                     catch (HttpException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound || ex.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
@@ -87,7 +79,7 @@ namespace PoliceOp.OpCenter
                     };
 
 
-                    if (session.SessionID == (new Models.Session()).SessionID)
+                    if (sessionVM.SessionID == (new Models.Session()).SessionID.ToString())
                     {
                         return;
                     }
@@ -101,7 +93,7 @@ namespace PoliceOp.OpCenter
 
                         //Caching
 
-                        AppLevel.CachingService.appCache.Add<string>("SessionID", session.SessionID.ToString(), new TimeSpan(23, 30, 0));
+                        AppLevel.CachingService.appCache.Add<Models.SessionVM>("SessionVM", sessionVM, new TimeSpan(23, 30, 0));
 
                         //Close this window and try to call The OpCenter
                         this.Visibility = Visibility.Collapsed;

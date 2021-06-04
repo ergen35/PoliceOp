@@ -14,7 +14,7 @@ namespace PoliceOp.API.Controllers
     [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize]
-    public class AuthController : ControllerBase
+    public class AuthController : Controller
     {
         private readonly PoliceOpAPIContext _context;
         private readonly Services.JWTServices jWTService;
@@ -33,7 +33,7 @@ namespace PoliceOp.API.Controllers
         // POST: api/Auth
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<Models.Session>> InitiateSession([FromHeader] string Authorization)
+        public async Task<ActionResult<Models.SessionVM>> InitiateSession([FromHeader] string Authorization)
         {
 
             var token = string.Empty;
@@ -52,14 +52,17 @@ namespace PoliceOp.API.Controllers
                                 where Agent.Matricule == mat
                                 where Agent.PasswordHash == pwd
                                 select Agent;
+                    Agent agent = await query.FirstOrDefaultAsync();
 
-                    if ((await query.FirstOrDefaultAsync()) != null)
+                    if (agent != null)
                     {
                         Session newSession = new Session();
                         await _context.Sessions.AddAsync(newSession);
                         await _context.SaveChangesAsync();
-                        
-                        return newSession;
+
+                        SessionVM svm = new SessionVM() { SessionID = newSession.SessionID.ToString(), AgentID = agent.PersonneId };
+
+                        return Json(svm);
                     }
                     else
                     {
@@ -92,7 +95,7 @@ namespace PoliceOp.API.Controllers
             _context.Sessions.Remove(session);
             await _context.SaveChangesAsync();
 
-            return session;
+            return Ok("Logout successfull");
         }
     }
 }

@@ -9,6 +9,8 @@ using System.Linq.Expressions;
 using LazyCache;
 using ControlzEx.Theming;
 using Enterwell.Clients.Wpf.Notifications;
+using Tiny.RestClient;
+using PoliceOp.OpCenter.Services;
 
 namespace PoliceOp.OpCenter
 {
@@ -17,9 +19,11 @@ namespace PoliceOp.OpCenter
     /// </summary>
     public partial class MainWindow : MahApps.Metro.Controls.MetroWindow
     {
-        public string SessionID { get; set; }
+        public Models.SessionVM SessionVM { get; set; }
         public Pages.HomePage Home { get; set; }
         public Models.Agent Agent { get; set; }
+
+        public JWTServices jWTServices { get; set; }
 
         public MainWindow()
         {
@@ -30,9 +34,9 @@ namespace PoliceOp.OpCenter
 
             try
             {
-                SessionID = AppLevel.CachingService.appCache.Get<string>("SessionID");
+                SessionVM = AppLevel.CachingService.appCache.Get<Models.SessionVM>("SessionVM");
                
-                if (SessionID == null)
+                if (SessionVM.SessionID == (new Models.Session()).SessionID.ToString())
                 {
                     this.Close();
                 }
@@ -43,8 +47,8 @@ namespace PoliceOp.OpCenter
                 this.Close();
             }
 
+            jWTServices = new JWTServices();
 
-            Agent = new Models.Agent() { Matricule = "4555555881", Nom = "Mad", Prenom = "Crocodile" };
 
             this.Home = new Pages.HomePage();
 
@@ -60,9 +64,34 @@ namespace PoliceOp.OpCenter
 
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
+            try
+            {
+                AppLevel.APIClients.v1Client = new TinyRestClient(new System.Net.Http.HttpClient(), System.Configuration.ConfigurationManager.AppSettings["v1APIUrl"].ToString());
+                
+                //Models.Personne P = await AppLevel.APIClients.v1Client
+                //            .GetRequest(route: "Agents")
+                //            .WithOAuthBearer(jWTServices.TokenizeSessionID(SessionVM.SessionID.ToString(), "getAgentByID"))
+                //            .AddQueryParameter("id", 1 /*SessionVM.AgentID*/)
+                //            .ExecuteAsync<Models.Personne>();
+
+                ShowNotification("Fait", "#333", "#1751C3", "Ok");
+
+            }
+            catch (HttpException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound || ex.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                ShowNotification("L'authentification a échoué", "#F15B19", "#F15B19", "Echec");
+            }
+            catch (HttpException ex) when (ex.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                ShowNotification("Le Serveur est Hors Service", "#F15B19", "#F15B19", "Echec");
+            }
+            catch (Exception ex)
+            {
+                ShowNotification($"Une Erreur s'est Produite\n{ex.Message}", "#F15B19", "#F15B19", "Echec");
+            }
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -85,7 +114,6 @@ namespace PoliceOp.OpCenter
         {
             this.ToogleDrawer.Visibility = Visibility.Visible;
         }
-
 
         private void ThemeBtn_Checked(object sender, RoutedEventArgs e)
         {
@@ -114,35 +142,10 @@ namespace PoliceOp.OpCenter
 
         }
 
-
-
         private void NotificationCenter_Click(object sender, RoutedEventArgs e)
         {
             // Generate a new notification
            
-        }
-
-        private void NotifBtn_Click(object sender, RoutedEventArgs e)
-        {
-            AppLevel.NotificationManagers.InAppNotificationsManager.CreateMessage()
-                                                           .Accent("#1751C3")
-                                                           .Background("#333")
-                                                           .HasBadge("Info")
-                                                           .HasMessage("Update will be installed on next application restart.")
-                                                           .Dismiss().WithButton("Update now", button => { })
-                                                           .Dismiss().WithButton("Release notes", button => { })
-                                                           .Dismiss().WithButton("Later", button => { })
-                                                           .Queue();
-
-            AppLevel.NotificationManagers.AlertCenterManager.CreateMessage()
-                                                            .Accent("#1751C3")
-                                                            .Background("#333")
-                                                            .HasBadge("Info")
-                                                            .HasMessage("Update will be installed on next application restart.")
-                                                            .Dismiss().WithButton("Update now", button => { })
-                                                            .Dismiss().WithButton("Release notes", button => { })
-                                                            .Dismiss().WithButton("Later", button => { })
-                                                            .Queue();
         }
 
         private void ClearAlertsBtn_Click(object sender, RoutedEventArgs e)
@@ -192,13 +195,35 @@ namespace PoliceOp.OpCenter
             }
         }
 
-        private void LogOutBtn_Click(object sender, RoutedEventArgs e)
+        private async void LogOutBtn_Click(object sender, RoutedEventArgs e)
         {
             //Delete sessionID from cache
 
-            AppLevel.CachingService.appCache.Add<string>("SessionID", string.Empty);
+            AppLevel.CachingService.appCache.Add<Models.Session>("SessionID", null);
+
             MessageBox.Show(AppLevel.CachingService.appCache.Get<string>("SessionID"));
+
             //Call Api logout
+            
+            try
+            {
+                 await AppLevel.APIClients.v1Client
+                                .DeleteRequest(route: "Auth")
+                                .AddQueryParameter("uid", SessionVM.SessionID.ToString())
+                                .ExecuteAsync();
+            }
+            catch (HttpException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return;
+            }
+            catch (HttpException ex) when (ex.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                return;
+            }
+            catch (Exception)
+            {
+                return;
+            }
 
             //Close window
             this.Close();
@@ -208,5 +233,23 @@ namespace PoliceOp.OpCenter
         {
             this.ContentFrame.Navigate(Home);
         }
+
+
+
+        private void ShowNotification(string Message, String BgBrush, String AccentBrush, string BadgeInfo)
+        {
+            AppLevel.NotificationManagers.InAppNotificationsManager.CreateMessage()
+                                        .Accent(AccentBrush)
+                                        .Animates(true)
+                                        .AnimationInDuration(0.75)
+                                        .AnimationOutDuration(2)
+                                        .Background(BgBrush)
+                                        .HasBadge(BadgeInfo)
+                                        .HasMessage(Message)
+                                        .Dismiss().WithButton("Ok", button => { })
+                                        .Dismiss().WithDelay(TimeSpan.FromSeconds(25))
+                                        .Queue();
+        }
     }
+
 }

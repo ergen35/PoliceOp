@@ -48,7 +48,7 @@
                             <hc:Card MaxWidth="240" BorderThickness="0" Background="LightBlue" Effect="{DynamicResource EffectShadow2}" Margin="0,8,0,8">
                                 <!--Card Content section-->
                                 <Border CornerRadius="4,4,0,0" Width="240" Height="240">
-                                    <Image Source="D:\DOCS\blender files divers\renders\MechWarior 6.png" VerticalAlignment="Center" 
+                                    <Image Source="Resources/images/EliteCaptHome.png" VerticalAlignment="Center" 
                                                                 HorizontalAlignment="Center" Stretch="Fill"
                                                                 Height="240" Width="240"/>
                                 </Border>
@@ -233,7 +233,7 @@
         <StatusBar Grid.Row="1">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Session ID: "/>
-                <TextBlock Text="{Binding Path=SessionID}"/>
+                <TextBlock Text="{Binding Path=SessionVM.SessionID}"/>
             </StackPanel>
         </StatusBar>
         

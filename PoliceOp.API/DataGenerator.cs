@@ -23,6 +23,7 @@ namespace PoliceOp.API
 
             Personne P = new Personne()
             {
+                UID = Guid.NewGuid().ToString(),
                 BiometrieID = Faker.RandomNumber.Next(0, 500000000),
                 CouleurCheveux = Faker.Enum.Random<Couleur>().ToString(),
                 CouleurYeux = Faker.Enum.Random<Couleur>().ToString(),
@@ -33,14 +34,14 @@ namespace PoliceOp.API
                 NPI = Identification.UsPassportNumber(),
                 Prenom = $"{ Name.Last() + " " + Name.Middle() }",
                 Nom = Name.Last(),
-                Profession = string.Concat(Faker.Lorem.Sentence(2)),
-                Sexe = Faker.Enum.Random<Sexe>(),
+                Profession = string.Concat(Faker.Lorem.Words(2)),
+                Sexe = Faker.Enum.Random<Sexe>().ToString(),
                 SignesParticuliers = string.Concat(Faker.Lorem.Words(4)),
                 SituationMatrimoniale = string.Concat(Faker.Lorem.Words(2)),
                 Taille = Convert.ToDouble(Faker.RandomNumber.Next(45, 300)),
                 Teint = Faker.Enum.Random<Couleur>().ToString(),
                 Telephone = Phone.Number(),
-                Photographie =  new byte[] { }//await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png")
+                Photographie =  "alze9ve2avez"//await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png")
             };
 
             return P;
@@ -50,11 +51,11 @@ namespace PoliceOp.API
         {
             Agent A = new Agent()
             {
-                UID = Guid.NewGuid(),
-                Grade = Faker.Lorem.Words(2).ToString(),
+                UID = Guid.NewGuid().ToString(),
+                Grade = string.Concat(Faker.Lorem.Words(2)),
                 Matricule = Faker.Identification.UkNhsNumber(),
                 PasswordHash = pwd.Next(),
-                Corps = Lorem.Words(3).ToString(),
+                Corps = string.Concat(Lorem.Words(3)),
                 BiometrieID = Faker.RandomNumber.Next(0, 500000000),
                 CouleurCheveux = Faker.Enum.Random<Couleur>().ToString(),
                 CouleurYeux = Faker.Enum.Random<Couleur>().ToString(),
@@ -65,14 +66,14 @@ namespace PoliceOp.API
                 NPI = Identification.UsPassportNumber(),
                 Prenom = $"{ Name.Last() + " " + Name.Middle() }",
                 Nom = Name.Last(),
-                Profession = Faker.Lorem.Sentence(2),
-                Sexe = Faker.Enum.Random<Sexe>(),
+                Sexe = Faker.Enum.Random<Sexe>().ToString(),
                 SignesParticuliers = string.Concat(Faker.Lorem.Words(4)),
                 SituationMatrimoniale = string.Concat(Faker.Lorem.Words(2)),
                 Taille = Convert.ToDouble(Faker.RandomNumber.Next(45, 300)),
                 Teint = Faker.Enum.Random<Couleur>().ToString(),
                 Telephone = Phone.Number(),
-                Photographie = await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png")
+                Profession = string.Concat(Faker.Lorem.Words(3)),
+                Photographie = "alze9ve2avez" //Convert.ToBase64String(await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png"))
             };
 
             return A;

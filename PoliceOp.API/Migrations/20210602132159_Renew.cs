@@ -3,10 +3,50 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PoliceOp.API.Migrations
 {
-    public partial class ClassesRedone : Migration
+    public partial class Renew : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Agents",
+                columns: table => new
+                {
+                    PersonneId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UID = table.Column<string>(nullable: false),
+                    NPI = table.Column<string>(nullable: false),
+                    IFU = table.Column<string>(nullable: false),
+                    Nom = table.Column<string>(nullable: false),
+                    Prenom = table.Column<string>(nullable: false),
+                    DateNaissance = table.Column<DateTime>(nullable: false),
+                    Telephone = table.Column<string>(nullable: false),
+                    Sexe = table.Column<string>(nullable: false),
+                    LieuNaissance = table.Column<string>(nullable: false),
+                    Nationalite = table.Column<string>(nullable: false),
+                    Profession = table.Column<string>(nullable: false),
+                    SituationMatrimoniale = table.Column<string>(nullable: false),
+                    SignesParticuliers = table.Column<string>(nullable: false),
+                    CouleurYeux = table.Column<string>(nullable: false),
+                    CouleurCheveux = table.Column<string>(nullable: false),
+                    Teint = table.Column<string>(nullable: false),
+                    Taille = table.Column<double>(nullable: false),
+                    Photographie = table.Column<string>(nullable: false),
+                    BiometrieID = table.Column<int>(nullable: false),
+                    ResidenceId = table.Column<int>(nullable: false),
+                    PereId = table.Column<int>(nullable: false),
+                    MereId = table.Column<int>(nullable: false),
+                    Matricule = table.Column<string>(nullable: false),
+                    Grade = table.Column<string>(nullable: false),
+                    Corps = table.Column<string>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Service = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Agents", x => x.PersonneId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AvisRecherches",
                 columns: table => new
@@ -27,14 +67,14 @@ namespace PoliceOp.API.Migrations
                 {
                     PersonneId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UID = table.Column<Guid>(nullable: false),
+                    UID = table.Column<string>(nullable: false),
                     NPI = table.Column<string>(nullable: false),
                     IFU = table.Column<string>(nullable: false),
                     Nom = table.Column<string>(nullable: false),
                     Prenom = table.Column<string>(nullable: false),
                     DateNaissance = table.Column<DateTime>(nullable: false),
                     Telephone = table.Column<string>(nullable: false),
-                    Sexe = table.Column<int>(nullable: false),
+                    Sexe = table.Column<string>(nullable: false),
                     LieuNaissance = table.Column<string>(nullable: false),
                     Nationalite = table.Column<string>(nullable: false),
                     Profession = table.Column<string>(nullable: false),
@@ -44,33 +84,16 @@ namespace PoliceOp.API.Migrations
                     CouleurCheveux = table.Column<string>(nullable: false),
                     Teint = table.Column<string>(nullable: false),
                     Taille = table.Column<double>(nullable: false),
-                    Photographie = table.Column<byte[]>(nullable: false),
+                    Photographie = table.Column<string>(nullable: false),
                     BiometrieID = table.Column<int>(nullable: false),
                     ResidenceId = table.Column<int>(nullable: false),
-                    Personne_pere = table.Column<int>(nullable: true),
-                    Personne_mere = table.Column<int>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false),
-                    Matricule = table.Column<string>(nullable: true),
-                    Grade = table.Column<string>(nullable: true),
-                    Corps = table.Column<string>(nullable: true),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    Service = table.Column<string>(nullable: true)
+                    PereId = table.Column<int>(nullable: false),
+                    MereId = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Personnes", x => x.PersonneId);
-                    table.ForeignKey(
-                        name: "FK_Personnes_Personnes_Personne_mere",
-                        column: x => x.Personne_mere,
-                        principalTable: "Personnes",
-                        principalColumn: "PersonneId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Personnes_Personnes_Personne_pere",
-                        column: x => x.Personne_pere,
-                        principalTable: "Personnes",
-                        principalColumn: "PersonneId",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,20 +119,13 @@ namespace PoliceOp.API.Migrations
                 {
                     table.PrimaryKey("PK_Sessions", x => x.SessionID);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Personnes_Personne_mere",
-                table: "Personnes",
-                column: "Personne_mere");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Personnes_Personne_pere",
-                table: "Personnes",
-                column: "Personne_pere");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Agents");
+
             migrationBuilder.DropTable(
                 name: "AvisRecherches");
 

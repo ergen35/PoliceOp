@@ -29,21 +29,21 @@ namespace PoliceOp.OpCenter.Pages
                 DateNaissance = new DateTime(1998, 05, 18),
                 PersonneId = 5,
                 IFU = "898888884658548",
-                Mere = new Models.Personne() { Nom = "Bark", Prenom = "Joyce" },
+                MereId = 562,
                 CouleurCheveux = "Bisque",
                 CouleurYeux = "PaleGreen",
                 NPI = "0000400848080",
-                Pere = new Models.Personne() { Nom = "Eric", Prenom = "Thanos" },
+                PereId = 9265,
                 LieuNaissance = "Transylvania",
                 Nationalite = "Béninoise",
                 Profession = "Ing. SIL",
-                Sexe = Models.Sexe.M,
+                Sexe = Models.Sexe.M.ToString(),
                 SignesParticuliers = "Trop Beau.. wow",
                 Taille = 1.98,
                 SituationMatrimoniale = "Célibataire endurci",
                 Teint = "Noir",
                 Telephone = "90210790",
-                UID = Guid.NewGuid()
+                UID = Guid.NewGuid().ToString()
             };
 
         }

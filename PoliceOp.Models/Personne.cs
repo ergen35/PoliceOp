@@ -13,7 +13,7 @@ namespace PoliceOp.Models
         public int PersonneId { get; set; }
 
         [Required]
-        public Guid UID { get; set; } 
+        public string UID { get; set; } 
         
         [Required]
         public string NPI { get; set; }
@@ -35,8 +35,7 @@ namespace PoliceOp.Models
         public string Telephone { get; set; }
 
         [Required]
-        [EnumDataType(typeof(Sexe))]
-        public Sexe Sexe { get; set; }
+        public string Sexe { get; set; }
 
         [Required]
         public string LieuNaissance { get; set; }
@@ -64,10 +63,9 @@ namespace PoliceOp.Models
 
         [Required]
         public double Taille { get; set; }
+
         [Required]
-        public Byte[] Photographie { get; set; }
-
-
+        public string Photographie { get; set; }
 
         [ForeignKey("Biometrie")]
         [Column(Order = 1)]
@@ -76,15 +74,14 @@ namespace PoliceOp.Models
         [ForeignKey("Residence")]
         [Column(Order = 2)]
         public int ResidenceId { get; set; }
-        [ForeignKey("Personne_pere")]
+
+        [ForeignKey("PersonneId")]
         [Column(Order = 3)]
-        public Personne Pere { get; set; }
+        public int PereId { get; set; }
 
-        [ForeignKey("Personne_mere")]
+        [ForeignKey("PersonneId")]
         [Column(Order = 4)]
-        public Personne Mere { get; set; }
-
-        
+        public int MereId { get; set; }
 
     }
 }
