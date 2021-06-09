@@ -11,6 +11,7 @@ using ControlzEx.Theming;
 using Enterwell.Clients.Wpf.Notifications;
 using Tiny.RestClient;
 using PoliceOp.OpCenter.Services;
+using RestSharp;
 
 namespace PoliceOp.OpCenter
 {
@@ -59,6 +60,8 @@ namespace PoliceOp.OpCenter
 
             this.Closed += MainWindow_Closed;
 
+            Agent = new Models.Agent();
+
             //Load Agent Info once window is loaded
             this.Loaded += MainWindow_Loaded;
 
@@ -67,31 +70,19 @@ namespace PoliceOp.OpCenter
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
 
-            try
-            {
-                AppLevel.APIClients.v1Client = new TinyRestClient(new System.Net.Http.HttpClient(), System.Configuration.ConfigurationManager.AppSettings["v1APIUrl"].ToString());
-                
-                //Models.Personne P = await AppLevel.APIClients.v1Client
-                //            .GetRequest(route: "Agents")
-                //            .WithOAuthBearer(jWTServices.TokenizeSessionID(SessionVM.SessionID.ToString(), "getAgentByID"))
-                //            .AddQueryParameter("id", 1 /*SessionVM.AgentID*/)
-                //            .ExecuteAsync<Models.Personne>();
+            AppLevel.APIClients.AppRestClient2.Authenticator = new RestSharp.Authenticators.JwtAuthenticator(
+                        jWTServices.TokenizeSessionID(SessionVM.SessionID, "get-Agent"));
 
+            var req = new RestRequest($"Agents/{SessionVM.AgentID}", RestSharp.DataFormat.Json);
+
+            this.Agent = await AppLevel.APIClients.AppRestClient2.GetAsync<Models.Agent>(request: req);
+
+
+            if (Agent.PersonneId == SessionVM.AgentID)
+            {
                 ShowNotification("Fait", "#333", "#1751C3", "Ok");
+            }
 
-            }
-            catch (HttpException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound || ex.StatusCode == System.Net.HttpStatusCode.BadRequest)
-            {
-                ShowNotification("L'authentification a échoué", "#F15B19", "#F15B19", "Echec");
-            }
-            catch (HttpException ex) when (ex.StatusCode == System.Net.HttpStatusCode.InternalServerError)
-            {
-                ShowNotification("Le Serveur est Hors Service", "#F15B19", "#F15B19", "Echec");
-            }
-            catch (Exception ex)
-            {
-                ShowNotification($"Une Erreur s'est Produite\n{ex.Message}", "#F15B19", "#F15B19", "Echec");
-            }
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -156,21 +147,7 @@ namespace PoliceOp.OpCenter
 
         private void AlertsSortingCbbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.AlertsSortingCbbx.SelectedIndex == 0)
-            {
-
-                var Xo = new List<string>();
-                Xo.Add("Hello56");
-                Xo.Add("Hello1");
-                Xo.Add("Hel");
-                Xo.Add("He");
-                IEnumerable<string> Filtered =  Xo.Select(m => m.ToString()).Where(m => m.Length > 3);
-
-                foreach (var item in Filtered)
-                {
-                    MessageBox.Show(item);
-                }
-            }
+            
         }
 
         private void ContentFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
@@ -212,17 +189,8 @@ namespace PoliceOp.OpCenter
                                 .AddQueryParameter("uid", SessionVM.SessionID.ToString())
                                 .ExecuteAsync();
             }
-            catch (HttpException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                return;
-            }
-            catch (HttpException ex) when (ex.StatusCode == System.Net.HttpStatusCode.InternalServerError)
-            {
-                return;
-            }
-            catch (Exception)
-            {
-                return;
+            catch {
+            
             }
 
             //Close window
@@ -233,7 +201,6 @@ namespace PoliceOp.OpCenter
         {
             this.ContentFrame.Navigate(Home);
         }
-
 
 
         private void ShowNotification(string Message, String BgBrush, String AccentBrush, string BadgeInfo)

@@ -11,7 +11,7 @@ using System.IO;
 namespace PoliceOp.API
 {
     public enum Couleur{
-        Rouge, Noir, Bleu, Orange, Violet, Vert, Cyan, Gris
+        Red, Black, Blue, Orange, Violet, Green, Cyan, Gray
     }
 
     public class DataGenerator
@@ -20,6 +20,12 @@ namespace PoliceOp.API
 
         public async Task<Personne> GeneratePersonne()
         {
+            Residence R = new Residence()
+            {
+                Rue = Faker.Address.StreetAddress(true),
+                NumeroChambre = Faker.Address.ZipCode(),
+                Type = string.Concat(Faker.Lorem.Words(3))
+            };
 
             Personne P = new Personne()
             {
@@ -33,6 +39,7 @@ namespace PoliceOp.API
                 NPI = Identification.UsPassportNumber(),
                 Prenom = $"{ Name.Last() + " " + Name.Middle() }",
                 Nom = Name.Last(),
+                Residence = R,
                 Profession = string.Concat(Faker.Lorem.Words(2)),
                 Sexe = Faker.Enum.Random<Sexe>().ToString(),
                 SignesParticuliers = string.Concat(Faker.Lorem.Words(4)),
@@ -48,9 +55,17 @@ namespace PoliceOp.API
 
         public async Task<Agent> GenerateAgent()
         {
+            Residence R = new Residence() { 
+                Rue = Faker.Address.StreetAddress(true), 
+                NumeroChambre = Faker.Address.ZipCode(),
+                Type = string.Concat(Faker.Lorem.Words(3))
+            };
+
+
             Agent A = new Agent()
             {
                 UID = Guid.NewGuid().ToString(),
+                Residence = R,
                 Grade = string.Concat(Faker.Lorem.Words(2)),
                 Matricule = Faker.Identification.UkNhsNumber(),
                 PasswordHash = pwd.Next(),
@@ -61,6 +76,8 @@ namespace PoliceOp.API
                 IFU = Faker.Identification.UkNhsNumber(),
                 LieuNaissance = Address.City(),
                 Nationalite = "Beninoise",
+                MereId = (new Random()).Next(1, 55),
+                PereId = (new Random()).Next(9, 85),
                 NPI = Identification.UsPassportNumber(),
                 Prenom = $"{ Name.Last() + " " + Name.Middle() }",
                 Nom = Name.Last(),

@@ -24,16 +24,14 @@ namespace PoliceOp.OpCenter.Pages
 
             Personne = new Models.Personne()
             {
-                Nom = "Eric",
-                Prenom = "Avery",
+                Nom = "Tohou",
+                Prenom = "Jeanot",
                 DateNaissance = new DateTime(1998, 05, 18),
                 PersonneId = 5,
                 IFU = "898888884658548",
-                MereId = 562,
-                CouleurCheveux = "Bisque",
-                CouleurYeux = "PaleGreen",
+                CouleurCheveux = "Black",
+                CouleurYeux = "Maroon",
                 NPI = "0000400848080",
-                PereId = 9265,
                 LieuNaissance = "Transylvania",
                 Nationalite = "Béninoise",
                 Profession = "Ing. SIL",

@@ -8,7 +8,6 @@ namespace PoliceOp.Models
 {
     public class Personne
     {
-
         [Key]
         public int PersonneId { get; set; }
 
@@ -72,9 +71,12 @@ namespace PoliceOp.Models
         [Required]
         public virtual Residence Residence { get; set; }
 
-        public virtual Personne Pere { get; set; }
+        [Required]        
+        public int PereId { get; set; }
 
-        public virtual Personne Mere { get; set; }
+        [Required]
+        public int MereId { get; set; }
 
     }
+
 }

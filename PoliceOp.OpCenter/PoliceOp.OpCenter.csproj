@@ -42,6 +42,8 @@
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.6.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="NETCore.Encrypt" Version="2.0.9" />
+    <PackageReference Include="RestSharp" Version="106.11.7" />
+    <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="106.11.7" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
     <PackageReference Include="Tiny.RestClient" Version="1.7.1" />
   </ItemGroup>

@@ -29,22 +29,10 @@
 
                     <hc:Card BorderThickness="0" Effect="{DynamicResource EffectShadow2}">
                         <!--Card Content section-->
-                        <Border CornerRadius="4,4,0,0" Width="160" Height="160">
-                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Text="test"/>
+                        <Border CornerRadius="4,4,0,0" Width="160" Height="200">
+                            <Image Source="/Resources/images/Homme1.png" Stretch="UniformToFill" HorizontalAlignment="Center"/>
                         </Border>
                         <!--Card Footer part-->
-                        <hc:Card.Footer>
-                            <StackPanel Margin="10" Width="160">
-                                <!--Card First-level content-->
-                                <TextBlock TextWrapping="NoWrap"  Style="{DynamicResource TextBlockLargeBold}" TextTrimming="CharacterEllipsis" 
-                                       Text="Headline" 
-                                       HorizontalAlignment="Left"/>
-                                <!--Card Secondary content-->
-                                <TextBlock TextWrapping="NoWrap" Style="{DynamicResource TextBlockDefault}" TextTrimming="CharacterEllipsis" 
-                                       Text="Description" Margin="0,6,0,0"
-                                       HorizontalAlignment="Left"/>
-                            </StackPanel>
-                        </hc:Card.Footer>
                     </hc:Card>
 
                     <Border Grid.Row="1" CornerRadius="0,10,0,10" Background="White" BorderThickness="0" Height="150" Effect="{DynamicResource EffectShadow2}" Margin="0,10,0,0">
@@ -146,11 +134,11 @@
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="408" />
+                                <ColumnDefinition Width="390" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="Nom Complet: " Margin="0,0,0,0" FontSize="22"/>
+                            <TextBlock Text="Nom Complet: " Margin="0,0,0,0" FontWeight="Bold" FontSize="22"/>
 
                             <StackPanel Grid.ColumnSpan="3" HorizontalAlignment="Center" Orientation="Horizontal">
                                 <TextBlock  Text="{Binding Personne.Nom}" FontSize="22"/>
@@ -159,27 +147,27 @@
 
                             <hc:Divider Grid.ColumnSpan="3" Grid.Row="1" Background="BlueViolet" Margin="0,0,0,0"/>
 
-                            <TextBlock Text="Nom" Grid.Row="1" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Nom: " Grid.Row="1" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
                             <TextBlock Text="{Binding Personne.Nom}" Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
 
-                            <TextBlock Text="Prénom" Grid.Row="2" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Prénoms:" Grid.Row="2" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
                             <TextBlock Text="{Binding Personne.Prenom}" Grid.Row="2" Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
 
 
-                            <TextBlock Text="Sexe" Grid.Row="3" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Sexe:" Grid.Row="3" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
                             <TextBlock Text="{Binding Personne.Sexe}" Grid.Row="3" Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
 
 
-                            <TextBlock Text="Nationalité" Grid.Row="4" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Nationalité:" Grid.Row="4" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
                             <TextBlock Text="{Binding Personne.Nationalite}" Grid.Row="4" Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
 
-                            <TextBlock Text="Taille" Grid.Row="5" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left" />
+                            <TextBlock Text="Taille:" Grid.Row="5" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left" />
                             <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" Margin="5,0,0,0">
                                 <TextBlock Text="{Binding Personne.Taille}" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
                                 <TextBlock Text=" m" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
                             </StackPanel>
 
-                            <TextBlock Text="Date de Naissance" Grid.Row="6" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Date de Naissance:" Grid.Row="6" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
                             <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" Margin="5,0,0,0" >
                                 <TextBlock Text="{Binding Personne.DateNaissance.Day}" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
                                 <TextBlock Text="/" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
@@ -187,24 +175,21 @@
                                 <TextBlock Text="/" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
                                 <TextBlock Text="{Binding Personne.DateNaissance.Year}" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
                             </StackPanel>
-
-                            <TextBlock Text="Sexe" Grid.Row="7" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
-                            <TextBlock Text="{Binding Personne.Sexe}" Grid.Row="7" Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource TextBlockTitle}" HorizontalAlignment="Left"/>
-
                         </Grid>
                     </Border>
 
                     <StackPanel Orientation="Vertical" Grid.Row="1" Background="White">
 
-                        <hc:Divider Content="Indentification"/>
+                        <hc:Divider Content="Indentification" FontSize="24" Foreground="DarkBlue"/>
 
                         <Grid Margin="2,0,10,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="UID"/>
-                            <TextBlock Text="{Binding Personne.UID}" Grid.Column="1" HorizontalAlignment="Right"/>
+                            <TextBlock Text="UID" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Text="{Binding Personne.UID}"  Style="{StaticResource TextBlockSubTitle}"
+                                       Grid.Column="1" HorizontalAlignment="Right"/>
                         </Grid>
 
                         <Grid Margin="2,0,10,0">
@@ -212,27 +197,30 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="NPI (Numéro Personnel d'Identification)"/>
-                            <TextBlock Text="{Binding Personne.NPI}" Grid.Column="1" HorizontalAlignment="Right"/>
+                            <TextBlock Text="NPI (Numéro Personnel d'Identification)" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Text="{Binding Personne.NPI}"  Style="{StaticResource TextBlockSubTitle}"
+                                       Grid.Column="1" HorizontalAlignment="Right"/>
                         </Grid>
                         <Grid Margin="2,0,10,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="IFU (Identifiant Fiscal Unique)"/>
-                            <TextBlock Text="{Binding Personne.IFU}" Grid.Column="1" HorizontalAlignment="Right"/>
+                            <TextBlock Text="IFU (Identifiant Fiscal Unique)"  Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Text="{Binding Personne.IFU}"  Style="{StaticResource TextBlockSubTitle}"
+                                       Grid.Column="1" HorizontalAlignment="Right"/>
                         </Grid>
 
 
-                        <hc:Divider Content="Bio"/>
+                        <hc:Divider Content="Bio"  FontSize="24" Foreground="DarkBlue"/>
                         <Grid Margin="2,0,10,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Nom"/>
-                            <TextBlock Text="{Binding Personne.Nom}" Grid.Column="1" HorizontalAlignment="Right"/>
+                            <TextBlock Text="Nom" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Text="{Binding Personne.Nom}"  Style="{StaticResource TextBlockSubTitle}"
+                                       Grid.Column="1" HorizontalAlignment="Right"/>
                         </Grid>
                         
                         <Grid Margin="2,5,10,0">
@@ -240,8 +228,9 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Prénom"/>
-                            <TextBlock Text="{Binding Personne.Prenom}" Grid.Column="1" HorizontalAlignment="Right"/>
+                            <TextBlock Text="Prénom" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Text="{Binding Personne.Prenom}"  Style="{StaticResource TextBlockSubTitle}"
+                                       Grid.Column="1" HorizontalAlignment="Right"/>
                         </Grid>
                         
                         <Grid Margin="2,5,10,0">
@@ -249,8 +238,9 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Taille"/>
-                            <TextBlock Text="{Binding Personne.Taille}" Grid.Column="1" HorizontalAlignment="Right"/>
+                            <TextBlock Text="Taille" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Text="{Binding Personne.Taille}" Style="{StaticResource TextBlockSubTitle}"
+                                       Grid.Column="1" HorizontalAlignment="Right"/>
                         </Grid>
 
                         <Grid Margin="2,5,10,0">
@@ -258,43 +248,46 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Sexe"/>
-                            <TextBlock Text="{Binding Personne.Sexe}" Grid.Column="1" HorizontalAlignment="Right"/>
+                            <TextBlock Text="Sexe" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Text="{Binding Personne.Sexe}"  Style="{StaticResource TextBlockSubTitle}"
+                                       Grid.Column="1" HorizontalAlignment="Right"/>
                         </Grid>
 
-                        <hc:Divider Content="Naissance"/>
+                        <hc:Divider Content="Naissance"  FontSize="24" Foreground="DarkBlue"/>
 
                         <Grid Margin="2,5,10,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Date Naissance"/>
-                            <TextBlock Text="{Binding Personne.DateNaissance}" Grid.Column="1" HorizontalAlignment="Right"/>
+                            <TextBlock Text="Date Naissance" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Text="{Binding Personne.DateNaissance}"  Style="{StaticResource TextBlockSubTitle}"
+                                       Grid.Column="1" HorizontalAlignment="Right"/>
                         </Grid>
                         <Grid Margin="2,5,10,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Lieu Naissance"/>
-                            <TextBlock Text="{Binding Personne.LieuNaissance}" Grid.Column="1" HorizontalAlignment="Right"/>
+                            <TextBlock Text="Lieu Naissance" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Text="{Binding Personne.LieuNaissance}"  Style="{StaticResource TextBlockSubTitle}"
+                                       Grid.Column="1" HorizontalAlignment="Right"/>
                         </Grid>
 
-                        <hc:Divider Content="Caractéristiques"/>
+                        <hc:Divider Content="Caractéristiques"  FontSize="24" Foreground="DarkBlue"/>
 
                         <Grid Margin="2,5,10,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Teint"/>
+                            <TextBlock Text="Teint" Style="{StaticResource TextBlockSubTitle}"/>
                             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                                <TextBlock 
+                                <TextBlock  Style="{StaticResource TextBlockSubTitle}"
                                     Text="{Binding Personne.Teint}" VerticalAlignment="Center"/>
                                 <Border Background="{Binding Personne.Teint}" 
                                         VerticalAlignment="Center" 
-                                        Margin="5,0,8,0" Height="25" Width="75"/>
+                                        Margin="5,0,8,0" Height="25" Width="30"/>
                             </StackPanel>
                         </Grid>
 
@@ -303,13 +296,13 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Couleur des yeux"/>
+                            <TextBlock Text="Couleur des yeux" Style="{StaticResource TextBlockSubTitle}"/>
                             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                                 <TextBlock 
-                                    Text="{Binding Personne.CouleurYeux}" VerticalAlignment="Center"/>
+                                    Text="{Binding Personne.CouleurYeux}" VerticalAlignment="Center" Style="{StaticResource TextBlockSubTitle}"/>
                                 <Border Background="{Binding Personne.CouleurYeux}" 
                                         VerticalAlignment="Center" 
-                                        Margin="5,0,8,0" Height="25" Width="75"/>
+                                        Margin="5,0,8,0" Height="25" Width="30"/>
                             </StackPanel>
                         </Grid>
 
@@ -318,13 +311,13 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Couleur des Cheveux"/>
+                            <TextBlock Text="Couleur des Cheveux" Style="{StaticResource TextBlockSubTitle}"/>
                             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                                <TextBlock 
+                                <TextBlock  Style="{StaticResource TextBlockSubTitle}"
                                     Text="{Binding Personne.CouleurCheveux}" VerticalAlignment="Center"/>
                                 <Border Background="{Binding Personne.CouleurCheveux}" 
                                         VerticalAlignment="Center" 
-                                        Margin="5,0,8,0" Height="25" Width="75"/>
+                                        Margin="5,0,8,0" Height="25" Width="30"/>
                             </StackPanel>
                         </Grid>
 
@@ -333,25 +326,25 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Signes Particuliers"/>
-                                <TextBlock Grid.Column="1" HorizontalAlignment="Right"
+                            <TextBlock Text="Signes Particuliers" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource TextBlockSubTitle}"
                                     Text="{Binding Personne.SignesParticuliers}" VerticalAlignment="Center"
                                     TextWrapping="Wrap"
                                 />
    
                         </Grid>
 
-                        <hc:Divider Content="Relatifs"/>
+                        <hc:Divider Content="Généalogie"  FontSize="24" Foreground="DarkBlue"/>
 
                         <Grid Margin="2,0,10,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Père"/>
+                            <TextBlock Text="Père" Style="{StaticResource TextBlockSubTitle}"/>
                             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                                <TextBlock Text="{Binding Personne.Pere.Nom}" VerticalAlignment="Center" />
-                                <TextBlock Text="{Binding Personne.Pere.Prenom}" Margin="5,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Personne.Pere.Nom}" VerticalAlignment="Center" Style="{StaticResource TextBlockSubTitle}" />
+                                <TextBlock Text="{Binding Personne.Pere.Prenom}" Margin="5,0,8,0" VerticalAlignment="Center" Style="{StaticResource TextBlockSubTitle}"/>
                                 <Button x:Name="BtnPere" Click="BtnPere_Click"  VerticalAlignment="Center">
                                     <Icons:PackIconFontAwesome Kind="ExternalLinkAltSolid" />
                                 </Button>
@@ -363,25 +356,25 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Mère"/>
+                            <TextBlock Text="Mère" Style="{StaticResource TextBlockSubTitle}"/>
                             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                                <TextBlock Text="{Binding Personne.Mere.Nom}" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding Personne.Mere.Prenom}" Margin="5,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Personne.Mere.Nom}" VerticalAlignment="Center" Style="{StaticResource TextBlockSubTitle}"/>
+                                <TextBlock Text="{Binding Personne.Mere.Prenom}" Margin="5,0,8,0" VerticalAlignment="Center" Style="{StaticResource TextBlockSubTitle}"/>
                                 <Button x:Name="BtnMere" Click="BtnMere_Click"  VerticalAlignment="Center">
                                     <Icons:PackIconFontAwesome Kind="ExternalLinkAltSolid" />
                                 </Button>
                             </StackPanel>
                         </Grid>
 
-                        <hc:Divider Content="Etat"/>
+                        <hc:Divider Content="Etat"  FontSize="24" Foreground="DarkBlue"/>
 
                         <Grid Margin="2,5,10,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Nationalité"/>
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Right"
+                            <TextBlock Text="Nationalité" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource TextBlockSubTitle}"
                                     Text="{Binding Personne.Nationalité}" VerticalAlignment="Center"
                                     TextWrapping="Wrap"/>
 
@@ -392,8 +385,8 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Profession"/>
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Right"
+                            <TextBlock Text="Profession" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource TextBlockSubTitle}"
                                     Text="{Binding Personne.Profession}" VerticalAlignment="Center"
                                     TextWrapping="Wrap"/>
 
@@ -404,29 +397,39 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Situation Matrimoniale"/>
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Right"
+                            <TextBlock Text="Situation Matrimoniale" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource TextBlockSubTitle}"
                                     Text="{Binding Personne.SituationMatrimoniale}" VerticalAlignment="Center"
                                     TextWrapping="Wrap"/>
 
                         </Grid>
 
-                        <hc:Divider Content="Contacts"/>
+                        <hc:Divider Content="Contacts"  FontSize="24" Foreground="DarkBlue"/>
 
                         <Grid Margin="2,5,10,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Telephone"/>
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Right"
+                            <TextBlock Text="Telephone" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource TextBlockSubTitle}"
                                     Text="{Binding Personne.Telephone}" VerticalAlignment="Center"
                                     TextWrapping="Wrap"/>
 
                         </Grid>
 
-                        <hc:Divider Content="Résidence"/>
+                        <hc:Divider Content="Résidence"  FontSize="24" Foreground="DarkBlue"/>
+                        <Grid Margin="2,5,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Adresse" Style="{StaticResource TextBlockSubTitle}"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource TextBlockSubTitle}"
+                                    Text="{Binding Personne.Residence.AdresseComplete}" VerticalAlignment="Center"
+                                    TextWrapping="Wrap"/>
 
+                        </Grid>
                         <Grid Margin="0">
                             <Button Grid.Column="1" Grid.ColumnSpan="3" Height="30" Style="{StaticResource MahApps.Styles.Button.Flat}"/>
                         </Grid>

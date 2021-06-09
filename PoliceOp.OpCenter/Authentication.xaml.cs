@@ -9,6 +9,8 @@ using System.Windows.Threading;
 using Enterwell.Clients.Wpf.Notifications;
 using PoliceOp.OpCenter.Services;
 using Tiny.RestClient;
+using RestSharp;
+using RestSharp.Serializers.NewtonsoftJson;
 
 
 namespace PoliceOp.OpCenter
@@ -41,36 +43,45 @@ namespace PoliceOp.OpCenter
             {
                 if (this.LoginTxtb.VerifyData())
                 {
-                    //Send Request to API
-
+                    
+                    // Laoding Icon
 
                     this.AuthBtn.Content = new MahApps.Metro.IconPacks.PackIconFontAwesome() { 
                         Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.CircleNotchSolid,
                         Spin = true
                     };
 
-                        
-                    try
+
+                    //Send Request to API
+                    AppLevel.APIClients.AppRestClient1.Authenticator = new RestSharp.Authenticators.JwtAuthenticator(
+                                                                                jWTServices.TokenizeID(login, pwd, "Auth",
+                                                                                Models.Issuers.OpCenterApp, Models.Audiences.PoliceOpAPI));
+
+
+                    var Request = new RestRequest("Auth", RestSharp.DataFormat.Json);
+
+                    var response = await AppLevel.APIClients.AppRestClient1.ExecutePostAsync<Models.SessionVM>(Request);
+
+                    if (response.IsSuccessful)
                     {
-                        sessionVM = await AppLevel.APIClients.v1Client
-                                        .PostRequest(route: "Auth")
-                                        .WithOAuthBearer(jWTServices.TokenizeID(login, pwd, "Auth", Models.Issuers.OpCenterApp, Models.Audiences.PoliceOpAPI))
-                                        .ExecuteAsync<Models.SessionVM>();
+                        sessionVM = response.Data;
                     }
-                    catch (HttpException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound || ex.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    else
                     {
-                        ShowNotification("L'authentification a échoué", "#F15B19", "#F15B19", "Echec");
-                    }
-                    catch (HttpException ex) when (ex.StatusCode == System.Net.HttpStatusCode.InternalServerError)
-                    {
-                        ShowNotification("Le Serveur est Hors Service", "#F15B19", "#F15B19", "Echec");
-                    }
-                    catch(Exception)
-                    {
-                        ShowNotification("Impossible d'atteindre le serveur\nUne Erreur s'est Produite", "#F15B19", "#F15B19", "Echec");
+                        if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                        {
+                            this.ShowNotification("Mauvaises informations de compte", "#333", "#1751C3", "Error");
+                            return;
+
+                        }
+                        else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                        {
+                            this.ShowNotification("Jeton d'authorisation inexistant", "#333", "#1751C3", "Error");
+                            return;
+                        }
                     }
 
-                    await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 5));
+                    await Task.Delay(new TimeSpan(0, 0, 5));
 
                     this.AuthBtn.Content = new MahApps.Metro.IconPacks.PackIconBoxIcons()
                     {
@@ -79,11 +90,12 @@ namespace PoliceOp.OpCenter
                     };
 
 
+
                     if (sessionVM.SessionID == (new Models.Session()).SessionID.ToString())
                     {
-                        return;
+                        this.ShowNotification("Une nouvelle session ne peut être ouverte", "#333", "#1751C3", "Info");
                     }
-                    
+
                     else
                     {
                         // Get Key from AppConfig

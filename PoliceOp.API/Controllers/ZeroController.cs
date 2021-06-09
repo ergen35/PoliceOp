@@ -9,9 +9,9 @@ using System.Collections.Generic;
 
 namespace PoliceOp.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ZeroController : Controller
     {
 
@@ -27,9 +27,8 @@ namespace PoliceOp.API.Controllers
         }
 
         // GET: api/<ZeroController>
-        [HttpGet("{get-token}")]
-        [AllowAnonymous()]
-        public async Task<IActionResult> Get()
+        [HttpGet("get-token")]
+        public async Task<IActionResult> GetToken()
         {
             var token = jWTService.TokenizeID("89898598", "77a8zeea87", "Session",Models.Issuers.PoliceOpAPI, Models.Audiences.TerminalDesktop);
 
@@ -45,9 +44,45 @@ namespace PoliceOp.API.Controllers
             return Json(new { token = token, totalAgents = totalA, totalPersonnes = totalP, Agebtx2 = LA });
         }
 
+        [HttpGet("get-int")]
+        public async Task<ActionResult<int>> GetInt()
+        {
+            return (new Random()).Next(0, 28928829);
+        }
+
+        [HttpGet("get-obj")]
+        public async Task<ActionResult> GetObj()
+        {
+            return Json(new { Id = 4, GrowRate = 0.002595, Relative = "GPI Rate", Type = "Gross", SearchUID = Guid.NewGuid().ToByteArray() });
+        }
+
+        [HttpGet("get-pers")]
+        public async Task<ActionResult<Models.Personne>> GetPersonne()
+        {
+            return Json(await ctx.Personnes.FindAsync(new Random().Next(1, 400)));
+        }
+
+        [HttpGet("get-agt")]
+        public async Task<ActionResult<Models.Agent>> GetAgent()
+        {
+            return Json(await ctx.Agents.FindAsync(new Random().Next(1, 100)));
+        }
+
+        [HttpGet("get-listAgt")]
+        public async Task<IEnumerable<Models.Personne>> GetListAgent()
+        {
+            return ctx.Agents.ToList().Take(18);
+        }
+
+        [HttpGet("get-Resi")]
+        public async Task<IEnumerable<Models.Residence>> GetListResidences()
+        {
+            return ctx.Residences.ToList().Skip(58).Take(8);
+        }
+
 
         // POST api/<ZeroController>
-        [HttpGet]
+        [HttpPost]
         public ActionResult<string> Post([FromHeader] String value)
         {
             Models.Personne P = new Models.Personne()

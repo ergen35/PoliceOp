@@ -19,122 +19,6 @@ namespace PoliceOp.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("PoliceOp.Models.Agent", b =>
-                {
-                    b.Property<int>("PersonneId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BiometrieID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Corps")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CouleurCheveux")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CouleurYeux")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateNaissance")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Grade")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IFU")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LieuNaissance")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Matricule")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MereId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NPI")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nationalite")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PereId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Photographie")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Prenom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Profession")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ResidenceId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Sexe")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SignesParticuliers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SituationMatrimoniale")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Taille")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Teint")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telephone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PersonneId");
-
-                    b.ToTable("Agents");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Agent");
-                });
-
             modelBuilder.Entity("PoliceOp.Models.AvisRecherche", b =>
                 {
                     b.Property<Guid>("UID")
@@ -147,13 +31,35 @@ namespace PoliceOp.API.Migrations
                     b.Property<string>("Informations")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PersonneRechercheePersonneId")
+                        .HasColumnType("int");
+
                     b.Property<string>("StatutRecherche")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UID");
 
+                    b.HasIndex("PersonneRechercheePersonneId");
+
                     b.ToTable("AvisRecherches");
+                });
+
+            modelBuilder.Entity("PoliceOp.Models.Biometrie", b =>
+                {
+                    b.Property<Guid>("UID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("DonneesDigitales")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("DonneesFaciales")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("UID");
+
+                    b.ToTable("BioData");
                 });
 
             modelBuilder.Entity("PoliceOp.Models.Personne", b =>
@@ -163,8 +69,8 @@ namespace PoliceOp.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BiometrieID")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("BiometrieUID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CouleurCheveux")
                         .IsRequired()
@@ -207,9 +113,9 @@ namespace PoliceOp.API.Migrations
                     b.Property<int>("PereId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Photographie")
+                    b.Property<byte[]>("Photographie")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Prenom")
                         .IsRequired()
@@ -218,9 +124,6 @@ namespace PoliceOp.API.Migrations
                     b.Property<string>("Profession")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ResidenceId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Sexe")
                         .IsRequired()
@@ -250,6 +153,8 @@ namespace PoliceOp.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PersonneId");
+
+                    b.HasIndex("BiometrieUID");
 
                     b.ToTable("Personnes");
 
@@ -274,6 +179,43 @@ namespace PoliceOp.API.Migrations
                     b.ToTable("Requetes");
                 });
 
+            modelBuilder.Entity("PoliceOp.Models.Residence", b =>
+                {
+                    b.Property<Guid>("ResidenceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CoordonneesGeo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumeroChambre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumeroParcelle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PersonneId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Rue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ResidenceId");
+
+                    b.HasIndex("PersonneId")
+                        .IsUnique()
+                        .HasFilter("[PersonneId] IS NOT NULL");
+
+                    b.ToTable("Residences");
+                });
+
             modelBuilder.Entity("PoliceOp.Models.Session", b =>
                 {
                     b.Property<Guid>("SessionID")
@@ -283,6 +225,29 @@ namespace PoliceOp.API.Migrations
                     b.HasKey("SessionID");
 
                     b.ToTable("Sessions");
+                });
+
+            modelBuilder.Entity("PoliceOp.Models.Agent", b =>
+                {
+                    b.HasBaseType("PoliceOp.Models.Personne");
+
+                    b.Property<string>("Corps")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Grade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Matricule")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Agent");
                 });
 
             modelBuilder.Entity("PoliceOp.Models.Operateur", b =>
@@ -296,18 +261,25 @@ namespace PoliceOp.API.Migrations
                     b.HasDiscriminator().HasValue("Operateur");
                 });
 
-            modelBuilder.Entity("PoliceOp.Models.PersonneSpeciale", b =>
+            modelBuilder.Entity("PoliceOp.Models.AvisRecherche", b =>
                 {
-                    b.HasBaseType("PoliceOp.Models.Personne");
-
-                    b.HasDiscriminator().HasValue("PersonneSpeciale");
+                    b.HasOne("PoliceOp.Models.Personne", "PersonneRecherchee")
+                        .WithMany()
+                        .HasForeignKey("PersonneRechercheePersonneId");
                 });
 
-            modelBuilder.Entity("PoliceOp.Models.Proprietaire", b =>
+            modelBuilder.Entity("PoliceOp.Models.Personne", b =>
                 {
-                    b.HasBaseType("PoliceOp.Models.Personne");
+                    b.HasOne("PoliceOp.Models.Biometrie", "Biometrie")
+                        .WithMany()
+                        .HasForeignKey("BiometrieUID");
+                });
 
-                    b.HasDiscriminator().HasValue("Proprietaire");
+            modelBuilder.Entity("PoliceOp.Models.Residence", b =>
+                {
+                    b.HasOne("PoliceOp.Models.Personne", "Proprietaire")
+                        .WithOne("Residence")
+                        .HasForeignKey("PoliceOp.Models.Residence", "PersonneId");
                 });
 #pragma warning restore 612, 618
         }

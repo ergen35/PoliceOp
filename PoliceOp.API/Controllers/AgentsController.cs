@@ -16,7 +16,7 @@ namespace PoliceOp.API.Controllers
     [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize]
-    public class AgentsController : Controller
+    public class AgentsController : ControllerBase
     {
         private readonly PoliceOpAPIContext _context;
         private readonly IConfiguration configuration;
@@ -56,7 +56,7 @@ namespace PoliceOp.API.Controllers
                     return NotFound();
                 }
 
-                return Json(agent);
+                return agent;
             }
 
             return Unauthorized("Session ID is Required");
