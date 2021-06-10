@@ -22,5 +22,10 @@ namespace PoliceOp.OpCenter.Pages
         {
             InitializeComponent();
         }
+
+        private void DiffuseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

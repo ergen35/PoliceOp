@@ -22,6 +22,8 @@ namespace PoliceOp.API.Data
         public DbSet<PoliceOp.Models.Requete> Requetes { get; set; }
         public DbSet<PoliceOp.Models.Residence> Residences { get; set; }
         public DbSet<PoliceOp.Models.Session> Sessions { get; set; }
+        public DbSet<PoliceOp.Models.Diffusion> Diffusions { get; set; }
+        public DbSet<PoliceOp.Models.PieceJointe> PieceJointes { get; set; }
 
     }
 }

@@ -3,12 +3,73 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:PoliceOp.OpCenter.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:local="clr-namespace:PoliceOp.OpCenter.Pages" xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      mc:Ignorable="d" xmlns:hc="https://handyorg.github.io/handycontrol"
+      d:DesignHeight="450" d:DesignWidth="800" xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
       Title="DiffusionPage">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Nouvelle Diffusion" HorizontalAlignment="Left" Margin="50,30,0,0" FontSize="30" FontFamily="Consolas" Style="{StaticResource TextBlockLargeBold}"/>
+
+        <Border Grid.Row="1" Margin="50,15,50,0" Effect="{StaticResource EffectShadow3}" Background="WhiteSmoke">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <hc:TextBox x:Name="Subject" Text="" hc:InfoElement.Placeholder="Objet" Width="400" HorizontalAlignment="Left" Margin="10,10,0,0"/>
+               
+                <hc:ComboBox x:Name="Cible" hc:InfoElement.Placeholder="Cible" Grid.Row="1" Width="400" HorizontalAlignment="Left" Margin="10,10,0,0">
+                    <sys:String>Agents</sys:String>
+                    <sys:String>Opérateurs</sys:String>
+                    <Button Content="Agent Particulier..."/>
+                    <!--<sys:String>Agent Particulier...</sys:String>-->
+                </hc:ComboBox>
+                
+                <hc:TextBox x:Name="Details" MaxLines="10" hc:InfoElement.Placeholder="Détails" Grid.Row="2" Width="550" Height="100" FontSize="18" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" HorizontalAlignment="Left" Margin="10,10,0,0"/>
+
+                <Button x:Name="AddPJ" Content="Piècs Jointes" Grid.Row="3">
+                    
+                </Button>
+                
+                <StackPanel Orientation="Horizontal" Margin="32" Grid.Row="4">
+                    <hc:Shield Subject=".net" Status=">=4.0" Color="#1182c3"/>
+                    <hc:Shield Subject="PDF" Status="7.0" Margin="4,0,0,0" Color="#1182c3"/>
+                    <hc:Shield Subject="IDE" Status="2017" Margin="4,0,0,0" Color="#1182c3"/>
+                    <hc:Shield Subject="chat" Status="on gitter" Margin="4,0,0,0" Color="#4eb899" Command="hc:ControlCommands.OpenLink" CommandParameter="https://gitter.im/HandyControl/Lobby?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"/>
+                    <hc:Shield Subject="qq" Status="714704041" Margin="4,0,0,0" Color="#d8624c" Command="hc:ControlCommands.OpenLink" CommandParameter="http://shang.qq.com/wpa/qunwpa?idkey=a571e5553c9d41e49c4f22f3a8b2865451497a795ff281fedf3285def247efc1"/>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Button x:Name="DiffuseBtn" Height="40" FontSize="18" Margin="0,5,0,0" 
+                    HorizontalAlignment="Center" Style="{StaticResource ButtonPrimary}" Click="DiffuseBtn_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Envoyer" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <Icons:PackIconFontAwesome VerticalAlignment="Center" Kind="AngleRightSolid" />
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="BackBtn" Height="40" FontSize="18" Margin="50,5,0,0" 
+                    HorizontalAlignment="Left" Style="{StaticResource ButtonPrimary}" Click="DiffuseBtn_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Annuler" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <Icons:PackIconFontAwesome VerticalAlignment="Center" Kind="AngleLeftSolid" />
+                </StackPanel>
+            </Button>
+        </Grid>
         
     </Grid>
 </Page>
