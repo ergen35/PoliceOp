@@ -345,7 +345,7 @@
                             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                                 <TextBlock Text="{Binding Personne.Pere.Nom}" VerticalAlignment="Center" Style="{StaticResource TextBlockSubTitle}" />
                                 <TextBlock Text="{Binding Personne.Pere.Prenom}" Margin="5,0,8,0" VerticalAlignment="Center" Style="{StaticResource TextBlockSubTitle}"/>
-                                <Button x:Name="BtnPere" Click="BtnPere_Click"  VerticalAlignment="Center">
+                                <Button x:Name="BtnPere" Tag="{Binding Personne.Pere.PersonneId}"  Click="BtnPere_Click"  VerticalAlignment="Center">
                                     <Icons:PackIconFontAwesome Kind="ExternalLinkAltSolid" />
                                 </Button>
                             </StackPanel>
@@ -360,7 +360,7 @@
                             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                                 <TextBlock Text="{Binding Personne.Mere.Nom}" VerticalAlignment="Center" Style="{StaticResource TextBlockSubTitle}"/>
                                 <TextBlock Text="{Binding Personne.Mere.Prenom}" Margin="5,0,8,0" VerticalAlignment="Center" Style="{StaticResource TextBlockSubTitle}"/>
-                                <Button x:Name="BtnMere" Click="BtnMere_Click"  VerticalAlignment="Center">
+                                <Button x:Name="BtnMere" Tag="{Binding Personne.Mere.PersonneId}" Click="BtnMere_Click"  VerticalAlignment="Center">
                                     <Icons:PackIconFontAwesome Kind="ExternalLinkAltSolid" />
                                 </Button>
                             </StackPanel>

@@ -64,7 +64,7 @@ namespace PoliceOp.OpCenter
 
             //Load Agent Info once window is loaded
             this.Loaded += MainWindow_Loaded;
-
+            
         }
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -75,12 +75,26 @@ namespace PoliceOp.OpCenter
 
             var req = new RestRequest($"Agents/{SessionVM.AgentID}", RestSharp.DataFormat.Json);
 
-            this.Agent = await AppLevel.APIClients.AppRestClient2.GetAsync<Models.Agent>(request: req);
+            var response = await AppLevel.APIClients.AppRestClient2.ExecuteGetAsync<Models.Agent>(request: req);
 
-
-            if (Agent.PersonneId == SessionVM.AgentID)
+            if (response.IsSuccessful)
             {
-                ShowNotification("Fait", "#333", "#1751C3", "Ok");
+                this.Agent = response.Data;
+            }
+            else
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    this.ShowNotification("Impossible d'obtenir les informations demandées", "#F15B19", "#F15B19", "Erreur");
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    this.ShowNotification("Requête non Authorisée", "#333", "#E0A030", "Avertissement");
+                }
+                else
+                {
+                    this.ShowNotification("Une Erreur est survenue", "#333", "#E0A030", "Erreur");
+                }
             }
 
         }
@@ -141,10 +155,8 @@ namespace PoliceOp.OpCenter
 
         private void ClearAlertsBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.AlertCenterMessageContainer.Items.Clear();
-            
+            this.AlertCenterMessageContainer.Items.Clear();   
         }
-
         private void AlertsSortingCbbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
@@ -205,6 +217,7 @@ namespace PoliceOp.OpCenter
 
         private void ShowNotification(string Message, String BgBrush, String AccentBrush, string BadgeInfo)
         {
+
             AppLevel.NotificationManagers.InAppNotificationsManager.CreateMessage()
                                         .Accent(AccentBrush)
                                         .Animates(true)
@@ -216,6 +229,8 @@ namespace PoliceOp.OpCenter
                                         .Dismiss().WithButton("Ok", button => { })
                                         .Dismiss().WithDelay(TimeSpan.FromSeconds(25))
                                         .Queue();
+
+            AppLevel.NotificationManagers.InAppNotificationsManager = new NotificationMessageManager();
         }
     }
 

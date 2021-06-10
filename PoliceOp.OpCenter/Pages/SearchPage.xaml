@@ -71,7 +71,7 @@
 
                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.RowSpan="2" 
                                         Grid.Column="4" Margin="35,0,0,0" VerticalAlignment="Center">
-                                <Button Content="Détails" Style="{StaticResource ButtonDashedInfo}" />
+                                <Button x:Name="DetailsBtn" Content="Détails" Tag="{Binding PersonneId}" Style="{StaticResource ButtonDashedInfo}" Click="DetailsBtn_Click" />
                                 <hc:Divider Orientation="Vertical"/>
                                 <Button  Style="{StaticResource ButtonDashedWarning}">
                                     <StackPanel Orientation="Horizontal">

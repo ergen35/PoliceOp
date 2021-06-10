@@ -56,6 +56,9 @@ namespace PoliceOp.API.Controllers
                     return NotFound();
                 }
 
+                await _context.Entry(agent).Reference(a => a.Residence).LoadAsync();
+                await _context.Entry(agent).Reference(a => a.Biometrie).LoadAsync();
+
                 return agent;
             }
 

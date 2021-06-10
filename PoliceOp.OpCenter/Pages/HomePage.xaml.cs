@@ -10,6 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LazyCache;
+
 
 namespace PoliceOp.OpCenter.Pages
 {
@@ -21,6 +23,8 @@ namespace PoliceOp.OpCenter.Pages
         public HomePage()
         {
             InitializeComponent();
+
+
         }
 
         private async void TileNews_Click(object sender, RoutedEventArgs e)
@@ -33,7 +37,7 @@ namespace PoliceOp.OpCenter.Pages
                     
                     await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 8));
 
-                    (item as MainWindow).ContentFrame.Navigate(new BioPage());
+                    (item as MainWindow).ContentFrame.Navigate(new BioPage(5));
                     break;
                 }
             }
@@ -49,7 +53,7 @@ namespace PoliceOp.OpCenter.Pages
 
                     await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 9));
 
-                    (item as MainWindow).ContentFrame.Navigate(new SearchPage());
+                    (item as MainWindow).ContentFrame.Navigate( new SearchPage());
                     break;
                 }
             }
@@ -65,7 +69,7 @@ namespace PoliceOp.OpCenter.Pages
 
                     await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 5));
 
-                    (item as MainWindow).ContentFrame.Navigate(new Pages.SearchPage());
+                    (item as MainWindow).ContentFrame.Navigate(new SearchPage());
                     break;
                 }
             }
@@ -81,7 +85,7 @@ namespace PoliceOp.OpCenter.Pages
 
                     await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 12));
 
-                    (item as MainWindow).ContentFrame.Navigate(new Pages.AgentsManagementPage());
+                    (item as MainWindow).ContentFrame.Navigate(new AgentsManagementPage());
                     break;
                 }
             }

@@ -72,8 +72,8 @@
                                                    FontSize="14"
                                                 TextTrimming="CharacterEllipsis" Text="{Binding Agent.Prenom}" Margin="0,6,0,0"
                                                 HorizontalAlignment="Left"/>
-                                            <TextBlock Text="{Binding Agent.Matricule}" Grid.Row="1" Grid.Column="1" 
-                                                   HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                            <TextBlock Text="{Binding Agent.Matricule}" Grid.Row="0" Grid.Column="1" 
+                                                   HorizontalAlignment="Right" VerticalAlignment="Center"
                                                    FontSize="16" FontFamily="Cambria" Foreground="Black"/>
                                         </Grid>
                                     </hc:Badge>

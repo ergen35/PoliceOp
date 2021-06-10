@@ -28,5 +28,10 @@ namespace PoliceOp.Models
         [ForeignKey("PersonneId")]
         public virtual Personne Proprietaire { get; set; }
 
+        [NotMapped]
+        public string AdresseComplete {
+            get { return $"{NumeroParcelle} Rue {Rue}, C{NumeroChambre}"; } 
+        }
+
     }
 }

@@ -79,9 +79,14 @@ namespace PoliceOp.OpCenter
                             this.ShowNotification("Jeton d'authorisation inexistant", "#333", "#1751C3", "Error");
                             return;
                         }
+                        else
+                        {
+                            this.ShowNotification("Une erreur est survenue" + response.StatusDescription, "#333", "#1751C3", "Error");
+                            return;
+                        }
                     }
 
-                    await Task.Delay(new TimeSpan(0, 0, 5));
+                    await Task.Delay(new TimeSpan(0, 0, 3));
 
                     this.AuthBtn.Content = new MahApps.Metro.IconPacks.PackIconBoxIcons()
                     {
