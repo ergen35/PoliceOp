@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 
 namespace PoliceOp.API.Controllers
@@ -44,10 +44,10 @@ namespace PoliceOp.API.Controllers
             return Json(new { token = token, totalAgents = totalA, totalPersonnes = totalP, Agebtx2 = LA });
         }
 
-        [HttpGet("get-int")]
-        public async Task<ActionResult<int>> GetInt()
+        [HttpGet("get-diff")]
+        public ActionResult<IEnumerable<Models.Diffusion>> GetInt()
         {
-            return (new Random()).Next(0, 28928829);
+            return ctx.Diffusions.ToList();
         }
 
         [HttpGet("get-obj")]

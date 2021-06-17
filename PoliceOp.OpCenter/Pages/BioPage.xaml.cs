@@ -135,8 +135,6 @@ namespace PoliceOp.OpCenter.Pages
                                         .Dismiss().WithButton("Ok", button => { })
                                         .Dismiss().WithDelay(TimeSpan.FromSeconds(25))
                                         .Queue();
-
-            AppLevel.NotificationManagers.InAppNotificationsManager = new NotificationMessageManager();
         }
 
     }
