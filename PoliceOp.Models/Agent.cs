@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System;
 
 
 namespace PoliceOp.Models
 {
-    public class Agent: Personne
+    public class Agent : Personne
     {
 
         /// <summary>
@@ -13,8 +11,8 @@ namespace PoliceOp.Models
         /// </summary>
 
         [Required]
-        public string Matricule { get; set; }    
-        
+        public string Matricule { get; set; }
+
         [Required]
         public string Grade { get; set; }
 

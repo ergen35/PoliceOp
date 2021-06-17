@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.Design;
 
 namespace PoliceOp.Models
 {
@@ -12,8 +9,8 @@ namespace PoliceOp.Models
         public int PersonneId { get; set; }
 
         [Required]
-        public string UID { get; set; } 
-        
+        public string UID { get; set; }
+
         [Required]
         public string NPI { get; set; }
 
@@ -71,7 +68,7 @@ namespace PoliceOp.Models
         [Required]
         public virtual Residence Residence { get; set; }
 
-        [Required]        
+        [Required]
         public int PereId { get; set; }
 
         [Required]

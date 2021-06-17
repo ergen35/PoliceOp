@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using PoliceOp.API.Data;
+using PoliceOp.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PoliceOp.API.Data;
-using PoliceOp.Models;
-using PoliceOp.API.Services;
-using Microsoft.Extensions.Configuration;
 
 namespace PoliceOp.API.Controllers
 {

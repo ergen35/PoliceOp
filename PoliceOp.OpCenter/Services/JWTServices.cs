@@ -1,19 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
-using JWT.Algorithms;
+﻿using JWT.Algorithms;
 using JWT.Builder;
-using Newtonsoft.Json;
-using JWT;
-using JWT.Serializers;
+using System;
+using System.Collections.Generic;
 
 namespace PoliceOp.OpCenter.Services
 {
     public class JWTServices
     {
         public string _secret { get; set; }
-        
+
         public JWTServices()
         {
             this._secret = System.Configuration.ConfigurationManager.AppSettings["secret"].ToString();

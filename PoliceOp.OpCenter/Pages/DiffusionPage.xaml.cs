@@ -1,18 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
-using Enterwell.Clients.Wpf.Notifications;
-using Microsoft.Win32;
 
 namespace PoliceOp.OpCenter.Pages
 {
@@ -35,7 +25,7 @@ namespace PoliceOp.OpCenter.Pages
                 Sujet = this.Subject.Text,
                 Cible = this.Cible.Text.ToString(),
                 Details = this.Details.Text,
-                
+
                 //If Any
                 PiecesJointes = new List<Models.PieceJointe>()
             };
@@ -52,7 +42,7 @@ namespace PoliceOp.OpCenter.Pages
             {
                 AppLevel.NotificationManagers.ShowNotification("Diffusion Effectuée !", "info");
                 this.DiffuseBtn.Visibility = Visibility.Collapsed;
-                
+
                 this.BackBtn_Click(this, null);
             }
             else

@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System;
 
 
 namespace PoliceOp.Models
@@ -29,8 +29,9 @@ namespace PoliceOp.Models
         public virtual Personne Proprietaire { get; set; }
 
         [NotMapped]
-        public string AdresseComplete {
-            get { return $"{NumeroParcelle} Rue {Rue}, C{NumeroChambre}"; } 
+        public string AdresseComplete
+        {
+            get { return $"{NumeroParcelle} Rue {Rue}, C{NumeroChambre}"; }
         }
 
     }

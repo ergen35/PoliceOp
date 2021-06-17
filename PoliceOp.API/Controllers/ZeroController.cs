@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,7 +29,7 @@ namespace PoliceOp.API.Controllers
         [HttpGet("get-token")]
         public async Task<IActionResult> GetToken()
         {
-            var token = jWTService.TokenizeID("89898598", "77a8zeea87", "Session",Models.Issuers.PoliceOpAPI, Models.Audiences.TerminalDesktop);
+            var token = jWTService.TokenizeID("89898598", "77a8zeea87", "Session", Models.Issuers.PoliceOpAPI, Models.Audiences.TerminalDesktop);
 
             //await GenerateData(500, 100);
 

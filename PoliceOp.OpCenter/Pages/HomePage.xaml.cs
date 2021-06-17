@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using LazyCache;
 
 
 namespace PoliceOp.OpCenter.Pages
@@ -34,7 +24,7 @@ namespace PoliceOp.OpCenter.Pages
                 if (item.Title.ToLower() == "opcenter")
                 {
                     (item as MainWindow).LoadingIndicator.Visibility = Visibility.Visible;
-                    
+
                     await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 8));
 
                     (item as MainWindow).ContentFrame.Navigate(new BioPage(5));
@@ -53,7 +43,7 @@ namespace PoliceOp.OpCenter.Pages
 
                     await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 9));
 
-                    (item as MainWindow).ContentFrame.Navigate( new SearchPage());
+                    (item as MainWindow).ContentFrame.Navigate(new SearchPage());
                     break;
                 }
             }

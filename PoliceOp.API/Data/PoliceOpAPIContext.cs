@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using PoliceOp.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace PoliceOp.API.Data
 {
     public class PoliceOpAPIContext : DbContext
     {
-        public PoliceOpAPIContext (DbContextOptions<PoliceOpAPIContext> options)
+        public PoliceOpAPIContext(DbContextOptions<PoliceOpAPIContext> options)
             : base(options)
         {
         }

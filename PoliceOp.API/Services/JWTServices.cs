@@ -1,16 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Http;
-using JWT.Algorithms;
+﻿using JWT.Algorithms;
 using JWT.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PoliceOp.API.Services
 {
     public class JWTServices
     {
-        private readonly string _secret; 
+        private readonly string _secret;
 
         public JWTServices(IConfiguration configuration)
         {
@@ -37,7 +37,7 @@ namespace PoliceOp.API.Services
 
                                   .AddClaim("DataObject", DataObject)  //Store a whole object 
                                   .Encode();
-            
+
 
             return token;
         }

@@ -1,10 +1,9 @@
 ﻿using RestSharp;
 using RestSharp.Authenticators;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Controls;
 using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace PoliceOp.OpCenter.Pages
 {

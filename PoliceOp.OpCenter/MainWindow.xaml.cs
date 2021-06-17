@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Linq.Expressions;
-using LazyCache;
-using ControlzEx.Theming;
+﻿using ControlzEx.Theming;
 using Enterwell.Clients.Wpf.Notifications;
-using Tiny.RestClient;
+using LazyCache;
 using PoliceOp.OpCenter.Services;
 using RestSharp;
+using System;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace PoliceOp.OpCenter
 {
@@ -36,7 +30,7 @@ namespace PoliceOp.OpCenter
             try
             {
                 SessionVM = AppLevel.CachingService.appCache.Get<Models.SessionVM>("SessionVM");
-               
+
                 if (SessionVM.SessionID == (new Models.Session()).SessionID.ToString())
                 {
                     this.Close();
@@ -64,7 +58,7 @@ namespace PoliceOp.OpCenter
 
             //Load Agent Info once window is loaded
             this.Loaded += MainWindow_Loaded;
-            
+
         }
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -150,16 +144,16 @@ namespace PoliceOp.OpCenter
         private void NotificationCenter_Click(object sender, RoutedEventArgs e)
         {
             // Generate a new notification
-           
+
         }
 
         private void ClearAlertsBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.AlertCenterMessageContainer.Items.Clear();   
+            this.AlertCenterMessageContainer.Items.Clear();
         }
         private void AlertsSortingCbbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
         }
 
         private void ContentFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
@@ -193,16 +187,17 @@ namespace PoliceOp.OpCenter
             MessageBox.Show(AppLevel.CachingService.appCache.Get<string>("SessionID"));
 
             //Call Api logout
-            
+
             try
             {
-                 await AppLevel.APIClients.v1Client
-                                .DeleteRequest(route: "Auth")
-                                .AddQueryParameter("uid", SessionVM.SessionID.ToString())
-                                .ExecuteAsync();
+                await AppLevel.APIClients.v1Client
+                               .DeleteRequest(route: "Auth")
+                               .AddQueryParameter("uid", SessionVM.SessionID.ToString())
+                               .ExecuteAsync();
             }
-            catch {
-            
+            catch
+            {
+
             }
 
             //Close window

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Text;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using PoliceOp.Models;
+using System;
+using System.Linq;
+using System.Text;
 
 namespace PoliceOp.API.Middleware
 {
@@ -20,29 +18,29 @@ namespace PoliceOp.API.Middleware
             var secret = configuration.GetSection("JwtConfig").GetSection("secret").Value;
             var key = Encoding.ASCII.GetBytes(secret);
 
-            services.AddAuthentication( Options =>
-           {
-                Options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                Options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-           })
-           
-            .AddJwtBearer( Options =>
+            services.AddAuthentication(Options =>
+          {
+              Options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+              Options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+          })
 
-           {
-               Options.TokenValidationParameters = new TokenValidationParameters()
-               {
-                   ValidateIssuerSigningKey = true,
-                   ValidateLifetime = true,
-                   IssuerSigningKey = new SymmetricSecurityKey(key),
+            .AddJwtBearer(Options =>
 
-                   ValidAudiences = Enum.GetNames(typeof(Audiences)).AsEnumerable(),
-                   ValidIssuers = Enum.GetNames(typeof(Issuers)).AsEnumerable(),
+          {
+              Options.TokenValidationParameters = new TokenValidationParameters()
+              {
+                  ValidateIssuerSigningKey = true,
+                  ValidateLifetime = true,
+                  IssuerSigningKey = new SymmetricSecurityKey(key),
 
-                   ValidateIssuer = true,
-                   ValidateAudience = true,
-               };
+                  ValidAudiences = Enum.GetNames(typeof(Audiences)).AsEnumerable(),
+                  ValidIssuers = Enum.GetNames(typeof(Issuers)).AsEnumerable(),
 
-           });
+                  ValidateIssuer = true,
+                  ValidateAudience = true,
+              };
+
+          });
 
             return services;
         }

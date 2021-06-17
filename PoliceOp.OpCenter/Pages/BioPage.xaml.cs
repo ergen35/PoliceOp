@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using RestSharp;
+using RestSharp.Authenticators;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using RestSharp;
-using RestSharp.Authenticators;
-using Enterwell.Clients.Wpf.Notifications;
-using System.Windows.Navigation;
 
 namespace PoliceOp.OpCenter.Pages
 {
@@ -25,14 +17,14 @@ namespace PoliceOp.OpCenter.Pages
             InitializeComponent();
 
             this.DataContext = this;
-            
+
         }
         public BioPage(int Pid)
         {
             fecthPersonData(Pid);
 
             InitializeComponent();
-            
+
             this.DataContext = this;
         }
 
@@ -63,7 +55,7 @@ namespace PoliceOp.OpCenter.Pages
                 }
                 else
                 {
-                    AppLevel.NotificationManagers.ShowNotification("Une Erreur est survenue" , "Erreur", AppLevel.NotificationLevel.Error);
+                    AppLevel.NotificationManagers.ShowNotification("Une Erreur est survenue", "Erreur", AppLevel.NotificationLevel.Error);
                 }
             }
 

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using PoliceOp.API.Data;
+﻿using Faker;
 using PoliceOp.Models;
-using Faker;
-using System.IO;
+using System;
+using System.Threading.Tasks;
 
 
 namespace PoliceOp.API
 {
-    public enum Couleur{
+    public enum Couleur
+    {
         Red, Black, Blue, Orange, Violet, Green, Cyan, Gray
     }
 
@@ -47,7 +44,7 @@ namespace PoliceOp.API
                 Taille = Convert.ToDouble(Faker.RandomNumber.Next(45, 300)),
                 Teint = Faker.Enum.Random<Couleur>().ToString(),
                 Telephone = Phone.Number(),
-                Photographie =  Convert.FromBase64String("alze9ve2avez")//await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png")
+                Photographie = Convert.FromBase64String("alze9ve2avez")//await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png")
             };
 
             return P;
@@ -55,8 +52,9 @@ namespace PoliceOp.API
 
         public async Task<Agent> GenerateAgent()
         {
-            Residence R = new Residence() { 
-                Rue = Faker.Address.StreetAddress(true), 
+            Residence R = new Residence()
+            {
+                Rue = Faker.Address.StreetAddress(true),
                 NumeroChambre = Faker.Address.ZipCode(),
                 Type = string.Concat(Faker.Lorem.Words(3))
             };
