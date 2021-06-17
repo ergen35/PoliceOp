@@ -25,9 +25,6 @@ namespace PoliceOp.OpCenter.Pages
             InitializeComponent();
 
             this.DataContext = this;
-
-            this.Loaded += BioPage_Loaded;
-            
             
         }
         public BioPage(int Pid)
@@ -35,10 +32,8 @@ namespace PoliceOp.OpCenter.Pages
             fecthPersonData(Pid);
 
             InitializeComponent();
-
+            
             this.DataContext = this;
-
-            this.Loaded += BioPage_Loaded;
         }
 
         public async void fecthPersonData(int Pid)
@@ -60,23 +55,18 @@ namespace PoliceOp.OpCenter.Pages
             {
                 if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    this.ShowNotification("Requête non Authorisée", "#333", "#E0A030", "Avertissement");
+                    AppLevel.NotificationManagers.ShowNotification("Requête non Authorisée", "Avertissement", AppLevel.NotificationLevel.Warning);
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    this.ShowNotification("Impossible d'obtenir les informations demandées", "#F15B19", "#F15B19", "Erreur");
+                    AppLevel.NotificationManagers.ShowNotification("Impossible d'obtenir les informations demandées", "Erreur", AppLevel.NotificationLevel.Error);
                 }
                 else
                 {
-                    this.ShowNotification("Une Erreur est survenue" + response.StatusDescription, "#F15B19", "#F15B19", "info");
+                    AppLevel.NotificationManagers.ShowNotification("Une Erreur est survenue" , "Erreur", AppLevel.NotificationLevel.Error);
                 }
             }
 
-        }
-
-        private void BioPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            
         }
 
         private async void BtnPere_Click(object sender, RoutedEventArgs e)
@@ -119,22 +109,6 @@ namespace PoliceOp.OpCenter.Pages
         private void FingerPrintBtn_Click(object sender, RoutedEventArgs e)
         {
             this.FingerDataExp.IsExpanded = !this.FingerDataExp.IsExpanded;
-        }
-
-        private void ShowNotification(string Message, String BgBrush, String AccentBrush, string BadgeInfo)
-        {
-
-            AppLevel.NotificationManagers.InAppNotificationsManager.CreateMessage()
-                                        .Accent(AccentBrush)
-                                        .Animates(true)
-                                        .AnimationInDuration(0.75)
-                                        .AnimationOutDuration(2)
-                                        .Background(BgBrush)
-                                        .HasBadge(BadgeInfo)
-                                        .HasMessage(Message)
-                                        .Dismiss().WithButton("Ok", button => { })
-                                        .Dismiss().WithDelay(TimeSpan.FromSeconds(25))
-                                        .Queue();
         }
 
     }

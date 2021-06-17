@@ -101,7 +101,7 @@ namespace PoliceOp.OpCenter.Pages
 
                     await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 7));
 
-                    (item as MainWindow).ContentFrame.Navigate(new DiffusionPage());
+                    (item as MainWindow).ContentFrame.Navigate(new DiffusionsList());
                     break;
                 }
             }

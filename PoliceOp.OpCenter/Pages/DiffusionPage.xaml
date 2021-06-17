@@ -25,6 +25,7 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <hc:TextBox x:Name="Subject" Text="" hc:InfoElement.Placeholder="Objet" Width="400" HorizontalAlignment="Left" Margin="10,10,0,0"/>
@@ -38,16 +39,16 @@
                 
                 <hc:TextBox x:Name="Details" MaxLines="10" hc:InfoElement.Placeholder="Détails" Grid.Row="2" Width="550" Height="100" FontSize="18" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" HorizontalAlignment="Left" Margin="10,10,0,0"/>
 
-                <Button x:Name="AddPJ" Content="Piècs Jointes" Grid.Row="3">
+                <hc:Divider Content="Picèces Jointe" Grid.Row="3" FontSize="18" Foreground="Blue" BorderThickness="2" BorderBrush="Black"/>
+
+                <Button x:Name="AddPJ" Content="Ajouter Une Pièce" Grid.Row="4" Width="200" Click="AddPJ_Click">
                     
                 </Button>
                 
-                <StackPanel Orientation="Horizontal" Margin="32" Grid.Row="4">
-                    <hc:Shield Subject=".net" Status=">=4.0" Color="#1182c3"/>
-                    <hc:Shield Subject="PDF" Status="7.0" Margin="4,0,0,0" Color="#1182c3"/>
-                    <hc:Shield Subject="IDE" Status="2017" Margin="4,0,0,0" Color="#1182c3"/>
-                    <hc:Shield Subject="chat" Status="on gitter" Margin="4,0,0,0" Color="#4eb899" Command="hc:ControlCommands.OpenLink" CommandParameter="https://gitter.im/HandyControl/Lobby?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"/>
-                    <hc:Shield Subject="qq" Status="714704041" Margin="4,0,0,0" Color="#d8624c" Command="hc:ControlCommands.OpenLink" CommandParameter="http://shang.qq.com/wpa/qunwpa?idkey=a571e5553c9d41e49c4f22f3a8b2865451497a795ff281fedf3285def247efc1"/>
+                <StackPanel Orientation="Horizontal" Margin="32" Grid.Row="5">
+                    <hc:Shield Subject="Fichier00.net" Status=">=4.0" Color="#1182c3"/>
+                    <hc:Shield Subject="Liste ADP.PDF" Status="7.0" Margin="4,0,0,0" Color="#1182c3"/>
+                    <hc:Shield Subject="Communiqué N°88" Status="on gitter" Margin="4,0,0,0" Color="#4eb899" Command="hc:ControlCommands.OpenLink" CommandParameter="https://gitter.im/HandyControl/Lobby?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"/>
                 </StackPanel>
 
             </Grid>
@@ -63,10 +64,10 @@
             </Button>
 
             <Button x:Name="BackBtn" Height="40" FontSize="18" Margin="50,5,0,0" 
-                    HorizontalAlignment="Left" Style="{StaticResource ButtonPrimary}" Click="DiffuseBtn_Click">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Annuler" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    HorizontalAlignment="Left" Style="{StaticResource ButtonPrimary}" Click="BackBtn_Click">
+                <StackPanel Orientation="Horizontal" >
                     <Icons:PackIconFontAwesome VerticalAlignment="Center" Kind="AngleLeftSolid" />
+                    <TextBlock Text="Annuler" VerticalAlignment="Center" Margin="8,0,0,0"/>
                 </StackPanel>
             </Button>
         </Grid>

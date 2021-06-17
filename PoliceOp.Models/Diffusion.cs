@@ -22,6 +22,8 @@ namespace PoliceOp.Models
 
         public string Cible { get; set; } = "Agents";
 
+        public DateTime DateDiffusion { get; set; }
+
         public virtual ICollection<PieceJointe> PiecesJointes { get; set; }
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using Enterwell.Clients.Wpf.Notifications;
+using Microsoft.Win32;
 
 namespace PoliceOp.OpCenter.Pages
 {
@@ -30,17 +31,18 @@ namespace PoliceOp.OpCenter.Pages
 
             Models.Diffusion Diff = new Models.Diffusion()
             {
-                AuthorId = 5,
+                AuthorId = AppLevel.CachingService.appCache.Get<Models.SessionVM>("SessionVM").AgentID,
+                Sujet = this.Subject.Text,
                 Cible = this.Cible.Text.ToString(),
                 Details = this.Details.Text,
-                DiffusionId = 4,
-                Sujet = this.Subject.Text,
-                PiecesJointes = null
+                
+                //If Any
+                PiecesJointes = new List<Models.PieceJointe>()
             };
 
 
             AppLevel.APIClients.AppRestClient1.Authenticator = new RestSharp.Authenticators.JwtAuthenticator(AppLevel.JWTAuthServices.jwtSvc.TokenizeSessionID(
-                                                                    AppLevel.CachingService.appCache.Get<Models.SessionVM>("SessionVM").SessionID, "Diffuse"));
+                                                                   AppLevel.CachingService.appCache.Get<Models.SessionVM>("SessionVM").SessionID, "Diffuse"));
 
             var req = new RestSharp.RestRequest("Diffusions").AddJsonBody(Diff);
 
@@ -48,38 +50,45 @@ namespace PoliceOp.OpCenter.Pages
 
             if (response.IsSuccessful)
             {
-                this.ShowNotification("Diffusion Effectuée", "#333", "#E0A030", "info");
+                AppLevel.NotificationManagers.ShowNotification("Diffusion Effectuée !", "info");
+                this.DiffuseBtn.Visibility = Visibility.Collapsed;
+                
+                this.BackBtn_Click(this, null);
             }
             else
             {
                 if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    this.ShowNotification("Requête non Authorisée", "#333", "#E0A030", "Avertissement");
+                    AppLevel.NotificationManagers.ShowNotification("Requête non Authorisée", "Avertissement", AppLevel.NotificationLevel.Warning);
                 }
                 else
                 {
-                    this.ShowNotification("Une erreur est survenue", "#333", "#E0A030", "Erreur");
+                    AppLevel.NotificationManagers.ShowNotification("Une erreur est survenue", "Erreur", AppLevel.NotificationLevel.Error);
                 }
             }
-
         }
 
-        private void ShowNotification(string Message, String BgBrush, String AccentBrush, string BadgeInfo)
+        private async void BackBtn_Click(object sender, RoutedEventArgs e)
         {
+            foreach (Window item in App.Current.Windows)
+            {
+                if (item.Title.ToLower() == "opcenter")
+                {
+                    (item as MainWindow).LoadingIndicator.Visibility = Visibility.Visible;
 
-            AppLevel.NotificationManagers.InAppNotificationsManager.CreateMessage()
-                                        .Accent(AccentBrush)
-                                        .Animates(true)
-                                        .AnimationInDuration(0.75)
-                                        .AnimationOutDuration(2)
-                                        .Background(BgBrush)
-                                        .HasBadge(BadgeInfo)
-                                        .HasMessage(Message)
-                                        .Dismiss().WithButton("Ok", button => { })
-                                        .Dismiss().WithDelay(TimeSpan.FromSeconds(25))
-                                        .Queue();
+                    await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 2));
 
-            AppLevel.NotificationManagers.InAppNotificationsManager = new NotificationMessageManager();
+                    (item as MainWindow).ContentFrame.Navigate(new DiffusionsList());
+                    break;
+                }
+            }
+        }
+
+        private void AddPJ_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog OPFD = new OpenFileDialog();
+
+            OPFD.ShowDialog();
         }
     }
 }

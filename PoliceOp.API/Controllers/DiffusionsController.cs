@@ -31,15 +31,10 @@ namespace PoliceOp.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Diffusion>>> GetDiffusions()
         {
+
             if (await SessionExists(HttpContext))
             {
-                if (await SessionExists(HttpContext))
-                {
-                    return await _context.Diffusions.ToListAsync();
-                }
-
-                return Unauthorized("Session ID is Required");
-                
+                return await _context.Diffusions.ToListAsync();
             }
 
             return Unauthorized("Session ID is Required");
