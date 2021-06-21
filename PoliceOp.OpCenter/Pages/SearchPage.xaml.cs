@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using RestSharp;
+using RestSharp.Authenticators;
 
 namespace PoliceOp.OpCenter.Pages
 {
@@ -10,22 +12,17 @@ namespace PoliceOp.OpCenter.Pages
     /// </summary>
     public partial class SearchPage : Page
     {
+    
+        public string keyword { get; set; }
+        public List<Models.Personne> PList { get; set; }
         public SearchPage()
         {
+            PList = new List<Models.Personne>();
+            
             InitializeComponent();
-
-            List<Models.Personne> PList = new List<Models.Personne>()
-            {
-                new Models.Personne(){PersonneId = 160,Nom = "Azon", Prenom = "Tonangon", NPI = "656248489", UID = Guid.NewGuid().ToString(), Nationalite = "/Resources/images/Femme2.png"  },
-                new Models.Personne(){PersonneId = 26, Nom = "Vignon", Prenom = "René Mahougnon", NPI = "656248489", UID = Guid.NewGuid().ToString(), Nationalite = "/Resources/images/Homme1.png" },
-                new Models.Personne(){PersonneId = 13, Nom = "Ataki", Prenom = "Vladimir", NPI = "656248489", UID = Guid.NewGuid().ToString(), Nationalite = "/Resources/images/Homme2.png" },
-                new Models.Personne(){PersonneId = 90,Nom = "Bignon", Prenom = "Arlette", NPI = "656248489", UID = Guid.NewGuid().ToString(), Nationalite = "/Resources/images/Femme1.png" },
-                new Models.Personne(){PersonneId = 37, Nom = "Bigon", Prenom = "Mylo", NPI = "656248489", UID = Guid.NewGuid().ToString(),   Nationalite = "/Resources/images/Homme3.png" },
-                new Models.Personne(){PersonneId = 89, Nom = "Hossou", Prenom = "Paul", NPI = "656248489", UID = Guid.NewGuid().ToString(), Nationalite = "/Resources/images/Homme1.png" },
-            };
-
-            this.PersonnesListView.ItemsSource = PList;
         }
+
+
 
         private async void DetailsBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -45,5 +42,48 @@ namespace PoliceOp.OpCenter.Pages
             }
 
         }
+
+        private async void SearchWdgt_SearchStarted(object sender, HandyControl.Data.FunctionEventArgs<string> e)
+        {
+            if (this.SearchWdgt.Text.Trim() == string.Empty)
+            {
+                MessageBox.Show("Veuillez Entrer un mot clé, Nom, Prénom, NPI, IFU....");
+                return;
+            }
+
+            this.SearchLoadingLine.Visibility = Visibility.Visible;
+
+            AppLevel.APIClients.AppRestClient2.Authenticator = new JwtAuthenticator(
+                    AppLevel.JWTAuthServices.jwtSvc.TokenizeSessionID(
+                        AppLevel.CachingService.appCache.Get<Models.SessionVM>("SessionVM").SessionID, "search_for"));
+
+            var Req = new RestRequest(resource: $"Identification/search/{keyword = this.SearchWdgt.Text}", method: Method.GET);
+
+            var response = await AppLevel.APIClients.AppRestClient2.ExecuteAsync<List<Models.Personne>>(request: Req);
+
+            if (response.IsSuccessful)
+            {
+                PList = response.Data;
+                this.PersonnesListView.ItemsSource = PList;
+            }
+            else
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    AppLevel.NotificationManagers.ShowNotification("Requête Non Authorisée", "Avertissement", AppLevel.NotificationLevel.Warning);
+                }
+                else
+                {
+                    AppLevel.NotificationManagers.ShowNotification("Une Erreur est Survenue", "Erreur", AppLevel.NotificationLevel.Error);
+
+                }
+            }
+
+            await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 4));
+            e.Handled = true;
+
+            this.SearchLoadingLine.Visibility = Visibility.Collapsed;
+        }
     }
+
 }

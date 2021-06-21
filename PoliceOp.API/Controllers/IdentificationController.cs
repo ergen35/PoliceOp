@@ -5,11 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PoliceOp.API.Data;
 using PoliceOp.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
-using System.Collections.ObjectModel;
 
 
 namespace PoliceOp.API.Controllers
@@ -65,19 +63,24 @@ namespace PoliceOp.API.Controllers
             return Unauthorized("Session ID is Required");
 
         }
-        
-        [HttpPost]
+
+        [HttpGet("search/{keyword}")]
         public async Task<ActionResult<IEnumerable<Personne>>> SearchFor(string keyword)
         {
             if (await SessionExists(HttpContext))
             {
                 if (keyword == string.Empty)
                 {
-                    return NoContent();
+                    return new List<Personne>();
                 }
 
                 var Results = await _context.Personnes.Where(p => p.Nom.Contains(keyword) || p.Prenom.Contains(keyword) || p.IFU.Contains(keyword) || p.NPI.Contains(keyword)).ToListAsync();
-                
+
+                foreach (var item in Results)
+                {
+                    await _context.Entry(item).Reference(r => r.Residence).LoadAsync();
+                }
+
                 return Results;
             }
 

@@ -27,16 +27,20 @@ namespace PoliceOp.API.Controllers
 
         // GET: api/<ZeroController>
         [HttpGet("get-token")]
-        public IActionResult GetToken()
+        public async Task<IActionResult> GetToken()
         {
             var token = jWTService.TokenizeID("89898598", "77a8zeea87", "Session", Models.Issuers.PoliceOpAPI, Models.Audiences.TerminalDesktop);
 
-            //await GenerateData(500, 100);
+            await GenerateData(5000, 450);
 
+            await ctx.SaveChangesAsync();
             //EraseData();
+            Console.WriteLine("Done!");
 
             int totalA = ctx.Agents.Count();
             int totalP = ctx.Personnes.Count();
+
+            //return NoContent();
 
             List<Models.Agent> LA = ctx.Agents.Take(2).AsEnumerable().ToList();
 
@@ -74,7 +78,7 @@ namespace PoliceOp.API.Controllers
         }
 
         [HttpGet("get-Resi")]
-        public  IEnumerable<Models.Residence> GetListResidences()
+        public IEnumerable<Models.Residence> GetListResidences()
         {
             return ctx.Residences.ToList().Skip(58).Take(8);
         }
@@ -114,7 +118,7 @@ namespace PoliceOp.API.Controllers
             Console.WriteLine("Fin Personnes\n");
 
             Console.Write("[");
-            for (long i = 0; i < totalPersonnes; i++)
+            for (long i = 0; i < totalAgents; i++)
             {
                 await ctx.Agents.AddAsync(await generator.GenerateAgent());
 

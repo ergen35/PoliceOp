@@ -15,7 +15,7 @@ namespace PoliceOp.API
     {
         PasswordGenerator.Password pwd = new PasswordGenerator.Password(true, false, true, false, 8);
 
-        public Personne GeneratePersonne()
+        public async Task<Personne> GeneratePersonne()
         {
             Residence R = new Residence()
             {
@@ -44,13 +44,15 @@ namespace PoliceOp.API
                 Taille = Convert.ToDouble(Faker.RandomNumber.Next(45, 300)),
                 Teint = Faker.Enum.Random<Couleur>().ToString(),
                 Telephone = Phone.Number(),
-                Photographie = Convert.FromBase64String("alze9ve2avez")//await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png")
+                Photographie = Convert.FromBase64String("alze9ve2avez"), //await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png")
+                PersonnePhoto = $"Resources/images/{System.Enum.GetValues(typeof(PhotoEnum)).GetValue((new Random()).Next(0, 6))}.png"
+
             };
 
             return P;
         }
 
-        public Agent GenerateAgent()
+        public async Task<Agent> GenerateAgent()
         {
             Residence R = new Residence()
             {
@@ -86,7 +88,8 @@ namespace PoliceOp.API
                 Teint = Faker.Enum.Random<Couleur>().ToString(),
                 Telephone = Phone.Number(),
                 Profession = string.Concat(Faker.Lorem.Words(3)),
-                Photographie = Convert.FromBase64String("alze9ve2avez") //Convert.ToBase64String(await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png"))
+                Photographie = Convert.FromBase64String("alze9ve2avez"),
+                PersonnePhoto = $"Resources/images/{System.Enum.GetValues(typeof(CaptPhoto)).GetValue((new Random()).Next(0, 4))}.png"
             };
 
             return A;
