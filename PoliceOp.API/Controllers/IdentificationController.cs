@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PoliceOp.API.Data;
 using PoliceOp.Models;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 
 
 namespace PoliceOp.API.Controllers
@@ -63,82 +65,23 @@ namespace PoliceOp.API.Controllers
             return Unauthorized("Session ID is Required");
 
         }
-
-        // PUT: api/Identification/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPersonne(int id, Personne personne)
-        {
-
-            if (await SessionExists(HttpContext))
-            {
-                if (id != personne.PersonneId)
-                {
-                    return BadRequest();
-                }
-
-                _context.Entry(personne).State = EntityState.Modified;
-
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PersonneExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
-                return NoContent();
-            }
-
-            return Unauthorized("Session ID is Required");
-        }
-
-        // POST: api/Identification
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        
         [HttpPost]
-        public async Task<ActionResult<Personne>> PostPersonne(Personne personne)
+        public async Task<ActionResult<IEnumerable<Personne>>> SearchFor(string keyword)
         {
             if (await SessionExists(HttpContext))
             {
-                _context.Personnes.Add(personne);
-                await _context.SaveChangesAsync();
-
-                return CreatedAtAction("GetPersonne", new { id = personne.PersonneId }, personne);
-            }
-
-            return Unauthorized("Session ID is Required");
-        }
-
-        // DELETE: api/Identification/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Personne>> DeletePersonne(int id)
-        {
-            if (await SessionExists(HttpContext))
-            {
-                var personne = await _context.Personnes.FindAsync(id);
-                if (personne == null)
+                if (keyword == string.Empty)
                 {
-                    return NotFound();
+                    return NoContent();
                 }
 
-                _context.Personnes.Remove(personne);
-                await _context.SaveChangesAsync();
-
-                return personne;
+                var Results = await _context.Personnes.Where(p => p.Nom.Contains(keyword) || p.Prenom.Contains(keyword) || p.IFU.Contains(keyword) || p.NPI.Contains(keyword)).ToListAsync();
+                
+                return Results;
             }
 
-            return Unauthorized("Session ID is Required");
-
+            return Unauthorized("Session ID Requis");
         }
 
         private bool PersonneExists(int id)

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Controllers\ZeroController.cs~RFbf4814.TMP" />
     <None Remove="FileRoot\CaptImg.png" />
   </ItemGroup>
 

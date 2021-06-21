@@ -178,7 +178,7 @@ namespace PoliceOp.OpCenter
             }
         }
 
-        private async void LogOutBtn_Click(object sender, RoutedEventArgs e)
+        private void LogOutBtn_Click(object sender, RoutedEventArgs e)
         {
             //Delete sessionID from cache
 

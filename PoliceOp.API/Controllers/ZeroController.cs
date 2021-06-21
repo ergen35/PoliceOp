@@ -27,7 +27,7 @@ namespace PoliceOp.API.Controllers
 
         // GET: api/<ZeroController>
         [HttpGet("get-token")]
-        public async Task<IActionResult> GetToken()
+        public IActionResult GetToken()
         {
             var token = jWTService.TokenizeID("89898598", "77a8zeea87", "Session", Models.Issuers.PoliceOpAPI, Models.Audiences.TerminalDesktop);
 
@@ -50,7 +50,7 @@ namespace PoliceOp.API.Controllers
         }
 
         [HttpGet("get-obj")]
-        public async Task<ActionResult> GetObj()
+        public IActionResult GetObj()
         {
             return Json(new { Id = 4, GrowRate = 0.002595, Relative = "GPI Rate", Type = "Gross", SearchUID = Guid.NewGuid().ToByteArray() });
         }
@@ -68,13 +68,13 @@ namespace PoliceOp.API.Controllers
         }
 
         [HttpGet("get-listAgt")]
-        public async Task<IEnumerable<Models.Personne>> GetListAgent()
+        public IEnumerable<Models.Personne> GetListAgent()
         {
             return ctx.Agents.ToList().Take(18);
         }
 
         [HttpGet("get-Resi")]
-        public async Task<IEnumerable<Models.Residence>> GetListResidences()
+        public  IEnumerable<Models.Residence> GetListResidences()
         {
             return ctx.Residences.ToList().Skip(58).Take(8);
         }

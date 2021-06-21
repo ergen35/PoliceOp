@@ -15,7 +15,7 @@ namespace PoliceOp.API
     {
         PasswordGenerator.Password pwd = new PasswordGenerator.Password(true, false, true, false, 8);
 
-        public async Task<Personne> GeneratePersonne()
+        public Personne GeneratePersonne()
         {
             Residence R = new Residence()
             {
@@ -50,7 +50,7 @@ namespace PoliceOp.API
             return P;
         }
 
-        public async Task<Agent> GenerateAgent()
+        public Agent GenerateAgent()
         {
             Residence R = new Residence()
             {
