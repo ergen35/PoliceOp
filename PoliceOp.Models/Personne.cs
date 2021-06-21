@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PoliceOp.Models
 {
@@ -62,7 +61,7 @@ namespace PoliceOp.Models
         public double Taille { get; set; }
 
         [Required]
-        public byte[] Photographie { get; set; }
+        public string PersonnePhoto { get; set; }
 
         public virtual Biometrie Biometrie { get; set; }
 
@@ -74,8 +73,6 @@ namespace PoliceOp.Models
 
         [Required]
         public int MereId { get; set; }
-
-        public string PersonnePhoto { get; set; }
     }
 
 }

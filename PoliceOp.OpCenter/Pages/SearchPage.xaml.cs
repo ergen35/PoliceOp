@@ -1,9 +1,10 @@
-﻿using System;
+﻿using RestSharp;
+using RestSharp.Authenticators;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using RestSharp;
-using RestSharp.Authenticators;
 
 namespace PoliceOp.OpCenter.Pages
 {
@@ -12,13 +13,13 @@ namespace PoliceOp.OpCenter.Pages
     /// </summary>
     public partial class SearchPage : Page
     {
-    
+
         public string keyword { get; set; }
         public List<Models.Personne> PList { get; set; }
         public SearchPage()
         {
             PList = new List<Models.Personne>();
-            
+
             InitializeComponent();
         }
 
@@ -45,26 +46,27 @@ namespace PoliceOp.OpCenter.Pages
 
         private async void SearchWdgt_SearchStarted(object sender, HandyControl.Data.FunctionEventArgs<string> e)
         {
-            if (this.SearchWdgt.Text.Trim() == string.Empty)
+            if (SearchWdgt.Text.Trim() == string.Empty)
             {
                 MessageBox.Show("Veuillez Entrer un mot clé, Nom, Prénom, NPI, IFU....");
                 return;
             }
 
-            this.SearchLoadingLine.Visibility = Visibility.Visible;
+            SearchLoadingLine.Visibility = Visibility.Visible;
 
             AppLevel.APIClients.AppRestClient2.Authenticator = new JwtAuthenticator(
                     AppLevel.JWTAuthServices.jwtSvc.TokenizeSessionID(
                         AppLevel.CachingService.appCache.Get<Models.SessionVM>("SessionVM").SessionID, "search_for"));
 
-            var Req = new RestRequest(resource: $"Identification/search/{keyword = this.SearchWdgt.Text}", method: Method.GET);
+            var Req = new RestRequest(resource: $"Identification/search/{keyword = SearchWdgt.Text}", method: Method.GET);
 
             var response = await AppLevel.APIClients.AppRestClient2.ExecuteAsync<List<Models.Personne>>(request: Req);
 
             if (response.IsSuccessful)
             {
                 PList = response.Data;
-                this.PersonnesListView.ItemsSource = PList;
+                MessageBox.Show(PList.First().PersonnePhoto);
+                PersonnesListView.ItemsSource = PList;
             }
             else
             {
@@ -82,7 +84,7 @@ namespace PoliceOp.OpCenter.Pages
             await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 4));
             e.Handled = true;
 
-            this.SearchLoadingLine.Visibility = Visibility.Collapsed;
+            SearchLoadingLine.Visibility = Visibility.Collapsed;
         }
     }
 

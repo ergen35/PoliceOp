@@ -21,15 +21,15 @@ namespace PoliceOp.OpCenter
         {
             InitializeComponent();
 
-            this.AuthMessages.Manager = AppLevel.NotificationManagers.AuthNotificationsManager;
+            AuthMessages.Manager = AppLevel.NotificationManagers.AuthNotificationsManager;
         }
 
         private async void AuthBtn_Click(object sender, RoutedEventArgs e)
         {
             Models.SessionVM sessionVM; ;
 
-            string login = this.LoginTxtb.Text;
-            string pwd = this.PwdTxtb.Password;
+            string login = LoginTxtb.Text;
+            string pwd = PwdTxtb.Password;
 
             if (login == "" || pwd == "")
             {
@@ -39,9 +39,9 @@ namespace PoliceOp.OpCenter
             }
             else
             {
-                if (this.LoginTxtb.VerifyData())
+                if (LoginTxtb.VerifyData())
                 {
-                    this.AuthBtn.Content = new PackIconFontAwesome()
+                    AuthBtn.Content = new PackIconFontAwesome()
                     {
                         Kind = PackIconFontAwesomeKind.CircleNotchSolid,
                         Spin = true
@@ -76,7 +76,7 @@ namespace PoliceOp.OpCenter
                             AppLevel.NotificationManagers.ShowAuthNotification("Une erreur est survenue" + response.StatusDescription, "Erreur", AppLevel.NotificationLevel.Error);
                         }
 
-                        this.AuthBtn.Content = new PackIconBoxIcons()
+                        AuthBtn.Content = new PackIconBoxIcons()
                         {
                             Kind = PackIconBoxIconsKind.RegularCheckShield,
                             Spin = false
@@ -87,7 +87,7 @@ namespace PoliceOp.OpCenter
 
                     await Task.Delay(new TimeSpan(0, 0, 3));
 
-                    this.AuthBtn.Content = new PackIconBoxIcons()
+                    AuthBtn.Content = new PackIconBoxIcons()
                     {
                         Kind = PackIconBoxIconsKind.RegularCheckShield,
                         Spin = false
@@ -103,9 +103,9 @@ namespace PoliceOp.OpCenter
                     AppLevel.CachingService.appCache.Add<Models.SessionVM>("SessionVM", sessionVM, new TimeSpan(23, 30, 0));
 
                     //Close this window and try to call The OpCenter
-                    this.Visibility = Visibility.Collapsed;
+                    Visibility = Visibility.Collapsed;
                     //Clear Password
-                    this.PwdTxtb.Clear();
+                    PwdTxtb.Clear();
 
                     // When OpCenter Opens, check Hash in the cache
                     MainWindow MW = new MainWindow();
@@ -122,13 +122,13 @@ namespace PoliceOp.OpCenter
 
         private void FingerPrintIcon_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.FingerPrintIcon.Effect = new HandyControl.Media.Effects.BrightnessEffect();
+            FingerPrintIcon.Effect = new HandyControl.Media.Effects.BrightnessEffect();
 
         }
 
         private void FingerPrintIcon_MouseLeave(object sender, MouseEventArgs e)
         {
-            this.FingerPrintIcon.Effect = new System.Windows.Media.Effects.BlurEffect();
+            FingerPrintIcon.Effect = new System.Windows.Media.Effects.BlurEffect();
         }
 
     }

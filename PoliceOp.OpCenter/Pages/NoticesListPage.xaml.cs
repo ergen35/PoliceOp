@@ -14,7 +14,7 @@ namespace PoliceOp.OpCenter.Pages
 
         public NoticesListPage()
         {
-            this.ListWanted = new List<Models.AvisRecherche>();
+            ListWanted = new List<Models.AvisRecherche>();
             FetchData();
             InitializeComponent();
         }
@@ -31,7 +31,7 @@ namespace PoliceOp.OpCenter.Pages
 
             if (response.IsSuccessful)
             {
-                this.ListWanted = response.Data;
+                ListWanted = response.Data;
             }
             else
             {

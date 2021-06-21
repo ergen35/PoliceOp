@@ -22,9 +22,9 @@ namespace PoliceOp.OpCenter.Pages
             Models.Diffusion Diff = new Models.Diffusion()
             {
                 AuthorId = AppLevel.CachingService.appCache.Get<Models.SessionVM>("SessionVM").AgentID,
-                Sujet = this.Subject.Text,
-                Cible = this.Cible.Text.ToString(),
-                Details = this.Details.Text,
+                Sujet = Subject.Text,
+                Cible = Cible.Text.ToString(),
+                Details = Details.Text,
 
                 //If Any
                 PiecesJointes = new List<Models.PieceJointe>()
@@ -41,9 +41,9 @@ namespace PoliceOp.OpCenter.Pages
             if (response.IsSuccessful)
             {
                 AppLevel.NotificationManagers.ShowNotification("Diffusion Effectuée !", "info");
-                this.DiffuseBtn.Visibility = Visibility.Collapsed;
+                DiffuseBtn.Visibility = Visibility.Collapsed;
 
-                this.BackBtn_Click(this, null);
+                BackBtn_Click(this, null);
             }
             else
             {

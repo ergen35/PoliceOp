@@ -24,7 +24,7 @@ namespace PoliceOp.OpCenter
         {
             InitializeComponent();
 
-            this.DataContext = this;
+            DataContext = this;
 
 
             try
@@ -33,31 +33,31 @@ namespace PoliceOp.OpCenter
 
                 if (SessionVM.SessionID == (new Models.Session()).SessionID.ToString())
                 {
-                    this.Close();
+                    Close();
                 }
 
             }
             catch (Exception)
             {
-                this.Close();
+                Close();
             }
 
             jWTServices = new JWTServices();
 
 
-            this.Home = new Pages.HomePage();
+            Home = new Pages.HomePage();
 
-            this.ContentFrame.Navigate(Home, null);
+            ContentFrame.Navigate(Home, null);
 
-            this.AlertCenterMessageContainer.Manager = AppLevel.NotificationManagers.AlertCenterManager;
-            this.InAppMessageContainer.Manager = AppLevel.NotificationManagers.InAppNotificationsManager;
+            AlertCenterMessageContainer.Manager = AppLevel.NotificationManagers.AlertCenterManager;
+            InAppMessageContainer.Manager = AppLevel.NotificationManagers.InAppNotificationsManager;
 
-            this.Closed += MainWindow_Closed;
+            Closed += MainWindow_Closed;
 
             Agent = new Models.Agent();
 
             //Load Agent Info once window is loaded
-            this.Loaded += MainWindow_Loaded;
+            Loaded += MainWindow_Loaded;
 
         }
 
@@ -73,21 +73,21 @@ namespace PoliceOp.OpCenter
 
             if (response.IsSuccessful)
             {
-                this.Agent = response.Data;
+                Agent = response.Data;
             }
             else
             {
                 if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    this.ShowNotification("Impossible d'obtenir les informations demandées", "#F15B19", "#F15B19", "Erreur");
+                    ShowNotification("Impossible d'obtenir les informations demandées", "#F15B19", "#F15B19", "Erreur");
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    this.ShowNotification("Requête non Authorisée", "#333", "#E0A030", "Avertissement");
+                    ShowNotification("Requête non Authorisée", "#333", "#E0A030", "Avertissement");
                 }
                 else
                 {
-                    this.ShowNotification("Une Erreur est survenue", "#333", "#E0A030", "Erreur");
+                    ShowNotification("Une Erreur est survenue", "#333", "#E0A030", "Erreur");
                 }
             }
 
@@ -106,12 +106,12 @@ namespace PoliceOp.OpCenter
 
         private void ToogleBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.ToogleDrawer.Visibility = Visibility.Hidden;
+            ToogleDrawer.Visibility = Visibility.Hidden;
         }
 
         private void DrawerLeft_Closed(object sender, RoutedEventArgs e)
         {
-            this.ToogleDrawer.Visibility = Visibility.Visible;
+            ToogleDrawer.Visibility = Visibility.Visible;
         }
 
         private void ThemeBtn_Checked(object sender, RoutedEventArgs e)
@@ -149,7 +149,7 @@ namespace PoliceOp.OpCenter
 
         private void ClearAlertsBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.AlertCenterMessageContainer.Items.Clear();
+            AlertCenterMessageContainer.Items.Clear();
         }
         private void AlertsSortingCbbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -158,23 +158,23 @@ namespace PoliceOp.OpCenter
 
         private void ContentFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
-            this.LoadingIndicator.Visibility = Visibility.Collapsed;
+            LoadingIndicator.Visibility = Visibility.Collapsed;
 
-            if (this.ContentFrame.CanGoBack)
+            if (ContentFrame.CanGoBack)
             {
-                this.BackNavigation.Visibility = Visibility.Visible;
+                BackNavigation.Visibility = Visibility.Visible;
             }
             else
             {
-                this.BackNavigation.Visibility = Visibility.Hidden;
+                BackNavigation.Visibility = Visibility.Hidden;
             }
         }
 
         private void BackNavigation_Click(object sender, RoutedEventArgs e)
         {
-            if (this.ContentFrame.CanGoBack)
+            if (ContentFrame.CanGoBack)
             {
-                this.ContentFrame.GoBack();
+                ContentFrame.GoBack();
             }
         }
 
@@ -183,8 +183,6 @@ namespace PoliceOp.OpCenter
             //Delete sessionID from cache
 
             AppLevel.CachingService.appCache.Add<Models.Session>("SessionID", null);
-
-            MessageBox.Show(AppLevel.CachingService.appCache.Get<string>("SessionID"));
 
             //Call Api logout
 
@@ -201,12 +199,12 @@ namespace PoliceOp.OpCenter
             //}
 
             //Close window
-            this.Close();
+            Close();
         }
 
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.ContentFrame.Navigate(Home);
+            ContentFrame.Navigate(Home);
         }
 
 
@@ -226,6 +224,49 @@ namespace PoliceOp.OpCenter
                                         .Queue();
 
             AppLevel.NotificationManagers.InAppNotificationsManager = new NotificationMessageManager();
+        }
+
+        private void WantedNoticesSM_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SideMenu_ItemSelected(object sender, RoutedEventArgs e)
+        {
+            if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("wanted"))
+            {
+                ContentFrame.Navigate(new Pages.NoticesListPage());
+            }
+
+            if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("search"))
+            {
+                DrawerLeft.IsOpen = false;
+                ContentFrame.Navigate(new Pages.SearchPage());
+            }
+
+            if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("work"))
+            {
+                //this.ContentFrame.Navigate(new Pages.NoticesListPage());
+            }
+
+            if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("agents"))
+            {
+                ContentFrame.Navigate(new Pages.AgentsManagementPage());
+            }
+            if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("diffusions"))
+            {
+                ContentFrame.Navigate(new Pages.DiffusionsList());
+            }
+            if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("admin"))
+            {
+                ContentFrame.Navigate(new Pages.AdministrationPage());
+            }
+            if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("center"))
+            {
+                NotificationCenter_Click(this, null);
+            }
+
+
         }
     }
 

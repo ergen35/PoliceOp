@@ -16,7 +16,7 @@ namespace PoliceOp.OpCenter.Pages
         {
             InitializeComponent();
 
-            this.DataContext = this;
+            DataContext = this;
 
         }
         public BioPage(int Pid)
@@ -25,7 +25,7 @@ namespace PoliceOp.OpCenter.Pages
 
             InitializeComponent();
 
-            this.DataContext = this;
+            DataContext = this;
         }
 
         public async void fecthPersonData(int Pid)
@@ -41,7 +41,7 @@ namespace PoliceOp.OpCenter.Pages
 
             if (response.IsSuccessful)
             {
-                this.Personne = response.Data;
+                Personne = response.Data;
             }
             else
             {
@@ -95,12 +95,12 @@ namespace PoliceOp.OpCenter.Pages
 
         private void FaceDataBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.FaceDataExp.IsExpanded = !this.FaceDataExp.IsExpanded;
+            FaceDataExp.IsExpanded = !FaceDataExp.IsExpanded;
         }
 
         private void FingerPrintBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.FingerDataExp.IsExpanded = !this.FingerDataExp.IsExpanded;
+            FingerDataExp.IsExpanded = !FingerDataExp.IsExpanded;
         }
 
     }

@@ -22,7 +22,7 @@ namespace PoliceOp.API.Controllers
         {
             _context = context;
             this.configuration = configuration;
-            this.jWTService = new Services.JWTServices(this.configuration);
+            jWTService = new Services.JWTServices(this.configuration);
         }
 
         // GET: api/Diffusions

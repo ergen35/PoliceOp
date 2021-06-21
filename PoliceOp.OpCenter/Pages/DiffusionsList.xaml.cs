@@ -20,12 +20,12 @@ namespace PoliceOp.OpCenter.Pages
             Fetch_Data();
 
             InitializeComponent();
-            this.Loaded += DiffusionsList_Loaded;
+            Loaded += DiffusionsList_Loaded;
         }
 
         private void DiffusionsList_Loaded(object sender, RoutedEventArgs e)
         {
-            this.SelectedDiffusion = new Models.Diffusion();
+            SelectedDiffusion = new Models.Diffusion();
         }
 
         private async void Fetch_Data()
@@ -40,9 +40,9 @@ namespace PoliceOp.OpCenter.Pages
 
             if (response.IsSuccessful)
             {
-                this.Diffusions = response.Data;
+                Diffusions = response.Data;
 
-                this.DiffusionsListView.ItemsSource = this.Diffusions;
+                DiffusionsListView.ItemsSource = Diffusions;
             }
             else
             {
@@ -59,18 +59,18 @@ namespace PoliceOp.OpCenter.Pages
 
         private void DiffusionsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.DiffusionsListView.Items.Count > 0)
+            if (DiffusionsListView.Items.Count > 0)
             {
-                this.DetailsCard.Visibility = Visibility.Collapsed;
+                DetailsCard.Visibility = Visibility.Collapsed;
 
-                if (this.DiffusionsListView.SelectedIndex > -1)
+                if (DiffusionsListView.SelectedIndex > -1)
                 {
                     var selectedItem = (DiffusionsListView.SelectedItem as Models.Diffusion);
-                    this.SelectedDiffusion = selectedItem;
+                    SelectedDiffusion = selectedItem;
 
-                    this.DataContext = this;
+                    DataContext = this;
 
-                    this.DetailsCard.Visibility = Visibility.Visible;
+                    DetailsCard.Visibility = Visibility.Visible;
                 }
             }
         }

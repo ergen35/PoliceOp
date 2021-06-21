@@ -81,42 +81,42 @@
                             </hc:Card>
                         </Grid>
                         <Grid Background="Azure" Grid.Row="2">
+                            
                             <hc:SideMenu BorderThickness="1" Width="300" SideBrush="LightBlue" 
                                          ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                         ExpandMode="ShowAll"
-                                         >
-                                <hc:SideMenuItem Header="Wanted Notices">
+                                         AutoSelect="True" ExpandMode="ShowAll">
+                                <hc:SideMenuItem Header="Wanted Notices" Selected="SideMenu_ItemSelected">
                                     <hc:SideMenuItem.Icon>
                                         <IconPacks:Material Kind="PoliceBadge"/>
                                     </hc:SideMenuItem.Icon>
                                 </hc:SideMenuItem>
-                                <hc:SideMenuItem Header="Search or Identify">
+                                <hc:SideMenuItem Header="Search or Identify" Selected="SideMenu_ItemSelected">
                                     <hc:SideMenuItem.Icon>
-                                        <IconPacks:Material Kind="AccountSearch"/>
+                                        <IconPacks:Material Kind="AccountSearch" />
                                     </hc:SideMenuItem.Icon>
                                 </hc:SideMenuItem>
-                                <hc:SideMenuItem Header="WorkSpace">
+                                <hc:SideMenuItem Header="WorkSpace" Selected="SideMenu_ItemSelected">
                                     <hc:SideMenuItem.Icon>
                                         <IconPacks:Material Kind="ViewDashboardVariant"/>
                                     </hc:SideMenuItem.Icon>
                                 </hc:SideMenuItem>
-                                <hc:SideMenuItem Header="Agents Management">
+                                <hc:SideMenuItem Header="Agents Management" Selected="SideMenu_ItemSelected">
                                     <hc:SideMenuItem.Icon>
                                         <IconPacks:Material Kind="AccountGroup"/>
                                     </hc:SideMenuItem.Icon>
                                 </hc:SideMenuItem>
-                                <hc:SideMenuItem Header="Diffusions">
+                                <hc:SideMenuItem Header="Diffusions" Selected="SideMenu_ItemSelected">
                                     <hc:SideMenuItem.Icon>
                                         <IconPacks:Material Kind="SurroundSound"/>
                                     </hc:SideMenuItem.Icon>
                                 </hc:SideMenuItem>
-                                <hc:SideMenuItem Header="Administration">
+                                <hc:SideMenuItem Header="Administration" Selected="SideMenu_ItemSelected">
                                     <hc:SideMenuItem.Icon>
                                         <IconPacks:Material Kind="ServerNetwork"/>
                                     </hc:SideMenuItem.Icon>
                                 </hc:SideMenuItem>
-                                
-                                <hc:SideMenuItem Header="Notifications Center">
+
+                                <hc:SideMenuItem x:Name="ItemSelected" Header="Notifications Center" Selected="SideMenu_ItemSelected">
                                     <hc:SideMenuItem.Icon>
                                         <IconPacks:BoxIcons Kind="RegularNotification"/>
                                     </hc:SideMenuItem.Icon>

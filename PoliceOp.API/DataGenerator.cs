@@ -13,7 +13,7 @@ namespace PoliceOp.API
 
     public class DataGenerator
     {
-        PasswordGenerator.Password pwd = new PasswordGenerator.Password(true, false, true, false, 8);
+        readonly PasswordGenerator.Password pwd = new PasswordGenerator.Password(true, false, true, false, 8);
 
         public async Task<Personne> GeneratePersonne()
         {
@@ -44,8 +44,7 @@ namespace PoliceOp.API
                 Taille = Convert.ToDouble(Faker.RandomNumber.Next(45, 300)),
                 Teint = Faker.Enum.Random<Couleur>().ToString(),
                 Telephone = Phone.Number(),
-                Photographie = Convert.FromBase64String("alze9ve2avez"), //await File.ReadAllBytesAsync("wwwroot/images/EliteCap.png")
-                PersonnePhoto = $"Resources/images/{System.Enum.GetValues(typeof(PhotoEnum)).GetValue((new Random()).Next(0, 6))}.png"
+                PersonnePhoto = $"/Resources/images/{Faker.Enum.Random<PhotoEnum>()}.png"
 
             };
 
@@ -88,8 +87,7 @@ namespace PoliceOp.API
                 Teint = Faker.Enum.Random<Couleur>().ToString(),
                 Telephone = Phone.Number(),
                 Profession = string.Concat(Faker.Lorem.Words(3)),
-                Photographie = Convert.FromBase64String("alze9ve2avez"),
-                PersonnePhoto = $"Resources/images/{System.Enum.GetValues(typeof(CaptPhoto)).GetValue((new Random()).Next(0, 4))}.png"
+                PersonnePhoto = $"/Resources/images/{Faker.Enum.Random<CaptPhoto>()}.png"
             };
 
             return A;

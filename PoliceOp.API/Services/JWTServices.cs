@@ -14,7 +14,7 @@ namespace PoliceOp.API.Services
 
         public JWTServices(IConfiguration configuration)
         {
-            this._secret = configuration.GetSection("JwtConfig").GetSection("secret").Value;
+            _secret = configuration.GetSection("JwtConfig").GetSection("secret").Value;
         }
 
         //Using JWT.NET Package

@@ -11,7 +11,7 @@ namespace PoliceOp.OpCenter.Services
 
         public JWTServices()
         {
-            this._secret = System.Configuration.ConfigurationManager.AppSettings["secret"].ToString();
+            _secret = System.Configuration.ConfigurationManager.AppSettings["secret"].ToString();
         }
 
 

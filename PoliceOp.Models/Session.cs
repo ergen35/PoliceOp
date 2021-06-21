@@ -10,7 +10,7 @@ namespace PoliceOp.Models
 
         public override string ToString()
         {
-            return this.SessionID.ToString();
+            return SessionID.ToString();
         }
     }
 }
