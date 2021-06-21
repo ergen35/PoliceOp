@@ -1,15 +1,12 @@
-﻿using Enterwell.Clients.Wpf.Notifications;
-using LazyCache;
+﻿using LazyCache;
+using MahApps.Metro.IconPacks;
 using Microsoft.Extensions.Configuration;
-using PoliceOp.OpCenter.Services;
+using RestSharp;
+using RestSharp.Authenticators;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using MahApps.Metro.IconPacks;
-using RestSharp;
-using RestSharp.Authenticators;
 
 
 

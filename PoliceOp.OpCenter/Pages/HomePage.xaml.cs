@@ -25,9 +25,9 @@ namespace PoliceOp.OpCenter.Pages
                 {
                     (item as MainWindow).LoadingIndicator.Visibility = Visibility.Visible;
 
-                    await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 8));
+                    await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 5));
 
-                    (item as MainWindow).ContentFrame.Navigate(new BioPage(5));
+                    (item as MainWindow).ContentFrame.Navigate(new NoticesListPage());
                     break;
                 }
             }

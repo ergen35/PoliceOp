@@ -34,7 +34,13 @@ namespace PoliceOp.API.Controllers
         {
             if (await SessionExists(HttpContext))
             {
-                return await _context.AvisRecherches.ToListAsync();
+                var liar = await _context.AvisRecherches.ToListAsync();
+
+                foreach (var item in liar)
+                {
+                    await _context.Entry(item).Reference(r => r.PersonneRecherchee).LoadAsync();
+                }
+                return liar;
             }
 
             return Unauthorized("Session ID is Required");

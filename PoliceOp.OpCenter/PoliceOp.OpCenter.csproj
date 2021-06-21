@@ -40,6 +40,10 @@
     <PackageReference Include="MahApps.Metro.IconPacks.BoxIcons" Version="4.6.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.6.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.6.0" />
+    <PackageReference Include="MaterialDesignExtensions" Version="3.2.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.0.0-ci2191" />
+    <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.1.5" />
+    <PackageReference Include="MaterialDesignThemes.Wpf" Version="1.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="NETCore.Encrypt" Version="2.0.9" />
     <PackageReference Include="RestSharp" Version="106.11.7" />

@@ -21,7 +21,7 @@
 
         <hc:SearchBar Grid.Row="1" Height="35" Width="500" HorizontalAlignment="Center" />
 
-        <ListView x:Name="PersonnesListView" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" Background="LightCoral"   SelectionMode="Single" Grid.Row="2" Margin="150,15,150,5" Effect="{StaticResource EffectShadow2}">
+        <ListView x:Name="PersonnesListView" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" Style="{StaticResource MahApps.Styles.ListBox}" Background="Transparent" BorderBrush="Black" BorderThickness="1"  SelectionMode="Single" Grid.Row="2" Margin="150,15,150,5" Effect="{StaticResource EffectShadow2}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border Padding="0" Margin="0" BorderThickness="2" BorderBrush="Black">
