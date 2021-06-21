@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestSharp;
+using RestSharp.Authenticators;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
@@ -13,20 +14,36 @@ namespace PoliceOp.OpCenter.Pages
 
         public NoticesListPage()
         {
+            this.ListWanted = new List<Models.AvisRecherche>();
+            FetchData();
             InitializeComponent();
+        }
 
-            this.ListWanted = new List<Models.AvisRecherche>() {
-                new Models.AvisRecherche()
+        private async void FetchData()
+        {
+            AppLevel.APIClients.AppRestClient3.Authenticator = new JwtAuthenticator(
+                AppLevel.JWTAuthServices.jwtSvc.TokenizeSessionID(
+                    AppLevel.CachingService.appCache.Get<Models.SessionVM>("SessionVM").SessionID, "wanted_notices"));
+
+            var req = new RestRequest(resource: "AvisRecherche", DataFormat.Json);
+            var response = await AppLevel.APIClients.AppRestClient3.ExecuteAsync<List<Models.AvisRecherche>>(request: req, httpMethod: Method.GET);
+
+
+            if (response.IsSuccessful)
+            {
+                this.ListWanted = response.Data;
+            }
+            else
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                     PersonneRecherchee = new Models.Personne(){ Nom = "Eric", Prenom = "Jira", NPI = "641814828"},
-                      DateEmission = DateTime.Now,
-                       Informations = "kleznzelianezaenf",
-                        StatutRecherche = "Actif",
-                         UID = Guid.NewGuid()
+                    AppLevel.NotificationManagers.ShowNotification("Requête non Authorisée", "Avertissement", AppLevel.NotificationLevel.Warning);
                 }
-            };
-
-            this.DataContext = this;
+                else
+                {
+                    AppLevel.NotificationManagers.ShowNotification("Une Erreur S'est Produite", "Erreur", AppLevel.NotificationLevel.Warning);
+                }
+            }
         }
     }
 }

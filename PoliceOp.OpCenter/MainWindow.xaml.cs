@@ -188,17 +188,17 @@ namespace PoliceOp.OpCenter
 
             //Call Api logout
 
-            try
-            {
-                await AppLevel.APIClients.v1Client
-                               .DeleteRequest(route: "Auth")
-                               .AddQueryParameter("uid", SessionVM.SessionID.ToString())
-                               .ExecuteAsync();
-            }
-            catch
-            {
+            //try
+            //{
+            //    //await AppLevel.APIClients.v1Client
+            //    //               .DeleteRequest(route: "Auth")
+            //    //               .AddQueryParameter("uid", SessionVM.SessionID.ToString())
+            //    //               .ExecuteAsync();
+            //}
+            //catch
+            //{
 
-            }
+            //}
 
             //Close window
             this.Close();
