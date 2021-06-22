@@ -3,8 +3,10 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:PoliceOp.OpCenter.Pages"
-      mc:Ignorable="d"  xmlns:hc="https://handyorg.github.io/handycontrol" xmlns:IconsPack="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:local="clr-namespace:PoliceOp.OpCenter.Pages" 
+      xmlns:models="clr-namespace:PoliceOp.Models;assembly=PoliceOp.Models"
+      mc:Ignorable="d"  xmlns:hc="https://handyorg.github.io/handycontrol" 
+      xmlns:IconsPack="http://metro.mahapps.com/winfx/xaml/iconpacks"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AgentsManagementPage">
 
@@ -19,11 +21,15 @@
         <TextBlock Text="Gestion des Agents" Style="{StaticResource TextBlockSubTitleBold}" FontSize="30" Margin="50,30,0,0" 
                            FontFamily="Consolas" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-        <hc:SearchBar Grid.Row="1" Height="35" Width="500" HorizontalAlignment="Center" />
+        <DockPanel Grid.Row="1" HorizontalAlignment="Center">
+            <hc:SearchBar x:Name="SearchWdgt" DockPanel.Dock="Top" Height="35" Width="500" Margin="0,0,0,10" HorizontalAlignment="Center" IsRealTime="False" SearchStarted="SearchWdgt_SearchStarted" />
 
-        <ListView x:Name="PersonnesListView" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" Style="{StaticResource MahApps.Styles.ListBox}" Background="Transparent" BorderBrush="Black" BorderThickness="1"  SelectionMode="Single" Grid.Row="2" Margin="150,15,150,5" Effect="{StaticResource EffectShadow2}">
+            <hc:LoadingLine x:Name="SearchLoadingLine" DockPanel.Dock="Bottom" Height="25" DotSpeed="2" Visibility="Collapsed"/>
+        </DockPanel>
+
+        <ListView x:Name="AgentsListView" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" Style="{StaticResource MahApps.Styles.ListBox}" Background="Transparent" BorderBrush="Black" BorderThickness="1"  SelectionMode="Single" Grid.Row="2" Margin="150,15,150,5" Effect="{StaticResource EffectShadow2}">
             <ListView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate DataType="{x:Type models:Agent}">
                     <Border Padding="0" Margin="0" BorderThickness="2" BorderBrush="Black">
                         <Grid Height="auto">
                             <Grid.RowDefinitions>
@@ -31,16 +37,16 @@
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="300" />
+                                <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="240" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
                             <Border BorderThickness="3" BorderBrush="Black" Grid.RowSpan="2"
                                 Grid.Row="0" Grid.Column="0" Margin="0,0,10,0">
-                                <Image Source="/Resources/images/EliteCapt.PNG" Stretch="Fill" Height="100" Width="100"/>
+                                <Image Source="{Binding PersonnePhoto}" Stretch="Fill" Height="100" Width="100"/>
                             </Border>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
@@ -84,12 +90,12 @@
                                 
                                 <hc:Divider Orientation="Vertical"/>
                                 
-                                <Button  Style="{StaticResource ButtonDanger}">
-                                    <StackPanel Orientation="Horizontal">
+                                <ToggleButton  Style="{StaticResource ToggleButtonDanger}">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                         <IconsPack:PackIconFontAwesome Kind="BanSolid" Margin="0,0,5,0"/>
-                                        <TextBlock Text="Bloquer L'Accès"/>
+                                        <TextBlock Text="Bloquer"/>
                                     </StackPanel>
-                                </Button>
+                                </ToggleButton>
                             </StackPanel>
 
                         </Grid>

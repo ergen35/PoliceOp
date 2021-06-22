@@ -30,7 +30,7 @@
                     <hc:Card BorderThickness="0" Effect="{DynamicResource EffectShadow2}">
                         <!--Card Content section-->
                         <Border CornerRadius="4,4,0,0" Width="160" Height="200">
-                            <Image Source="/Resources/images/Homme1.png" Stretch="UniformToFill" HorizontalAlignment="Center"/>
+                            <Image Source="{Binding Personne.PersonnePhoto}" Stretch="UniformToFill" HorizontalAlignment="Center"/>
                         </Border>
                         <!--Card Footer part-->
                     </hc:Card>
@@ -93,19 +93,7 @@
                         </Grid>
                     </Expander>
                     <Expander x:Name="FaceDataExp" Header="Face Data">
-                        <StackPanel>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                            <Button Content="Hello"/>
-                        </StackPanel>
+                    
                     </Expander>
                 </StackPanel>
 

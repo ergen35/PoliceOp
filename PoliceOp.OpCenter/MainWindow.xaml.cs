@@ -26,7 +26,6 @@ namespace PoliceOp.OpCenter
 
             DataContext = this;
 
-
             try
             {
                 SessionVM = AppLevel.CachingService.appCache.Get<Models.SessionVM>("SessionVM");
@@ -47,7 +46,7 @@ namespace PoliceOp.OpCenter
 
             Home = new Pages.HomePage();
 
-            ContentFrame.Navigate(Home, null);
+            ContentFrame.Navigate(Home);
 
             AlertCenterMessageContainer.Manager = AppLevel.NotificationManagers.AlertCenterManager;
             InAppMessageContainer.Manager = AppLevel.NotificationManagers.InAppNotificationsManager;
@@ -58,7 +57,6 @@ namespace PoliceOp.OpCenter
 
             //Load Agent Info once window is loaded
             Loaded += MainWindow_Loaded;
-
         }
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -79,15 +77,15 @@ namespace PoliceOp.OpCenter
             {
                 if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    ShowNotification("Impossible d'obtenir les informations demandées", "#F15B19", "#F15B19", "Erreur");
+                    AppLevel.NotificationManagers.ShowNotification("Impossible d'obtenir les informations demandées", "Erreur", AppLevel.NotificationLevel.Error);
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    ShowNotification("Requête non Authorisée", "#333", "#E0A030", "Avertissement");
+                    AppLevel.NotificationManagers.ShowNotification("Requête non Authorisée", "Avertissement", AppLevel.NotificationLevel.Warning);
                 }
                 else
                 {
-                    ShowNotification("Une Erreur est survenue", "#333", "#E0A030", "Erreur");
+                    AppLevel.NotificationManagers.ShowNotification("Une Erreur est survenue", "Erreur", AppLevel.NotificationLevel.Error);
                 }
             }
 
@@ -207,66 +205,74 @@ namespace PoliceOp.OpCenter
             ContentFrame.Navigate(Home);
         }
 
-
-        private void ShowNotification(string Message, String BgBrush, String AccentBrush, string BadgeInfo)
-        {
-
-            AppLevel.NotificationManagers.InAppNotificationsManager.CreateMessage()
-                                        .Accent(AccentBrush)
-                                        .Animates(true)
-                                        .AnimationInDuration(0.75)
-                                        .AnimationOutDuration(2)
-                                        .Background(BgBrush)
-                                        .HasBadge(BadgeInfo)
-                                        .HasMessage(Message)
-                                        .Dismiss().WithButton("Ok", button => { })
-                                        .Dismiss().WithDelay(TimeSpan.FromSeconds(25))
-                                        .Queue();
-
-            AppLevel.NotificationManagers.InAppNotificationsManager = new NotificationMessageManager();
-        }
-
-        private void WantedNoticesSM_Selected(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void SideMenu_ItemSelected(object sender, RoutedEventArgs e)
+        private async void SideMenu_ItemSelected(object sender, RoutedEventArgs e)
         {
             if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("wanted"))
             {
+                DrawerLeft.IsOpen = false;
+                LoadingIndicator.Visibility = Visibility.Visible;
+                await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 5));
+                
                 ContentFrame.Navigate(new Pages.NoticesListPage());
+                
+                LoadingIndicator.Visibility = Visibility.Collapsed;
             }
 
             if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("search"))
             {
                 DrawerLeft.IsOpen = false;
+                LoadingIndicator.Visibility = Visibility.Visible;
+                await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 5));
+
                 ContentFrame.Navigate(new Pages.SearchPage());
+
+                LoadingIndicator.Visibility = Visibility.Collapsed;
             }
 
             if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("work"))
             {
+                DrawerLeft.IsOpen = false;
                 //this.ContentFrame.Navigate(new Pages.NoticesListPage());
             }
 
             if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("agents"))
             {
+                DrawerLeft.IsOpen = false;
+                LoadingIndicator.Visibility = Visibility.Visible;
+                await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 5));
+
                 ContentFrame.Navigate(new Pages.AgentsManagementPage());
+
+                LoadingIndicator.Visibility = Visibility.Collapsed;
             }
+           
             if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("diffusions"))
             {
+                DrawerLeft.IsOpen = false;
+                LoadingIndicator.Visibility = Visibility.Visible;
+                await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 5));
+
                 ContentFrame.Navigate(new Pages.DiffusionsList());
+
+                LoadingIndicator.Visibility = Visibility.Collapsed;
             }
+            
             if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("admin"))
             {
+                DrawerLeft.IsOpen = false;
+                LoadingIndicator.Visibility = Visibility.Visible;
+                await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 5));
+
                 ContentFrame.Navigate(new Pages.AdministrationPage());
+
+                LoadingIndicator.Visibility = Visibility.Collapsed;
             }
+            
             if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("center"))
             {
-                NotificationCenter_Click(this, null);
+                DrawerLeft.IsOpen = false;
+                NotifCenter.IsOpen = true;
             }
-
-
         }
     }
 

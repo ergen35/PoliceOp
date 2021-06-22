@@ -44,7 +44,6 @@ namespace PoliceOp.API.Controllers
 
         // GET: api/Agents/5
         [HttpGet("{id}")]
-        [AllowAnonymous]
         public async Task<ActionResult<Models.Agent>> GetAgent(int id)
         {
             if (await SessionExists(HttpContext))
@@ -63,6 +62,29 @@ namespace PoliceOp.API.Controllers
             }
 
             return Unauthorized("Session ID is Required");
+        }
+
+        [HttpGet("search/{keyword}")]
+        public async Task<ActionResult<IEnumerable<Models.Agent>>> SearchForAgent(string keyword)
+        {
+            if (await SessionExists(HttpContext))
+            {
+                if (keyword == string.Empty)
+                {
+                    return new List<Agent>();
+                }
+
+                var Results = await _context.Agents.Where(a => a.Nom.Contains(keyword) || a.Prenom.Contains(keyword) || a.Matricule.Contains(keyword) || a.IFU.Contains(keyword) || a.NPI.Contains(keyword)).ToListAsync();
+
+                foreach (var item in Results)
+                {
+                    await _context.Entry(item).Reference(r => r.Residence).LoadAsync();
+                }
+
+                return Results;
+            }
+
+            return Unauthorized("Session ID Requis");
         }
 
         // PUT: api/Agents/5

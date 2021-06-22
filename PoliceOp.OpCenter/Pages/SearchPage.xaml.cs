@@ -65,7 +65,6 @@ namespace PoliceOp.OpCenter.Pages
             if (response.IsSuccessful)
             {
                 PList = response.Data;
-                MessageBox.Show(PList.First().PersonnePhoto);
                 PersonnesListView.ItemsSource = PList;
             }
             else
