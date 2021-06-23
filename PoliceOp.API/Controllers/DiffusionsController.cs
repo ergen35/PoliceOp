@@ -7,6 +7,7 @@ using PoliceOp.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace PoliceOp.API.Controllers
 {
@@ -17,10 +18,12 @@ namespace PoliceOp.API.Controllers
         private readonly PoliceOpAPIContext _context;
         private readonly IConfiguration configuration;
         private readonly Services.JWTServices jWTService;
+        private readonly ILogger<DiffusionsController> logger;
 
-        public DiffusionsController(PoliceOpAPIContext context, IConfiguration configuration)
+        public DiffusionsController(PoliceOpAPIContext context, IConfiguration configuration, ILogger<DiffusionsController> logger)
         {
             _context = context;
+            this.logger = logger;
             this.configuration = configuration;
             jWTService = new Services.JWTServices(this.configuration);
         }
@@ -32,6 +35,7 @@ namespace PoliceOp.API.Controllers
 
             if (await SessionExists(HttpContext))
             {
+                logger.LogInformation("Liste:: Diffusions");
                 return await _context.Diffusions.ToListAsync();
             }
 
@@ -50,6 +54,8 @@ namespace PoliceOp.API.Controllers
                 {
                     return NotFound();
                 }
+
+                logger.LogInformation($"Details Diffusion:: N°{id}");
 
                 return diffusion;
             }
@@ -100,7 +106,9 @@ namespace PoliceOp.API.Controllers
                 _context.Diffusions.Add(diffusion);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetDiffusion", new { id = diffusion.DiffusionId }, diffusion);
+                logger.LogInformation($"Diffusion:: Ajouté @Id:: {diffusion.DiffusionId}");
+
+                return Ok();
             }
 
             return Unauthorized("Session ID is Required");

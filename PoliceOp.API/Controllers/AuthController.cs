@@ -7,6 +7,7 @@ using PoliceOp.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 
 namespace PoliceOp.API.Controllers
@@ -19,11 +20,13 @@ namespace PoliceOp.API.Controllers
         private readonly PoliceOpAPIContext _context;
         private readonly Services.JWTServices jWTService;
         private readonly IConfiguration configuration;
+        private readonly ILogger<AuthController> logger;
 
 
-        public AuthController(PoliceOpAPIContext context, IConfiguration configuration)
+        public AuthController(PoliceOpAPIContext context, IConfiguration configuration, ILogger<AuthController> logger)
         {
             this.configuration = configuration;
+            this.logger = logger;
             jWTService = new Services.JWTServices(this.configuration);
             _context = context;
 
@@ -62,15 +65,19 @@ namespace PoliceOp.API.Controllers
 
                         SessionVM svm = new SessionVM() { SessionID = newSession.SessionID.ToString(), AgentID = agent.PersonneId };
 
+                        logger.LogInformation($"Nouvelle Session Crée Par @{agent.Matricule}, {DateTime.Now}");
                         return Json(svm);
                     }
                     else
                     {
+                        logger.LogWarning($"Echec de Création de Session @{agent.Matricule}, {DateTime.Now}, depuis @{HttpContext.Connection.RemoteIpAddress}");
                         return NotFound("Bad Match");
                     }
                 }
                 else
                 {
+                    logger.LogError($"Echec de Création de Session @{mat}, {DateTime.Now}, depuis @{HttpContext.Connection.RemoteIpAddress}");
+
                     return NotFound("No Such Data");
                 }
             }
@@ -95,6 +102,7 @@ namespace PoliceOp.API.Controllers
             _context.Sessions.Remove(session);
             await _context.SaveChangesAsync();
 
+            logger.LogInformation($"Session {session.SessionID} detruite");
             return Ok("Logout successfull");
         }
     }

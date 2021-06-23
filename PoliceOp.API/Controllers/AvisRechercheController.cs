@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using PoliceOp.API.Data;
 using PoliceOp.Models;
 using System;
@@ -20,10 +21,12 @@ namespace PoliceOp.API.Controllers
         private readonly PoliceOpAPIContext _context;
         private readonly IConfiguration configuration;
         private readonly Services.JWTServices jWTService;
+        private readonly ILogger<AvisRecherche> logger;
 
-        public AvisRechercheController(PoliceOpAPIContext context, IConfiguration configuration)
+        public AvisRechercheController(PoliceOpAPIContext context, IConfiguration configuration, ILogger<AvisRecherche> logger)
         {
             this.configuration = configuration;
+            this.logger = logger;
             jWTService = new Services.JWTServices(this.configuration);
             _context = context;
         }
@@ -40,6 +43,8 @@ namespace PoliceOp.API.Controllers
                 {
                     item.PersonneRecherchee = await _context.Personnes.FindAsync(item.PersonneRechercheeId);
                 }
+
+                logger.LogInformation("Liste:: AvisRecherche");
                 return liar;
             }
 
@@ -116,6 +121,7 @@ namespace PoliceOp.API.Controllers
                 _context.AvisRecherches.Add(avisRecherche);
                 await _context.SaveChangesAsync();
 
+                logger.LogInformation($"Nouvel AvisRecherche @Id{avisRecherche.UID}, le {DateTime.Now}");
                 return Ok();
             }
 

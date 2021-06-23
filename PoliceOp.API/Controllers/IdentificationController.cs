@@ -8,6 +8,7 @@ using PoliceOp.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 
 namespace PoliceOp.API.Controllers
@@ -20,10 +21,12 @@ namespace PoliceOp.API.Controllers
         private readonly PoliceOpAPIContext _context;
         private readonly IConfiguration configuration;
         private readonly Services.JWTServices jWTService;
+        private readonly ILogger<IdentificationController> logger;
 
-        public IdentificationController(PoliceOpAPIContext context, IConfiguration configuration)
+        public IdentificationController(PoliceOpAPIContext context, IConfiguration configuration, ILogger<IdentificationController> logger)
         {
             _context = context;
+            this.logger = logger;
             this.configuration = configuration;
             jWTService = new Services.JWTServices(this.configuration);
         }
@@ -34,6 +37,7 @@ namespace PoliceOp.API.Controllers
         {
             if (await SessionExists(HttpContext))
             {
+                logger.LogInformation("Liste:: Personnes");
                 return await _context.Personnes.ToListAsync();
             }
 
@@ -57,6 +61,7 @@ namespace PoliceOp.API.Controllers
                 await _context.Entry(personne).Reference(p => p.Residence).LoadAsync();
                 await _context.Entry(personne).Reference(p => p.Biometrie).LoadAsync();
 
+                logger.LogInformation($"Personne:: {personne.UID}");
                 return personne;
             }
 
@@ -80,6 +85,8 @@ namespace PoliceOp.API.Controllers
                 {
                     await _context.Entry(item).Reference(r => r.Residence).LoadAsync();
                 }
+
+                logger.LogInformation($"Liste:: Recherche Personne @Mot-Clé:: {keyword} |");
 
                 return Results;
             }

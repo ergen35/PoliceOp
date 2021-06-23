@@ -42,6 +42,7 @@ namespace PoliceOp.API.Controllers
                 return await _context.Agents.ToListAsync();
             }
 
+            logger.LogInformation("Liste::Agents");
             return Unauthorized("Session ID is Required");
         }
 
@@ -63,7 +64,7 @@ namespace PoliceOp.API.Controllers
                 await _context.Entry(agent).Reference(a => a.Biometrie).LoadAsync();
 
 
-                logger.LogInformation($"Agent @{agent.Matricule} Connecté ::{HttpContext.Connection.RemotePort}, {DateTime.Now.ToShortDateString()}");
+                logger.LogInformation($"Agent @{agent.Matricule}");
 
                 return agent;
             }
@@ -87,85 +88,13 @@ namespace PoliceOp.API.Controllers
                 {
                     await _context.Entry(item).Reference(r => r.Residence).LoadAsync();
                 }
+                
+                logger.LogInformation($"Liste:: Recherche Agent @Mot-Clé:: {keyword} |");
 
                 return Results;
             }
 
             return Unauthorized("Session ID Requis");
-        }
-
-        // PUT: api/Agents/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAgent(int id, Agent agent)
-        {
-
-            if (await SessionExists(HttpContext))
-            {
-                if (id != agent.PersonneId)
-                {
-                    return BadRequest();
-                }
-
-                _context.Entry(agent).State = EntityState.Modified;
-
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AgentExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
-                return NoContent();
-            }
-
-            return Unauthorized("Session ID is Required");
-
-        }
-
-        // POST: api/Agents
-        [HttpPost]
-        public async Task<ActionResult<Agent>> PostAgent(Agent agent)
-        {
-            if (await SessionExists(HttpContext))
-            {
-
-                _context.Agents.Add(agent);
-                await _context.SaveChangesAsync();
-
-                return CreatedAtAction("GetAgent", new { id = agent.PersonneId }, agent);
-            }
-
-            return Unauthorized("Session ID is Required");
-        }
-
-        // DELETE: api/Agents/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Agent>> DeleteAgent(int id)
-        {
-            if (await SessionExists(HttpContext))
-            {
-                var agent = await _context.Agents.FindAsync(id);
-                if (agent == null)
-                {
-                    return NotFound();
-                }
-
-                _context.Agents.Remove(agent);
-                await _context.SaveChangesAsync();
-
-                return agent;
-            }
-
-            return Unauthorized("Session ID is Required");
         }
 
         private bool AgentExists(int id)
