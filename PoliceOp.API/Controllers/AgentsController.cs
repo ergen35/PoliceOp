@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PoliceOp.API.Data;
 using PoliceOp.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -88,7 +87,7 @@ namespace PoliceOp.API.Controllers
                 {
                     await _context.Entry(item).Reference(r => r.Residence).LoadAsync();
                 }
-                
+
                 logger.LogInformation($"Liste:: Recherche Agent @Mot-Clé:: {keyword} |");
 
                 return Results;
