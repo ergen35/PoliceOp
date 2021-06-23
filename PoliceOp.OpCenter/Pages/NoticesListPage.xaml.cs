@@ -1,6 +1,6 @@
-﻿using System;
-using RestSharp;
+﻿using RestSharp;
 using RestSharp.Authenticators;
+using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
@@ -99,7 +99,7 @@ namespace PoliceOp.OpCenter.Pages
             if (response.IsSuccessful)
             {
                 ListWanted = response.Data;
-                this.WantedListView.ItemsSource = ListWanted;
+                WantedListView.ItemsSource = ListWanted;
             }
             else
             {

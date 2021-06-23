@@ -31,18 +31,18 @@ namespace PoliceOp.API.Controllers
         {
             var token = jWTService.TokenizeID("89898598", "77a8zeea87", "Session", Models.Issuers.PoliceOpAPI, Models.Audiences.TerminalDesktop);
 
-            await GenerateData(1500, 450);
+            //await GenerateData(1500, 450, 22);
 
-            await ctx.SaveChangesAsync();
+            //await ctx.SaveChangesAsync();
             //EraseData();
-            Console.WriteLine("Done!");
+            //Console.WriteLine("Done!");
 
             int totalA = ctx.Agents.Count();
             int totalP = ctx.Personnes.Count();
 
             //return NoContent();
 
-            List<Models.Agent> LA = ctx.Agents.Take(2).AsEnumerable().ToList();
+            List<Models.Agent> LA = ctx.Agents.Skip(Faker.RandomNumber.Next(1, 400)).Take(2).AsEnumerable().ToList();
 
             return Json(new { token = token, totalAgents = totalA, totalPersonnes = totalP, Agebtx2 = LA });
         }
@@ -103,7 +103,7 @@ namespace PoliceOp.API.Controllers
 
         }
 
-        public async Task GenerateData(long totalPersonnes, long totalAgents)
+        public async Task GenerateData(long totalPersonnes, long totalAgents, int totalAvis)
         {
             DataGenerator generator = new DataGenerator();
 
@@ -125,8 +125,18 @@ namespace PoliceOp.API.Controllers
                 Console.Write("|");
             }
 
-            Console.WriteLine("Fin Agents");
+            Console.WriteLine("Fin Agents\n");
 
+
+            Console.Write("[");
+            for (int i = 0; i < totalAvis; i++)
+            {
+                await ctx.AvisRecherches.AddAsync(await generator.GenerateAvis());
+
+                Console.Write("|");
+            }
+
+            Console.WriteLine("Fin Avis");
 
             ctx.SaveChanges();
 

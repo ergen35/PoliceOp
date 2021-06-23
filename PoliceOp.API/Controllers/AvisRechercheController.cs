@@ -38,7 +38,7 @@ namespace PoliceOp.API.Controllers
 
                 foreach (var item in liar)
                 {
-                    await _context.Entry(item).Reference(r => r.PersonneRecherchee).LoadAsync();
+                    item.PersonneRecherchee = await _context.Personnes.FindAsync(item.PersonneRechercheeId);
                 }
                 return liar;
             }

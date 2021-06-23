@@ -92,5 +92,18 @@ namespace PoliceOp.API
 
             return A;
         }
+
+        public async Task<AvisRecherche> GenerateAvis()
+        {
+            AvisRecherche avis = new AvisRecherche()
+            {
+                DateEmission = Faker.Identification.DateOfBirth(),
+                Informations = Faker.Lorem.Sentence(5),
+                PersonneRechercheeId = Faker.RandomNumber.Next(1, 1400),
+                StatutRecherche = "Actif"
+            };
+
+            return avis;
+        }
     }
 }

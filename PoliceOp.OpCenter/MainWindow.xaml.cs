@@ -1,6 +1,4 @@
 ﻿using ControlzEx.Theming;
-using Enterwell.Clients.Wpf.Notifications;
-using LazyCache;
 using PoliceOp.OpCenter.Services;
 using RestSharp;
 using System;
@@ -197,9 +195,9 @@ namespace PoliceOp.OpCenter
                 DrawerLeft.IsOpen = false;
                 LoadingIndicator.Visibility = Visibility.Visible;
                 await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 5));
-                
+
                 ContentFrame.Navigate(new Pages.NoticesListPage());
-                
+
                 LoadingIndicator.Visibility = Visibility.Collapsed;
             }
 
@@ -230,7 +228,7 @@ namespace PoliceOp.OpCenter
 
                 LoadingIndicator.Visibility = Visibility.Collapsed;
             }
-           
+
             if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("diffusions"))
             {
                 DrawerLeft.IsOpen = false;
@@ -241,7 +239,7 @@ namespace PoliceOp.OpCenter
 
                 LoadingIndicator.Visibility = Visibility.Collapsed;
             }
-            
+
             if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("admin"))
             {
                 DrawerLeft.IsOpen = false;
@@ -252,7 +250,7 @@ namespace PoliceOp.OpCenter
 
                 LoadingIndicator.Visibility = Visibility.Collapsed;
             }
-            
+
             if (((sender as HandyControl.Controls.SideMenuItem).Header as string).ToLower().Contains("center"))
             {
                 DrawerLeft.IsOpen = false;

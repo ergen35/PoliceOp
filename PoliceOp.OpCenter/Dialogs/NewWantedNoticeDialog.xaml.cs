@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using RestSharp;
+﻿using RestSharp;
 using RestSharp.Authenticators;
+using System;
+using System.Collections.Generic;
+using System.Windows;
 
 namespace PoliceOp.OpCenter.Dialogs
 {
@@ -27,17 +22,17 @@ namespace PoliceOp.OpCenter.Dialogs
 
         private async void DetailsBtn_Click(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
         private async void SendAvisBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.SendAvisBtn.IsEnabled = false;
+            SendAvisBtn.IsEnabled = false;
 
-            if (this.PersonnesListView.SelectedIndex < 0 || this.StatutCbbx.SelectedIndex < 0)
+            if (PersonnesListView.SelectedIndex < 0 || StatutCbbx.SelectedIndex < 0)
             {
                 MessageBox.Show("Veuillez Renseigner tous les champs néccessaires");
-                this.SendAvisBtn.IsEnabled = false;
+                SendAvisBtn.IsEnabled = false;
                 return;
             }
 
@@ -46,8 +41,8 @@ namespace PoliceOp.OpCenter.Dialogs
             Models.AvisRecherche avis = new Models.AvisRecherche()
             {
                 DateEmission = DateTime.Now,
-                Informations = this.InfosTxtb.Text,
-                PersonneRecherchee = (this.PersonnesListView.SelectedItem as Models.Personne),
+                Informations = InfosTxtb.Text,
+                PersonneRechercheeId = (PersonnesListView.SelectedItem as Models.Personne).PersonneId,
                 StatutRecherche = StatutCbbx.SelectedItem.ToString(),
             };
 
@@ -67,7 +62,7 @@ namespace PoliceOp.OpCenter.Dialogs
             else
             {
                 AppLevel.NotificationManagers.ShowNotification(response.ResponseStatus.ToString(), "Info", AppLevel.NotificationLevel.Error);
-                this.SendAvisBtn.IsEnabled = true;
+                SendAvisBtn.IsEnabled = true;
             }
 
             LoadingInd.Visibility = Visibility.Collapsed;

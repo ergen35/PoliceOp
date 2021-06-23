@@ -1,10 +1,9 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using RestSharp;
+using RestSharp.Authenticators;
+using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Linq;
-using RestSharp;
-using RestSharp.Authenticators;
+using System.Windows.Controls;
 
 namespace PoliceOp.OpCenter.Pages
 {
@@ -20,7 +19,7 @@ namespace PoliceOp.OpCenter.Pages
         public AgentsManagementPage()
         {
             AList = new List<Models.Agent>();
-            
+
             InitializeComponent();
 
             Loaded += AgentsManagementPage_Loaded;
@@ -73,7 +72,7 @@ namespace PoliceOp.OpCenter.Pages
 
             SearchLoadingLine.Visibility = Visibility.Collapsed;
         }
-        
- 
+
+
     }
 }

@@ -5,6 +5,7 @@ namespace PoliceOp.API
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
@@ -17,6 +18,5 @@ namespace PoliceOp.API
                     webBuilder.UseStartup<Startup>();
 
                 });
-
     }
 }

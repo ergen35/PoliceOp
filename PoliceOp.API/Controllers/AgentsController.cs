@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using PoliceOp.API.Data;
 using PoliceOp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,12 +23,13 @@ namespace PoliceOp.API.Controllers
         private readonly PoliceOpAPIContext _context;
         private readonly IConfiguration configuration;
         private readonly Services.JWTServices jWTService;
+        private readonly ILogger<AgentsController> logger;
 
-
-        public AgentsController(PoliceOpAPIContext context, IConfiguration configuration)
+        public AgentsController(PoliceOpAPIContext context, IConfiguration configuration, ILogger<AgentsController> logger)
         {
             _context = context;
             this.configuration = configuration;
+            this.logger = logger;
             jWTService = new Services.JWTServices(this.configuration);
         }
 
@@ -55,8 +58,12 @@ namespace PoliceOp.API.Controllers
                     return NotFound();
                 }
 
+
                 await _context.Entry(agent).Reference(a => a.Residence).LoadAsync();
                 await _context.Entry(agent).Reference(a => a.Biometrie).LoadAsync();
+
+
+                logger.LogInformation($"Agent @{agent.Matricule} Connecté ::{HttpContext.Connection.RemotePort}, {DateTime.Now.ToShortDateString()}");
 
                 return agent;
             }
