@@ -11,33 +11,37 @@
     <Grid  Margin="50,20,50,50">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Avis de Recherche" FontSize="35" FontWeight="Bold" HorizontalAlignment="Left"/>
        
-        <Button x:Name="NewNotice" Grid.Column="1" Style="{StaticResource ButtonPrimary}" HorizontalAlignment="Right">
+        <Button x:Name="NewNotice" Grid.Column="1" Click="NewNotice_Click" Style="{StaticResource ButtonPrimary}" HorizontalAlignment="Right">
             <StackPanel Orientation="Horizontal">
                 <Icons:PackIconFontAwesome Kind="PlusSolid" Margin="0,0,5,0"/>
                 <TextBlock Text="Nouvel Avis de Recherche" VerticalAlignment="Center" FontSize="15"/>
             </StackPanel>
         </Button>
 
-        <hc:CoverView Grid.Row="1" Grid.ColumnSpan="2" Groups="1" HorizontalAlignment="Left" ItemsSource="{Binding ListWanted}" ItemWidth="200" ItemHeight="224">
-            <hc:CoverView.ItemHeaderTemplate>
+        <ListView x:Name="WantedListView" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,30,0,30" 
+                  ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible"  
+                  Style="{StaticResource WrapPanelHorizontalListBox}" 
+                  ItemsSource="{Binding ListWanted}">
+            <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:AvisRecherche}">
-                    <Border Background="#f9f9f9" Effect="{StaticResource EffectShadow4}">
+                    <Border Background="#f9f9f9" Effect="{StaticResource EffectShadow4}" Margin="30,20">
                         <StackPanel Margin="5,0,5,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <TextBlock Text="N° " FontSize="13"/>
                                 <TextBlock Text="{Binding PersonneRecherchee.NPI}" FontSize="13"/>
                             </StackPanel>
-                            <Image Source="/Resources/images/Homme2.png" HorizontalAlignment="Center" Height="145" Width="200" />
+                            <Image Source="{Binding PersonneRecherchee.PersonnePhoto}" 
+                                   HorizontalAlignment="Center" Height="145" Width="200" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -52,25 +56,21 @@
                                 <StackPanel  Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center">
                                     <TextBlock HorizontalAlignment="Center" FontSize="13" Text="{Binding PersonneRecherchee.Nom}"/>
                                     <TextBlock Text="  " FontSize="13"/>
-                                    <TextBlock Text="{Binding PersonneRecherchee.Prenom}" FontSize="13" HorizontalAlignment="Center" Grid.Column="1"/>
+                                    <TextBlock Text="{Binding PersonneRecherchee.Prenom}" FontSize="13" 
+                                               HorizontalAlignment="Center" Grid.Column="1"/>
                                 </StackPanel>
 
-                                <TextBlock Text="{Binding StatutRecherche}" HorizontalAlignment="Right" Grid.ColumnSpan="2" FontSize="13" Foreground="Green" Grid.Row="1" Grid.Column="1"/>
+                                <TextBlock Text="{Binding StatutRecherche}" HorizontalAlignment="Right" 
+                                           Grid.ColumnSpan="2" FontSize="13" Foreground="Green" Grid.Row="1" Grid.Column="1"/>
 
-                                <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="0,5" Content="Mettre à Jour" Style="{StaticResource MahApps.Styles.Button.Flat}"/>
+                                <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="0,5" Content="Mettre à Jour" 
+                                        Style="{StaticResource MahApps.Styles.Button.Flat}"/>
                             </Grid>
                         </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-                    </Border>
-                </DataTemplate>
-            </hc:CoverView.ItemHeaderTemplate>
-            <hc:CoverView.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:AvisRecherche}">
-                    <Border HorizontalAlignment="Left" Height="300" Width="800" Background="LightSkyBlue">
-                        <TextBlock Text="Something Awesome goes there!" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
-                    </Border>
-                </DataTemplate>
-            </hc:CoverView.ItemTemplate>
-        </hc:CoverView>
     </Grid>
 </Page>

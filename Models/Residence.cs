@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PoliceOp.Models
 {
+    [ComplexType]
     public class Residence
     {
         [Key]

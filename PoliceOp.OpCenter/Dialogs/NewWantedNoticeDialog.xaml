@@ -1,34 +1,33 @@
-﻿<Page x:Class="PoliceOp.OpCenter.Pages.SearchPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:PoliceOp.OpCenter.Pages" xmlns:models="clr-namespace:PoliceOp.Models;assembly=PoliceOp.Models"
-      mc:Ignorable="d" xmlns:hc="https://handyorg.github.io/handycontrol"
-      d:DesignHeight="450" d:DesignWidth="800" xmlns:IconsPack="http://metro.mahapps.com/winfx/xaml/iconpacks"
-      Title="SearchPage">
-
-    <Grid>
+﻿<hc:PopupWindow x:Class="PoliceOp.OpCenter.Dialogs.NewWantedNoticeDialog"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:IconsPack="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:models="clr-namespace:PoliceOp.Models;assembly=PoliceOp.Models"
+                xmlns:hc="https://handyorg.github.io/handycontrol"
+                mc:Ignorable="d" xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                d:DesignHeight="450" d:DesignWidth="800" xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                Width="1000" Height="630"  Background="{DynamicResource RegionBrush}" ShowInTaskbar="False"
+                WindowStartupLocation="CenterScreen" Title="Nouvel Avis de Recherche" WindowStyle="ToolWindow">
+    <Grid Margin="15,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="70" />
+            <RowDefinition Height="75" />
+            <RowDefinition Height="250" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="150" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Rechercher ou Identifier Une Personne" Style="{StaticResource TextBlockLarge}" FontSize="30" Margin="50,30,0,0" 
-                           FontFamily="Consolas" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-
-        <DockPanel Grid.Row="1" HorizontalAlignment="Center">
-            <hc:SearchBar x:Name="SearchWdgt" FontSize="16" Style="{StaticResource SearchBarPlus}" DockPanel.Dock="Top" hc:InfoElement.Placeholder="Veuillez Entrer un mot clé, Nom, Prénom, NPI, IFU...." Height="35" Width="500" Margin="0,0,0,10" HorizontalAlignment="Center" IsRealTime="False" SearchStarted="SearchWdgt_SearchStarted" />
-
-            <hc:LoadingLine x:Name="SearchLoadingLine" DockPanel.Dock="Bottom" Height="25" DotSpeed="2" Visibility="Collapsed"/>
+        <DockPanel HorizontalAlignment="Center" Margin="0,0,0,15">
+            <hc:SearchBar x:Name="SearchWdgt" SearchStarted="SearchWdgt_SearchStarted" DockPanel.Dock="Left" FontSize="16" Width="500"  Height="35" hc:InfoElement.Placeholder="Veuillez Entrer un mot clé, Nom, Prénom, NPI, IFU...." Style="{StaticResource SearchBarPlus}"/>
+            <hc:LoadingCircle x:Name="LoadingInd" DockPanel.Dock="Right" Margin="15,0,0,0" Visibility="Hidden"/>
         </DockPanel>
 
-        <ListView x:Name="PersonnesListView" Style="{StaticResource MahApps.Styles.ListBox}" 
+        <ListView x:Name="PersonnesListView" Grid.Row="1" Style="{StaticResource MahApps.Styles.ListBox}" 
                   SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" ItemsSource="{Binding PList}"
                   BorderBrush="Black" BorderThickness="1" Background="Transparent"   
-                  SelectionMode="Single" Grid.Row="2" Margin="150,15,150,5" Effect="{StaticResource EffectShadow2}">
+                  SelectionMode="Single" Margin="50,0,50,15" Effect="{StaticResource EffectShadow2}">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Personne}">
                     <Border Padding="0" Margin="0" BorderThickness="2" BorderBrush="Black">
@@ -75,25 +74,27 @@
                                 <TextBlock Text="{Binding Residence.AdresseComplete}" TextWrapping="Wrap" Style="{StaticResource TextBlockSubTitle}"
                                            VerticalAlignment="Center"/>
                             </StackPanel>
-
-                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.RowSpan="2" 
-                                        Grid.Column="4" Margin="35,0,0,0" VerticalAlignment="Center">
-                                <Button x:Name="DetailsBtn" Content="Détails" Tag="{Binding PersonneId}" Style="{StaticResource ButtonInfo}" Click="DetailsBtn_Click" />
-                                <hc:Divider Orientation="Vertical"/>
-                                <Button  Style="{StaticResource ButtonWarning}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <IconsPack:PackIconFontAwesome Kind="SearchLocationSolid"/>
-                                        <TextBlock Text="  Nouvel Avis de Recherche"/>
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
-
                         </Grid>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <hc:Pagination MaxPageCount="15" Grid.Row="3" HorizontalAlignment="Center"/>
+        <hc:ComboBox x:Name="StatutCbbx" Width="150" HorizontalAlignment="Left" Grid.Row="2" Style="{StaticResource ComboBoxPlusBaseStyle}" hc:InfoElement.Placeholder="Sélectionnez le Statut" >
+            <hc:ComboBox.Items>
+                <sys:String>Actif</sys:String>
+                <sys:String>Annulé</sys:String>
+                <sys:String>Résolu</sys:String>
+            </hc:ComboBox.Items>
+        </hc:ComboBox>
+
+        <hc:TextBox x:Name="InfosTxtb" Grid.Row="3" Margin="0,10,0,0" FontSize="16" AcceptsReturn="True" AcceptsTab="True" hc:TitleElement.Title="Informations Supplémentaires" hc:TitleElement.TitlePlacement="Top"/>
+
+        <Button x:Name="SendAvisBtn" Click="SendAvisBtn_Click" Grid.Row="4" Width="150" HorizontalAlignment="Center" Height="45" Margin="0,15,0,0" Style="{StaticResource MahApps.Styles.Button.MetroSquare.Accent}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontSize="18" Text="Envoyer" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <Icons:PackIconFontAwesome VerticalAlignment="Center" Kind="AngleRightSolid" />
+            </StackPanel>
+        </Button>
     </Grid>
-</Page>
+</hc:PopupWindow>

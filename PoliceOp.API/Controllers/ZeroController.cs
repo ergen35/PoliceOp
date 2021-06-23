@@ -31,11 +31,11 @@ namespace PoliceOp.API.Controllers
         {
             var token = jWTService.TokenizeID("89898598", "77a8zeea87", "Session", Models.Issuers.PoliceOpAPI, Models.Audiences.TerminalDesktop);
 
-            //await GenerateData(1500, 450);
+            await GenerateData(1500, 450);
 
-            //await ctx.SaveChangesAsync();
+            await ctx.SaveChangesAsync();
             //EraseData();
-            //Console.WriteLine("Done!");
+            Console.WriteLine("Done!");
 
             int totalA = ctx.Agents.Count();
             int totalP = ctx.Personnes.Count();

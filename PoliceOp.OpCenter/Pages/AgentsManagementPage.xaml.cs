@@ -15,13 +15,23 @@ namespace PoliceOp.OpCenter.Pages
     {
         public string keyword { get; set; }
         public List<Models.Agent> AList { get; set; }
+        public List<Models.Agent> AListLimited { get; set; }
+
         public AgentsManagementPage()
         {
             AList = new List<Models.Agent>();
-
+            
             InitializeComponent();
+
+            Loaded += AgentsManagementPage_Loaded;
         }
 
+        private void AgentsManagementPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            SearchWdgt.Text = "Ang";
+            SearchWdgt_SearchStarted(this, null);
+            SearchWdgt.Text = string.Empty;
+        }
 
         private async void SearchWdgt_SearchStarted(object sender, HandyControl.Data.FunctionEventArgs<string> e)
         {
@@ -60,9 +70,10 @@ namespace PoliceOp.OpCenter.Pages
             }
 
             await System.Threading.Tasks.Task.Delay(new TimeSpan(0, 0, 4));
-            e.Handled = true;
 
             SearchLoadingLine.Visibility = Visibility.Collapsed;
         }
+        
+ 
     }
 }

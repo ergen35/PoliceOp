@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PoliceOp.Models
 {
@@ -75,7 +73,6 @@ namespace PoliceOp.Models
 
         [Required]
         public int MereId { get; set; }
-
     }
 
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.Design;
 
 namespace PoliceOp.Models
 {
@@ -18,12 +16,6 @@ namespace PoliceOp.Models
 
         public string Informations { get; set; }
 
-        [Required]
-        [ForeignKey("PersonneId")]
-        public int PersonneRechercheeId { get; set; }
-
-        [NotMapped]
-        public Personne PersonneRecherchee { get; set; }
-
+        public virtual Personne PersonneRecherchee { get; set; }
     }
 }

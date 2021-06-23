@@ -22,7 +22,7 @@
                            FontFamily="Consolas" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <DockPanel Grid.Row="1" HorizontalAlignment="Center">
-            <hc:SearchBar x:Name="SearchWdgt" DockPanel.Dock="Top" Height="35" Width="500" Margin="0,0,0,10" HorizontalAlignment="Center" IsRealTime="False" SearchStarted="SearchWdgt_SearchStarted" />
+            <hc:SearchBar x:Name="SearchWdgt" FontSize="16" Style="{StaticResource SearchBarPlus}" DockPanel.Dock="Top" hc:InfoElement.Placeholder="Veuillez Entrer un mot clé, Matricule, Nom, Prénom, NPI, IFU...." Height="35" Width="500" Margin="0,0,0,10" HorizontalAlignment="Center" IsRealTime="False" SearchStarted="SearchWdgt_SearchStarted" />
 
             <hc:LoadingLine x:Name="SearchLoadingLine" DockPanel.Dock="Bottom" Height="25" DotSpeed="2" Visibility="Collapsed"/>
         </DockPanel>

@@ -10,8 +10,8 @@ using PoliceOp.API.Data;
 namespace PoliceOp.API.Migrations
 {
     [DbContext(typeof(PoliceOpAPIContext))]
-    [Migration("20210621151828_MigZero")]
-    partial class MigZero
+    [Migration("20210623170830_InitialMigration002")]
+    partial class InitialMigration002
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,7 +33,7 @@ namespace PoliceOp.API.Migrations
                     b.Property<string>("Informations")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PersonneRechercheePersonneId")
+                    b.Property<int>("PersonneRechercheeId")
                         .HasColumnType("int");
 
                     b.Property<string>("StatutRecherche")
@@ -41,8 +41,6 @@ namespace PoliceOp.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UID");
-
-                    b.HasIndex("PersonneRechercheePersonneId");
 
                     b.ToTable("AvisRecherches");
                 });
@@ -71,6 +69,9 @@ namespace PoliceOp.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("AgentPersonneId")
+                        .HasColumnType("int");
+
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
@@ -88,6 +89,8 @@ namespace PoliceOp.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DiffusionId");
+
+                    b.HasIndex("AgentPersonneId");
 
                     b.ToTable("Diffusions");
                 });
@@ -319,11 +322,11 @@ namespace PoliceOp.API.Migrations
                     b.HasDiscriminator().HasValue("Operateur");
                 });
 
-            modelBuilder.Entity("PoliceOp.Models.AvisRecherche", b =>
+            modelBuilder.Entity("PoliceOp.Models.Diffusion", b =>
                 {
-                    b.HasOne("PoliceOp.Models.Personne", "PersonneRecherchee")
-                        .WithMany()
-                        .HasForeignKey("PersonneRechercheePersonneId");
+                    b.HasOne("PoliceOp.Models.Agent", null)
+                        .WithMany("ListeDiffusions")
+                        .HasForeignKey("AgentPersonneId");
                 });
 
             modelBuilder.Entity("PoliceOp.Models.Personne", b =>

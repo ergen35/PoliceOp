@@ -1,12 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PoliceOp.API.Migrations
 {
-    public partial class MigZero : Migration
+    public partial class InitialMigration001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AvisRecherches",
+                columns: table => new
+                {
+                    UID = table.Column<Guid>(nullable: false),
+                    DateEmission = table.Column<DateTime>(nullable: false),
+                    StatutRecherche = table.Column<string>(nullable: false),
+                    Informations = table.Column<string>(nullable: true),
+                    PersonneRechercheeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AvisRecherches", x => x.UID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "BioData",
                 columns: table => new
@@ -18,23 +33,6 @@ namespace PoliceOp.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BioData", x => x.UID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Diffusions",
-                columns: table => new
-                {
-                    DiffusionId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AuthorId = table.Column<int>(nullable: false),
-                    Sujet = table.Column<string>(nullable: true),
-                    Details = table.Column<string>(nullable: false),
-                    Cible = table.Column<string>(nullable: true),
-                    DateDiffusion = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Diffusions", x => x.DiffusionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -107,42 +105,24 @@ namespace PoliceOp.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PieceJointes",
+                name: "Diffusions",
                 columns: table => new
                 {
-                    PieceJointeId = table.Column<Guid>(nullable: false),
-                    NomFichier = table.Column<string>(nullable: false),
-                    ExtensionFichier = table.Column<string>(nullable: false),
-                    Fichier = table.Column<byte[]>(nullable: false),
-                    DiffusionId = table.Column<int>(nullable: true)
+                    DiffusionId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AuthorId = table.Column<int>(nullable: false),
+                    Sujet = table.Column<string>(nullable: true),
+                    Details = table.Column<string>(nullable: false),
+                    Cible = table.Column<string>(nullable: true),
+                    DateDiffusion = table.Column<DateTime>(nullable: false),
+                    AgentPersonneId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PieceJointes", x => x.PieceJointeId);
+                    table.PrimaryKey("PK_Diffusions", x => x.DiffusionId);
                     table.ForeignKey(
-                        name: "FK_PieceJointes_Diffusions_DiffusionId",
-                        column: x => x.DiffusionId,
-                        principalTable: "Diffusions",
-                        principalColumn: "DiffusionId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AvisRecherches",
-                columns: table => new
-                {
-                    UID = table.Column<Guid>(nullable: false),
-                    DateEmission = table.Column<DateTime>(nullable: false),
-                    StatutRecherche = table.Column<string>(nullable: false),
-                    Informations = table.Column<string>(nullable: true),
-                    PersonneRechercheePersonneId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AvisRecherches", x => x.UID);
-                    table.ForeignKey(
-                        name: "FK_AvisRecherches_Personnes_PersonneRechercheePersonneId",
-                        column: x => x.PersonneRechercheePersonneId,
+                        name: "FK_Diffusions_Personnes_AgentPersonneId",
+                        column: x => x.AgentPersonneId,
                         principalTable: "Personnes",
                         principalColumn: "PersonneId",
                         onDelete: ReferentialAction.Restrict);
@@ -172,10 +152,31 @@ namespace PoliceOp.API.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PieceJointes",
+                columns: table => new
+                {
+                    PieceJointeId = table.Column<Guid>(nullable: false),
+                    NomFichier = table.Column<string>(nullable: false),
+                    ExtensionFichier = table.Column<string>(nullable: false),
+                    Fichier = table.Column<byte[]>(nullable: false),
+                    DiffusionId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PieceJointes", x => x.PieceJointeId);
+                    table.ForeignKey(
+                        name: "FK_PieceJointes_Diffusions_DiffusionId",
+                        column: x => x.DiffusionId,
+                        principalTable: "Diffusions",
+                        principalColumn: "DiffusionId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_AvisRecherches_PersonneRechercheePersonneId",
-                table: "AvisRecherches",
-                column: "PersonneRechercheePersonneId");
+                name: "IX_Diffusions_AgentPersonneId",
+                table: "Diffusions",
+                column: "AgentPersonneId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Personnes_BiometrieUID",

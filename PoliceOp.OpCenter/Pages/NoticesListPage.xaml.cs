@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using System;
+using RestSharp;
 using RestSharp.Authenticators;
 using System.Collections.Generic;
 using System.Windows.Controls;
@@ -17,6 +18,72 @@ namespace PoliceOp.OpCenter.Pages
             ListWanted = new List<Models.AvisRecherche>();
             FetchData();
             InitializeComponent();
+
+            ListWanted = new List<Models.AvisRecherche>()
+            {
+                new Models.AvisRecherche()
+                {
+                    PersonneRecherchee = new Models.Personne(){Nom = "Gaston", Prenom = "Phil", PersonneId = 854},
+                     DateEmission = DateTime.Now, Informations = "klfkjzejfjzefq", StatutRecherche = "Actif", UID = Guid.NewGuid()
+                },
+                  new Models.AvisRecherche()
+                {
+                    PersonneRecherchee = new Models.Personne(){Nom = "Gaston", Prenom = "Phil", PersonneId = 854},
+                     DateEmission = DateTime.Now, Informations = "klfkjzejfjzefq", StatutRecherche = "Actif", UID = Guid.NewGuid()
+                },
+                    new Models.AvisRecherche()
+                {
+                    PersonneRecherchee = new Models.Personne(){Nom = "Gaston", Prenom = "Phil", PersonneId = 854},
+                     DateEmission = DateTime.Now, Informations = "klfkjzejfjzefq", StatutRecherche = "Actif", UID = Guid.NewGuid()
+                },
+                      new Models.AvisRecherche()
+                {
+                    PersonneRecherchee = new Models.Personne(){Nom = "Gaston", Prenom = "Phil", PersonneId = 854},
+                     DateEmission = DateTime.Now, Informations = "klfkjzejfjzefq", StatutRecherche = "Actif", UID = Guid.NewGuid()
+                },
+                       new Models.AvisRecherche()
+                {
+                    PersonneRecherchee = new Models.Personne(){Nom = "Gaston", Prenom = "Phil", PersonneId = 854},
+                     DateEmission = DateTime.Now, Informations = "klfkjzejfjzefq", StatutRecherche = "Actif", UID = Guid.NewGuid()
+                },
+                          new Models.AvisRecherche()
+                        {
+                            PersonneRecherchee = new Models.Personne(){Nom = "Gaston", Prenom = "Phil", PersonneId = 854},
+                             DateEmission = DateTime.Now, Informations = "klfkjzejfjzefq", StatutRecherche = "Actif", UID = Guid.NewGuid()
+                        },
+                            new Models.AvisRecherche()
+                        {
+                            PersonneRecherchee = new Models.Personne(){Nom = "Gaston", Prenom = "Phil", PersonneId = 854},
+                             DateEmission = DateTime.Now, Informations = "klfkjzejfjzefq", StatutRecherche = "Actif", UID = Guid.NewGuid()
+                        },
+                              new Models.AvisRecherche()
+                        {
+                            PersonneRecherchee = new Models.Personne(){Nom = "Gaston", Prenom = "Phil", PersonneId = 854},
+                             DateEmission = DateTime.Now, Informations = "klfkjzejfjzefq", StatutRecherche = "Actif", UID = Guid.NewGuid()
+                        },
+                               new Models.AvisRecherche()
+                {
+                    PersonneRecherchee = new Models.Personne(){Nom = "Gaston", Prenom = "Phil", PersonneId = 854},
+                     DateEmission = DateTime.Now, Informations = "klfkjzejfjzefq", StatutRecherche = "Actif", UID = Guid.NewGuid()
+                },
+                                  new Models.AvisRecherche()
+                                {
+                                    PersonneRecherchee = new Models.Personne(){Nom = "Gaston", Prenom = "Phil", PersonneId = 854},
+                                     DateEmission = DateTime.Now, Informations = "klfkjzejfjzefq", StatutRecherche = "Actif", UID = Guid.NewGuid()
+                                },
+                                    new Models.AvisRecherche()
+                                {
+                                    PersonneRecherchee = new Models.Personne(){Nom = "Gaston", Prenom = "Phil", PersonneId = 854},
+                                     DateEmission = DateTime.Now, Informations = "klfkjzejfjzefq", StatutRecherche = "Actif", UID = Guid.NewGuid()
+                                },
+                                      new Models.AvisRecherche()
+                {
+                    PersonneRecherchee = new Models.Personne(){Nom = "Gaston", Prenom = "Phil", PersonneId = 854},
+                     DateEmission = DateTime.Now, Informations = "klfkjzejfjzefq", StatutRecherche = "Actif", UID = Guid.NewGuid()
+                },
+            };
+
+            WantedListView.ItemsSource = ListWanted;
         }
 
         private async void FetchData()
@@ -32,6 +99,7 @@ namespace PoliceOp.OpCenter.Pages
             if (response.IsSuccessful)
             {
                 ListWanted = response.Data;
+                this.WantedListView.ItemsSource = ListWanted;
             }
             else
             {
@@ -44,6 +112,13 @@ namespace PoliceOp.OpCenter.Pages
                     AppLevel.NotificationManagers.ShowNotification("Une Erreur S'est Produite", "Erreur", AppLevel.NotificationLevel.Warning);
                 }
             }
+        }
+
+        private void NewNotice_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Dialogs.NewWantedNoticeDialog noticeDialog = new Dialogs.NewWantedNoticeDialog();
+
+            noticeDialog.Show();
         }
     }
 }

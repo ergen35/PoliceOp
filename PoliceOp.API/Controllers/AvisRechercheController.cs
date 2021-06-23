@@ -59,6 +59,8 @@ namespace PoliceOp.API.Controllers
                     return NotFound();
                 }
 
+                avisRecherche.PersonneRecherchee = await _context.Personnes.FindAsync(avisRecherche.PersonneRechercheeId);
+
                 return avisRecherche;
 
             }
@@ -67,8 +69,6 @@ namespace PoliceOp.API.Controllers
         }
 
         // PUT: api/AvisRecherche/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAvisRecherche(Guid id, AvisRecherche avisRecherche)
         {
@@ -106,17 +106,17 @@ namespace PoliceOp.API.Controllers
         }
 
         // POST: api/AvisRecherche
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<AvisRecherche>> PostAvisRecherche(AvisRecherche avisRecherche)
         {
             if (await SessionExists(HttpContext))
             {
+                //Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(avisRecherche.PersonneRecherchee));
+
                 _context.AvisRecherches.Add(avisRecherche);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetAvisRecherche", new { id = avisRecherche.UID }, avisRecherche);
+                return Ok();
             }
 
             return Unauthorized("Session ID is Required");

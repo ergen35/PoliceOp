@@ -1,15 +1,17 @@
 ﻿<mah:MetroWindow x:Class="PoliceOp.OpCenter.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PoliceOp.OpCenter" xmlns:hc="https://handyorg.github.io/handycontrol"
-        mc:Ignorable="d" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        Title="OpCenter" TitleCharacterCasing="Normal" TitleAlignment="Center" Height="450" Width="800" 
-        xmlns:Notif="clr-namespace:Enterwell.Clients.Wpf.Notifications.Controls;assembly=Enterwell.Clients.Wpf.Notifications"
-        xmlns:mde="http://metro.mahapps.com/winfx/xaml/controls" WindowState="Maximized" Icon="/Resources/images/PoliceOp.ico"
-        >
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:Notif="clr-namespace:Enterwell.Clients.Wpf.Notifications.Controls;assembly=Enterwell.Clients.Wpf.Notifications"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                 xmlns:hc="https://handyorg.github.io/handycontrol"
+                 mc:Ignorable="d"
+                 Title="OpCenter" TitleCharacterCasing="Normal" TitleAlignment="Center" Height="450" Width="800"
+                 WindowState="Maximized" Icon="/Resources/images/PoliceOp.ico">
+    
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
             <ToggleButton x:Name="ThemeBtn" Height="35" Width="25" Style="{StaticResource ToggleButtonSwitch}" ToolTip="Theme Switch" ToggleButton.Checked="ThemeBtn_Checked" ToggleButton.Unchecked="ThemeBtn_Unchecked"/>
@@ -157,7 +159,7 @@
                         <Button Command="hc:ControlCommands.Close" Grid.Row="0" HorizontalAlignment="Left" Foreground="{DynamicResource LightWarningBrush}" Style="{StaticResource ButtonIcon}" hc:IconElement.Geometry="{StaticResource RightGeometry}" />
 
                         <ScrollViewer Grid.Row="1" Width="330"  Margin="0,15,0,0" Style="{StaticResource ListViewScrollViewerStyle}" VerticalScrollBarVisibility="Auto" >
-                        <Notif:NotificationMessageContainer Grid.Row="1" x:Name="AlertCenterMessageContainer" Width="335" />
+                            <Notif:NotificationMessageContainer Grid.Row="1" x:Name="AlertCenterMessageContainer" Width="335" />
                         </ScrollViewer>
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>

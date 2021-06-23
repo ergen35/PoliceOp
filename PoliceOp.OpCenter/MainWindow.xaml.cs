@@ -180,23 +180,8 @@ namespace PoliceOp.OpCenter
         {
             //Delete sessionID from cache
 
-            AppLevel.CachingService.appCache.Add<Models.Session>("SessionID", null);
+            //AppLevel.CachingService.appCache.Add<Models.SessionVM>("SessionVM", null);
 
-            //Call Api logout
-
-            //try
-            //{
-            //    //await AppLevel.APIClients.v1Client
-            //    //               .DeleteRequest(route: "Auth")
-            //    //               .AddQueryParameter("uid", SessionVM.SessionID.ToString())
-            //    //               .ExecuteAsync();
-            //}
-            //catch
-            //{
-
-            //}
-
-            //Close window
             Close();
         }
 

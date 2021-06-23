@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 
 
 namespace PoliceOp.Models
@@ -23,6 +22,6 @@ namespace PoliceOp.Models
         [Required]
         public string PasswordHash { get; set; }
 
-        public virtual ICollection<Diffusion> ListeDiffusions { get; set; }
+
     }
 }
